@@ -12,6 +12,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.v("Sup", "'Sup ButtStallion");
-        Log.v("Sup","Soupé de crabe au cégep de La Pocatière");
+        Log.v("Sup","Souper de crabe au cégep de La Pocatière");
     }
 }
