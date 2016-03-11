@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.v("Sup","'Sup");
+        Log.v("Sup", "'Sup");
+        Log.v("Sup","Soupé de crabe au cégep de La Pocatière");
     }
 }
