@@ -22,9 +22,9 @@ public class StudentRepository implements PortailStudentRep{
     {
         studentList = new ArrayList<Student>();
 
-        Student student1 = new Student("Student1","12345");
-        Student student2 = new Student("Student2","22345");
-        Student student3 = new Student("Student3","32345");
+        Student student1 = new Student("BanabaBBQ Mcgehee","aa83dac4c78a");
+        Student student2 = new Student("Ron Busse","e8334a6b37c0");
+        Student student3 = new Student("Kandy Vangilder","3caea9dbc7c9");
         studentList.add(student1);
         studentList.add(student2);
         studentList.add(student3);
@@ -34,7 +34,7 @@ public class StudentRepository implements PortailStudentRep{
     public Student getStudentByCode(String code)
     {
         for(int i=0;i<studentList.size();i++) {
-            if (studentList.get(i).getCode()==code)
+            if (studentList.get(i).getCode().matches(code))
                 return studentList.get(i);
         }
         return null;
@@ -43,7 +43,7 @@ public class StudentRepository implements PortailStudentRep{
     public void removeStudentFromList(String code)
     {
         for(int i=0;i<studentList.size();i++) {
-            if (studentList.get(i).getCode()==code) {
+            if (studentList.get(i).getCode().matches(code)) {
                 studentList.remove(i);
                 break;
             }

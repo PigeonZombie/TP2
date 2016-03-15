@@ -54,13 +54,7 @@ public class MainActivity extends AppCompatActivity implements PortalView{
             barCodeIntent.putExtra("SCAN_FORMATS","CODE_128");
             startActivityForResult(barCodeIntent, REQUEST_CODE);
 
-            String errorMessage = controller.validateUserInput("12345");
-            if(errorMessage==null){
-                //commencerPartie
-            }
-            else{
-                Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
-            }
+
 
         }
     };
@@ -72,6 +66,13 @@ public class MainActivity extends AppCompatActivity implements PortalView{
         if(requestCode == REQUEST_CODE){
             if(resultCode == Activity.RESULT_OK){
                 studentCode =data.getStringExtra("SCAN_RESULT");
+                String errorMessage = controller.validateUserInput(studentCode);
+                if(errorMessage==null){
+                    //commencerPartie
+                }
+                else{
+                    Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
