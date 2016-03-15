@@ -20,12 +20,16 @@ public class Controleur {
 
     public String validateUserInput(String code)
     {
-        String errorMessage = null;
-        if(repository.getStudentByCode(code)!=null)
+        String messagePourUtilisateur;
+        if(repository.getStudentByCode(code)!=null) {
             repository.removeStudentFromList(code);
-        else
-            errorMessage = "You are not on our list for this activity. Please try again.";
+            messagePourUtilisateur ="You are ready for the ativity, please procede.";
+        }
 
-        return errorMessage;
+
+        else
+            messagePourUtilisateur = "You are not on our list for this activity. Please try again.";
+
+        return messagePourUtilisateur;
     }
 }
