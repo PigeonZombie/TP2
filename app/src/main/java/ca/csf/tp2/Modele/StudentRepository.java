@@ -11,15 +11,19 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import ca.csf.tp2.Modele.Portail.PortailStudentRep;
+import ca.csf.tp2.Vue_Controleur.Portail.PortalView;
 
 /**
  * Simulation d'une base de données
  */
 public class StudentRepository implements PortailStudentRep{
     ArrayList<Student> studentList;
+    PortalView portalView;
 
-    public StudentRepository()
+    public StudentRepository(PortalView portalView)
     {
+        this.portalView = portalView;
+
         studentList = new ArrayList<Student>();
 
         Student student1 = new Student("BanabaBBQ Mcgehee","aa83dac4c78a");
@@ -45,6 +49,7 @@ public class StudentRepository implements PortailStudentRep{
         for(int i=0;i<studentList.size();i++) {
             if (studentList.get(i).getCode().matches(code)) {
                 studentList.remove(i);
+                portalView.notify(this);
                 break;
             }
         }
@@ -65,9 +70,23 @@ public class StudentRepository implements PortailStudentRep{
         Collections.shuffle(studentList, new Random(seed));
     }
 
+    public ArrayList<Student> getStudentList(){
+        return studentList;
+    }
+
     @Override
     public String createView()
     {
         return "";
+    }
+
+    @Override
+    public ArrayList<Student> saveStudents()
+    {
+        return studentList;
+    }
+
+    public void restoreStudents(ArrayList<Student> students) {
+        studentList = students;
     }
 }

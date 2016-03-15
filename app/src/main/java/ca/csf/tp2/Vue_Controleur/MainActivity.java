@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import ca.csf.tp2.Modele.Portail.PortailStudentRep;
+import ca.csf.tp2.Modele.Student;
 import ca.csf.tp2.Modele.StudentRepository;
 import ca.csf.tp2.R;
 import ca.csf.tp2.Vue_Controleur.Portail.PortalView;
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements PortalView{
     Controleur controller;
     public static final int REQUEST_CODE = 42;
     private String studentCode;
+    public static final String ETUDIANTS_ACTUELS = "ETUDIANTS_ACTUELS";
+    private ArrayList<Student> etudiantsRestants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements PortalView{
         scanButton = (Button)findViewById(R.id.buttonScan);
         scanButton.setOnClickListener(clickScan);
         studentCode = new String("");
+
+
     }
 
     @Override
@@ -78,9 +85,24 @@ public class MainActivity extends AppCompatActivity implements PortalView{
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelableArrayList(ETUDIANTS_ACTUELS,etudiantsRestants);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        etudiantsRestants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
+        controller.restore(etudiantsRestants);
+    }
+
+    @Override
     public void notify(PortailStudentRep portalModel)
     {
-
+        etudiantsRestants = portalModel.saveStudents();
     }
 
 }

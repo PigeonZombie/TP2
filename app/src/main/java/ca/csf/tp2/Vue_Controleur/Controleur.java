@@ -1,7 +1,9 @@
 package ca.csf.tp2.Vue_Controleur;
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import ca.csf.tp2.Modele.Student;
 import ca.csf.tp2.Modele.StudentRepository;
 
 /**
@@ -15,7 +17,7 @@ public class Controleur {
     public Controleur(MainActivity vue)
     {
         this.vue = vue;
-        repository = new StudentRepository();
+        repository = new StudentRepository(vue);
     }
 
     public String validateUserInput(String code)
@@ -23,13 +25,15 @@ public class Controleur {
         String messagePourUtilisateur;
         if(repository.getStudentByCode(code)!=null) {
             repository.removeStudentFromList(code);
-            messagePourUtilisateur ="You are ready for the ativity, please procede.";
+            messagePourUtilisateur ="You are ready for the activity, please procede.";
         }
-
-
         else
             messagePourUtilisateur = "You are not on our list for this activity. Please try again.";
 
         return messagePourUtilisateur;
+    }
+
+    public void restore(ArrayList<Student> liste){
+        repository.restoreStudents(liste);
     }
 }
