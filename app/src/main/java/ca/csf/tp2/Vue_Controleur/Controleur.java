@@ -25,8 +25,14 @@ public class Controleur {
 
     public String validerEntreeUtilisateur(String code) {
         String messagePourUtilisateur = "";
+        if (depot.getEtudiantParCode(code) != null) {
+            depot.retirerEtudiantDeLaListe(code);
+            messagePourUtilisateur = "You are ready for the activity, please procede.";
+        }
+        else
+            messagePourUtilisateur = "You are not on our list for this activity. Please try again.";
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Objects.equals(Locale.getDefault().getDisplayLanguage(), "English"))
             {
 
@@ -52,7 +58,7 @@ public class Controleur {
                 else
                 messagePourUtilisateur = "VOus n'Etes aps inscrit à cette ativité, veuillez réessayer.";
             }
-        }
+        }*/
 
         return messagePourUtilisateur;
     }

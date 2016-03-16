@@ -34,13 +34,17 @@ public class MainActivity extends AppCompatActivity implements InterfaceVue {
         scanButton.setOnClickListener(clickScan);
         codeEtudiant = new String("");
 
-
+        if(savedInstanceState!=null) {
+            etudiantsRestants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         controller = new Controleur(this);
+        if(etudiantsRestants!=null)
+            controller.restore(etudiantsRestants);
         // Établir la connexion à la base de données
         }
 
