@@ -4,28 +4,26 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ca.csf.tp2.Modele.Portail.PortailStudentRep;
-import ca.csf.tp2.Modele.Student;
-import ca.csf.tp2.Modele.StudentRepository;
+import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
+import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.R;
-import ca.csf.tp2.Vue_Controleur.Portail.PortalView;
+import ca.csf.tp2.Vue_Controleur.Portail.InterfaceVue;
 
-public class MainActivity extends AppCompatActivity implements PortalView{
+public class MainActivity extends AppCompatActivity implements InterfaceVue {
 
-    PortailStudentRep portalModel;
+    InterfaceDepotEtudiant portalModel;
     Button scanButton;
     Controleur controller;
-    public static final int REQUEST_CODE = 42;
-    private String studentCode;
+    public static final int CODE_REQUETE = 42;
+    private String codeEtudiant;
     public static final String ETUDIANTS_ACTUELS = "ETUDIANTS_ACTUELS";
-    private ArrayList<Student> etudiantsRestants;
+    private ArrayList<Etudiant> etudiantsRestants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements PortalView{
 
         scanButton = (Button)findViewById(R.id.buttonScan);
         scanButton.setOnClickListener(clickScan);
-        studentCode = new String("");
+        codeEtudiant = new String("");
 
 
     }
@@ -43,13 +41,12 @@ public class MainActivity extends AppCompatActivity implements PortalView{
     protected void onStart() {
         super.onStart();
         controller = new Controleur(this);
-    }
+        // Établir la connexion à la base de données
+        }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        // Établir la connexion à la base de données
     }
 
 
@@ -59,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements PortalView{
             // Utiliser la caméra pour scanner un code barre
             Intent barCodeIntent = new Intent("com.google.zxing.client.android.SCAN");
             barCodeIntent.putExtra("SCAN_FORMATS","CODE_128");
-            startActivityForResult(barCodeIntent, REQUEST_CODE);
+            startActivityForResult(barCodeIntent, CODE_REQUETE);
 
 
 
@@ -70,15 +67,15 @@ public class MainActivity extends AppCompatActivity implements PortalView{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQUEST_CODE){
+        if(requestCode == CODE_REQUETE){
             if(resultCode == Activity.RESULT_OK){
-                studentCode =data.getStringExtra("SCAN_RESULT");
-                String errorMessage = controller.validateUserInput(studentCode);
-                if(errorMessage==null){
+                codeEtudiant =data.getStringExtra("SCAN_RESULT");
+                String messageErreur = controller.validerEntreeUtilisateur(codeEtudiant);
+                if(messageErreur==null){
                     //commencerPartie
                 }
                 else{
-                    Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, messageErreur, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -92,18 +89,19 @@ public class MainActivity extends AppCompatActivity implements PortalView{
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        etudiantsRestants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
+    protected void onRestoreInstanceState(Bundle outState) {
+        super.onRestoreInstanceState(outState);
+        etudiantsRestants = outState.getParcelableArrayList(ETUDIANTS_ACTUELS);
         controller.restore(etudiantsRestants);
     }
 
     @Override
-    public void notify(PortailStudentRep portalModel)
+    public void notify(InterfaceDepotEtudiant portalModel)
     {
-        etudiantsRestants = portalModel.saveStudents();
+        etudiantsRestants = portalModel.sauvegarderEtudiant();
     }
+
+
 
 }
 

@@ -6,11 +6,11 @@ import android.os.Parcelable;
 /**
  * Simulation d'un étudiant
  */
-public class Student implements Parcelable{
+public class Etudiant implements Parcelable{
     private String name;
     private String code;
 
-    public Student(String name, String code){
+    public Etudiant(String name, String code){
         if(name!=null)
             this.name = new String(name);
         else
@@ -18,7 +18,7 @@ public class Student implements Parcelable{
         this.code = code;
     }
 
-    private Student(Parcel in) {
+    private Etudiant(Parcel in) {
         name = in.readString();
         code = in.readString();
     }
@@ -34,13 +34,13 @@ public class Student implements Parcelable{
         dest.writeString(code);
     }
 
-    public static final Parcelable.Creator<Student> CREATOR = new Parcelable.Creator<Student>() {
-        public Student createFromParcel(Parcel in) {
-            return new Student(in);
+    public static final Parcelable.Creator<Etudiant> CREATOR = new Parcelable.Creator<Etudiant>() {
+        public Etudiant createFromParcel(Parcel in) {
+            return new Etudiant(in);
         }
 
-        public Student[] newArray(int size) {
-            return new Student[size];
+        public Etudiant[] newArray(int size) {
+            return new Etudiant[size];
         }
     };
 

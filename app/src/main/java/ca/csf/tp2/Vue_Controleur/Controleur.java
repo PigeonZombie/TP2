@@ -1,39 +1,63 @@
 package ca.csf.tp2.Vue_Controleur;
 
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import android.os.Build;
 
-import ca.csf.tp2.Modele.Student;
-import ca.csf.tp2.Modele.StudentRepository;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Objects;
+
+import ca.csf.tp2.Modele.Etudiant;
+import ca.csf.tp2.Modele.DepotEtudiant;
 
 /**
  * Created by Utilisateur on 2016-03-14.
  */
 public class Controleur {
 
-    StudentRepository repository;
+    DepotEtudiant depot;
     MainActivity vue;
 
     public Controleur(MainActivity vue)
     {
         this.vue = vue;
-        repository = new StudentRepository(vue);
+        depot = new DepotEtudiant(vue);
     }
 
-    public String validateUserInput(String code)
-    {
-        String messagePourUtilisateur;
-        if(repository.getStudentByCode(code)!=null) {
-            repository.removeStudentFromList(code);
-            messagePourUtilisateur ="You are ready for the activity, please procede.";
+    public String validerEntreeUtilisateur(String code) {
+        String messagePourUtilisateur = "";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (Objects.equals(Locale.getDefault().getDisplayLanguage(), "English"))
+            {
+
+
+                if (depot.getEtudiantParCode(code) != null) {
+                    depot.retirerEtudiantDeLaListe(code);
+                    messagePourUtilisateur = "You are ready for the activity, please procede.";
+                }
+                else
+                    messagePourUtilisateur = "You are not on our list for this activity. Please try again.";
+            }
         }
-        else
-            messagePourUtilisateur = "You are not on our list for this activity. Please try again.";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (Objects.equals(Locale.getDefault().getDisplayLanguage(), "Francais")) {
+
+
+                if (depot.getEtudiantParCode(code) != null) {
+                    depot.retirerEtudiantDeLaListe(code);
+                    messagePourUtilisateur = "Vous etes inscrit à cette activité, veuillez procéder.";
+                }
+
+                else
+                messagePourUtilisateur = "VOus n'Etes aps inscrit à cette ativité, veuillez réessayer.";
+            }
+        }
 
         return messagePourUtilisateur;
     }
 
-    public void restore(ArrayList<Student> liste){
-        repository.restoreStudents(liste);
+    public void restore(ArrayList<Etudiant> liste){
+        depot.restoreStudents(liste);
     }
 }
