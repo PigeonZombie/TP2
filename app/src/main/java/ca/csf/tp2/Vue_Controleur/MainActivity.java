@@ -96,7 +96,8 @@ public class MainActivity extends AppCompatActivity implements InterfaceVue {
     protected void onRestoreInstanceState(Bundle outState) {
         super.onRestoreInstanceState(outState);
         etudiantsRestants = outState.getParcelableArrayList(ETUDIANTS_ACTUELS);
-        controller.restore(etudiantsRestants);
+        if(etudiantsRestants!=null)
+            controller.restore(etudiantsRestants);
     }
 
     @Override
