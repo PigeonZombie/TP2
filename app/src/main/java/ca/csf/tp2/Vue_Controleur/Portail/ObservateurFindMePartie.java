@@ -7,5 +7,5 @@ import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
  * Created by Utilisateur on 2016-03-14.
  */
 public interface ObservateurFindMePartie {
-    public void notifierChangementEtudiantATrouver(Etudiant etudiant);
+    public void notifierChangementEtudiantATrouver(String NomEtudiant);
 }

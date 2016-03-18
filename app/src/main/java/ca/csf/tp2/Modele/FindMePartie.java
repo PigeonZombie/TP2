@@ -24,17 +24,19 @@ public class FindMePartie {
     }
 
 
-    public Etudiant getEtudiantParCode(String code)
+    public void getEtudiantParCode(String code)
     {
         for(int i=0;i< etudiants.size();i++) {
             if (etudiants.get(i).getCode().matches(code))
-                return etudiants.get(i);
+                 etudiants.get(i);{
+                etudiants.remove(i);
+                observateurFindMePartie.notifierChangementEtudiantATrouver(getProchainEtudiant());
+            }
         }
-        return null;
     }
 
 
-    public String getProchainEtudiant()
+    private String getProchainEtudiant()
     {
         if(!etudiants.isEmpty())
         {
