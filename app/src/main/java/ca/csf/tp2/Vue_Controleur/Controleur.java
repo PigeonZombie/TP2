@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.Modele.DepotEtudiant;
+import ca.csf.tp2.R;
 
 /**
  * Created by Utilisateur on 2016-03-14.
