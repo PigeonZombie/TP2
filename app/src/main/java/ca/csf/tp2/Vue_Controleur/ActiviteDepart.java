@@ -16,7 +16,7 @@ import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.R;
 import ca.csf.tp2.Vue_Controleur.Portail.InterfaceVue;
 
-public class MainActivity extends AppCompatActivity implements InterfaceVue {
+public class ActiviteDepart extends AppCompatActivity implements InterfaceVue {
 
     InterfaceDepotEtudiant portalModel;
     Button scanButton;
@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements InterfaceVue {
     private String codeEtudiant;
     public static final String ETUDIANTS_ACTUELS = "ETUDIANTS_ACTUELS";
     private ArrayList<Etudiant> etudiantsRestants;
-    FindMePartie partie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +78,10 @@ public class MainActivity extends AppCompatActivity implements InterfaceVue {
                 codeEtudiant =data.getStringExtra("SCAN_RESULT");
                 String messageErreur = controller.validerEntreeUtilisateur(codeEtudiant);
                 if(messageErreur==null){
-                   // partie = new FindMePartie()
-                    partie.commencerPartie();
+                    Intent partie = new Intent(this, ActiviteRechercheEtudiant.class);
                 }
                 else{
-                    Toast.makeText(MainActivity.this, messageErreur, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActiviteDepart.this, messageErreur, Toast.LENGTH_SHORT).show();
                 }
             }
         }

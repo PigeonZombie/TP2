@@ -1,15 +1,9 @@
 package ca.csf.tp2.Vue_Controleur;
 
-import android.os.Build;
-
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Objects;
 
 import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.Modele.DepotEtudiant;
-import ca.csf.tp2.Modele.FindMePartie;
-import ca.csf.tp2.R;
 
 /**
  * Created by Utilisateur on 2016-03-14.
@@ -17,9 +11,9 @@ import ca.csf.tp2.R;
 public class Controleur {
 
     DepotEtudiant depot;
-    MainActivity vue;
+    ActiviteDepart vue;
 
-    public Controleur(MainActivity vue)
+    public Controleur(ActiviteDepart vue)
     {
         this.vue = vue;
         depot = new DepotEtudiant(vue);
