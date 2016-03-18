@@ -62,9 +62,6 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurFind
             Intent barCodeIntent = new Intent("com.google.zxing.client.android.SCAN");
             barCodeIntent.putExtra("SCAN_FORMATS","CODE_128");
             startActivityForResult(barCodeIntent, CODE_REQUETE);
-
-
-
         }
     };
 
@@ -76,8 +73,9 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurFind
             if(resultCode == Activity.RESULT_OK){
                 codeEtudiant =data.getStringExtra("SCAN_RESULT");
                 String messageErreur = controller.validerEntreeUtilisateur(codeEtudiant);
-                if(messageErreur==null){
+                if(messageErreur.equals(getResources().getString(R.string.JoueurInscrit))){
                     Intent partie = new Intent(this, ActiviteRechercheEtudiant.class);
+                    startActivity(partie);
                 }
                 else{
                     Toast.makeText(ActiviteDepart.this, messageErreur, Toast.LENGTH_SHORT).show();
