@@ -10,13 +10,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ca.csf.tp2.Modele.FindMePartie;
 import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
 import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.R;
-import ca.csf.tp2.Vue_Controleur.Portail.InterfaceVue;
+import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
-public class ActiviteDepart extends AppCompatActivity implements InterfaceVue {
+public class ActiviteDepart extends AppCompatActivity implements ObservateurFindMePartie {
 
     InterfaceDepotEtudiant portalModel;
     Button scanButton;

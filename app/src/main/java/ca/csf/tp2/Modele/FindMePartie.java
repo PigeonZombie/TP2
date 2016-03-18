@@ -2,26 +2,25 @@ package ca.csf.tp2.Modele;
 
 import java.util.ArrayList;
 
-import ca.csf.tp2.Modele.Portail.ObservateurFindMePartie;
-import ca.csf.tp2.Vue_Controleur.Portail.InterfaceVue;
+import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 
-public class FindMePartie implements ObservateurFindMePartie {
+public class FindMePartie {
 
     private ArrayList<Etudiant> etudiants;
     private final long dureeDePartie;
     private final long tempsPourTrouverEtudiant;
     private final Minuteur findMeMinuteur;
-    private final InterfaceVue interfaceVue;
+    private final ObservateurFindMePartie observateurFindMePartie;
 
     public FindMePartie(ArrayList<Etudiant> etudiants, Etudiant joueur,
                         long dureeDePartie, long tempsPourTrouverEtudiant, Minuteur minuteur,
-                        InterfaceVue interfaceVue){
+                        ObservateurFindMePartie observateurFindMePartie){
         this.etudiants = etudiants;
         this. dureeDePartie = dureeDePartie;
         this.tempsPourTrouverEtudiant = tempsPourTrouverEtudiant;
         this.findMeMinuteur = minuteur;
-        this.interfaceVue = interfaceVue;
+        this.observateurFindMePartie = observateurFindMePartie;
     }
 
 

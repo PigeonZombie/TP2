@@ -5,18 +5,18 @@ import java.util.Collections;
 import java.util.Random;
 
 import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
-import ca.csf.tp2.Vue_Controleur.Portail.InterfaceVue;
+import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 /**
  * Simulation d'une base de données
  */
 public class DepotEtudiant implements InterfaceDepotEtudiant{
     ArrayList<Etudiant> etudiantList;
-    InterfaceVue interfaceVue;
+    ObservateurFindMePartie observateurFindMePartie;
 
-    public DepotEtudiant (InterfaceVue interfaceVue)
+    public DepotEtudiant (ObservateurFindMePartie observateurFindMePartie)
     {
-        this.interfaceVue = interfaceVue;
+        this.observateurFindMePartie = observateurFindMePartie;
 
         etudiantList = new ArrayList<Etudiant>();
 
@@ -53,7 +53,7 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
         for(int i=0;i< etudiantList.size();i++) {
             if (etudiantList.get(i).getCode().matches(code)) {
                 etudiantList.remove(i);
-                interfaceVue.notify(this);
+                observateurFindMePartie.notify(this);
                 break;
             }
         }
