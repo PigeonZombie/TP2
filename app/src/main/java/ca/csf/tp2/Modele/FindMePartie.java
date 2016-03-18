@@ -2,6 +2,7 @@ package ca.csf.tp2.Modele;
 
 import java.util.ArrayList;
 
+import ca.csf.tp2.Modele.Portail.InterfaceMinuteur;
 import ca.csf.tp2.Modele.Portail.ObservateurMinuteur;
 import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
@@ -9,18 +10,19 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 public class FindMePartie implements ObservateurMinuteur {
 
     private ArrayList<Etudiant> etudiants;
+    private int pointage = 0;
     private final long dureeDePartie;
     private final long tempsPourTrouverEtudiant;
-    private final Minuteur findMeMinuteur;
     private final ObservateurFindMePartie observateurFindMePartie;
+    private final InterfaceMinuteur interfacerMinuteur;
 
     public FindMePartie(ArrayList<Etudiant> etudiants, Etudiant joueur,
-                        long dureeDePartie, long tempsPourTrouverEtudiant, Minuteur minuteur,
+                        long dureeDePartie, long tempsPourTrouverEtudiant, InterfaceMinuteur minuteur,
                         ObservateurFindMePartie observateurFindMePartie){
         this.etudiants = etudiants;
         this. dureeDePartie = dureeDePartie;
         this.tempsPourTrouverEtudiant = tempsPourTrouverEtudiant;
-        this.findMeMinuteur = minuteur;
+        this.interfacerMinuteur = minuteur;
         this.observateurFindMePartie = observateurFindMePartie;
     }
 
@@ -31,6 +33,7 @@ public class FindMePartie implements ObservateurMinuteur {
             if (etudiants.get(i).getCode().matches(code))
                  etudiants.get(i);{
                 etudiants.remove(i);
+                pointage += interfacerMinuteur.getTempsRestant();
                 observateurFindMePartie.notifierChangementEtudiantATrouver(getProchainEtudiant());
             }
         }
