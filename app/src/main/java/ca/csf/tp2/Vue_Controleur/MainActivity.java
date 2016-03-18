@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import ca.csf.tp2.Modele.FindMePartie;
 import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
 import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.R;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceVue {
     private String codeEtudiant;
     public static final String ETUDIANTS_ACTUELS = "ETUDIANTS_ACTUELS";
     private ArrayList<Etudiant> etudiantsRestants;
+    FindMePartie partie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceVue {
         scanButton = (Button)findViewById(R.id.buttonScan);
         scanButton.setOnClickListener(clickScan);
         codeEtudiant = new String("");
+
 
         if(savedInstanceState!=null) {
             etudiantsRestants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
@@ -76,7 +79,8 @@ public class MainActivity extends AppCompatActivity implements InterfaceVue {
                 codeEtudiant =data.getStringExtra("SCAN_RESULT");
                 String messageErreur = controller.validerEntreeUtilisateur(codeEtudiant);
                 if(messageErreur==null){
-                    //commencerPartie
+                   // partie = new FindMePartie()
+                    partie.commencerPartie();
                 }
                 else{
                     Toast.makeText(MainActivity.this, messageErreur, Toast.LENGTH_SHORT).show();
@@ -89,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceVue {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putParcelableArrayList(ETUDIANTS_ACTUELS,etudiantsRestants);
+        outState.putParcelableArrayList(ETUDIANTS_ACTUELS, etudiantsRestants);
     }
 
     @Override

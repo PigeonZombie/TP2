@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.Modele.DepotEtudiant;
+import ca.csf.tp2.Modele.FindMePartie;
 
 /**
  * Created by Utilisateur on 2016-03-14.
@@ -21,44 +22,18 @@ public class Controleur {
     {
         this.vue = vue;
         depot = new DepotEtudiant(vue);
+
     }
 
     public String validerEntreeUtilisateur(String code) {
         String messagePourUtilisateur = "";
         if (depot.getEtudiantParCode(code) != null) {
-            depot.retirerEtudiantDeLaListe(code);
+            depot.retirerJoueurDeLaListe(code);
             messagePourUtilisateur = "You are ready for the activity, please procede.";
         }
         else
             messagePourUtilisateur = "You are not on our list for this activity. Please try again.";
 
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (Objects.equals(Locale.getDefault().getDisplayLanguage(), "English"))
-            {
-
-
-                if (depot.getEtudiantParCode(code) != null) {
-                    depot.retirerEtudiantDeLaListe(code);
-                    messagePourUtilisateur = "You are ready for the activity, please procede.";
-                }
-                else
-                    messagePourUtilisateur = "You are not on our list for this activity. Please try again.";
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (Objects.equals(Locale.getDefault().getDisplayLanguage(), "Francais")) {
-
-
-                if (depot.getEtudiantParCode(code) != null) {
-                    depot.retirerEtudiantDeLaListe(code);
-                    messagePourUtilisateur = "Vous etes inscrit à cette activité, veuillez procéder.";
-                }
-
-                else
-                messagePourUtilisateur = "VOus n'Etes aps inscrit à cette ativité, veuillez réessayer.";
-            }
-        }*/
 
         return messagePourUtilisateur;
     }

@@ -10,11 +10,11 @@ import ca.csf.tp2.Vue_Controleur.Portail.InterfaceVue;
 /**
  * Simulation d'une base de données
  */
-public class DepotEtudiant implements InterfaceDepotEtudiant {
+public class DepotEtudiant implements InterfaceDepotEtudiant{
     ArrayList<Etudiant> etudiantList;
     InterfaceVue interfaceVue;
 
-    public DepotEtudiant(InterfaceVue interfaceVue)
+    public DepotEtudiant (InterfaceVue interfaceVue)
     {
         this.interfaceVue = interfaceVue;
 
@@ -29,35 +29,6 @@ public class DepotEtudiant implements InterfaceDepotEtudiant {
         melangerListe();
     }
 
-    public Etudiant getEtudiantParCode(String code)
-    {
-        for(int i=0;i< etudiantList.size();i++) {
-            if (etudiantList.get(i).getCode().matches(code))
-                return etudiantList.get(i);
-        }
-        return null;
-    }
-
-    public void retirerEtudiantDeLaListe(String code)
-    {
-        for(int i=0;i< etudiantList.size();i++) {
-            if (etudiantList.get(i).getCode().matches(code)) {
-                etudiantList.remove(i);
-                interfaceVue.notify(this);
-                break;
-            }
-        }
-    }
-
-    public String getProchainEtudiant()
-    {
-        if(!etudiantList.isEmpty())
-        {
-            return etudiantList.get(0).getName();
-        }
-        return null;
-    }
-
     private void melangerListe()
     {
         long seed = System.nanoTime();
@@ -68,10 +39,34 @@ public class DepotEtudiant implements InterfaceDepotEtudiant {
         return etudiantList;
     }
 
+    public Etudiant getEtudiantParCode(String code)
+    {
+        for(int i=0;i< etudiantList.size();i++) {
+            if (etudiantList.get(i).getCode().matches(code))
+                return etudiantList.get(i);
+        }
+        return null;
+    }
+
+    public void retirerJoueurDeLaListe(String code)
+    {
+        for(int i=0;i< etudiantList.size();i++) {
+            if (etudiantList.get(i).getCode().matches(code)) {
+                etudiantList.remove(i);
+                interfaceVue.notify(this);
+                break;
+            }
+        }
+    }
+
     @Override
     public String creerVue()
     {
         return "";
+    }
+
+    public void restoreStudents(ArrayList<Etudiant> etudiants) {
+        this.etudiantList = etudiants;
     }
 
     @Override
@@ -80,7 +75,4 @@ public class DepotEtudiant implements InterfaceDepotEtudiant {
         return etudiantList;
     }
 
-    public void restoreStudents(ArrayList<Etudiant> etudiants) {
-        etudiantList = etudiants;
-    }
 }
