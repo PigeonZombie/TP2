@@ -2,10 +2,11 @@ package ca.csf.tp2.Modele;
 
 import java.util.ArrayList;
 
+import ca.csf.tp2.Modele.Portail.ObservateurMinuteur;
 import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 
-public class FindMePartie {
+public class FindMePartie implements ObservateurMinuteur {
 
     private ArrayList<Etudiant> etudiants;
     private final long dureeDePartie;
