@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Find.me</string>
+    <string name="DebutActivite">First, we need to know who you are. Please press this button to scan the barcode on your shirt. Then, the activity will immediately start.</string>
+    <string name="OrdreIdentification">Identify yourself!</string>
+    <string name="JoueurPasInscrit">You are not on our list for this activity, please try again</string>
+    <string name="JoueurInscrit">Your are ready to play, have fun !</string>
 </resources>

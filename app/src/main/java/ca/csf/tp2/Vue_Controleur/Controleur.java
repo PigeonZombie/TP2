@@ -9,6 +9,7 @@ import java.util.Objects;
 import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.Modele.DepotEtudiant;
 import ca.csf.tp2.Modele.FindMePartie;
+import ca.csf.tp2.R;
 
 /**
  * Created by Utilisateur on 2016-03-14.
@@ -29,10 +30,10 @@ public class Controleur {
         String messagePourUtilisateur = "";
         if (depot.getEtudiantParCode(code) != null) {
             depot.retirerJoueurDeLaListe(code);
-            messagePourUtilisateur = "You are ready for the activity, please procede.";
+            messagePourUtilisateur = vue.getResources().getString(R.string.JoueurInscrit);
         }
         else
-            messagePourUtilisateur = "You are not on our list for this activity. Please try again.";
+            messagePourUtilisateur =vue.getResources().getString(R.string.JoueurPasInscrit);
 
 
         return messagePourUtilisateur;
