@@ -60,14 +60,12 @@ public class FindMePartie implements ObservateurMinuteur {
 
     @Override
     public void notifierTempsTrouverEtudiantExpire() {
-        Etudiant conteneurTemporaireEtudiant = etudiants.get(0);
         etudiants.remove(0);
-        etudiants.add(conteneurTemporaireEtudiant);
         observateurFindMePartie.notifierTempsEcoulePourTrouverEtudiant(getProchainEtudiant());
     }
 
     @Override
     public void notifierPartieTerminee() {
-
+    observateurFindMePartie.notifierTempsPourLaPartieFinie(pointage);
     }
 }

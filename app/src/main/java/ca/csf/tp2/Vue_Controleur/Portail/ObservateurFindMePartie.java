@@ -9,5 +9,5 @@ import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
 public interface ObservateurFindMePartie {
     void notifierChangementEtudiantATrouver(String nomEtudiant);
     void notifierTempsEcoulePourTrouverEtudiant(String nomEtudiant);
-    void notifierTempsPourLaPartieFinie(int score);
+    void notifierTempsPourLaPartieFinie(long pointage);
 }
