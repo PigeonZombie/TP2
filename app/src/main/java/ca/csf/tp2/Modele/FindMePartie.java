@@ -16,8 +16,8 @@ public class FindMePartie implements ObservateurMinuteur {
     private final ObservateurFindMePartie observateurFindMePartie;
     private final InterfaceMinuteur interfacerMinuteur;
 
-    public FindMePartie(ArrayList<Etudiant> etudiants, Etudiant joueur,
-                        long dureeDePartie, long tempsPourTrouverEtudiant, InterfaceMinuteur minuteur,
+
+    public FindMePartie(ArrayList<Etudiant> etudiants, long dureeDePartie, long tempsPourTrouverEtudiant, InterfaceMinuteur minuteur,
                         ObservateurFindMePartie observateurFindMePartie){
         this.etudiants = etudiants;
         this. dureeDePartie = dureeDePartie;
@@ -29,18 +29,21 @@ public class FindMePartie implements ObservateurMinuteur {
 
     public void getEtudiantParCode(String code)
     {
-        for(int i=0;i< etudiants.size();i++) {
-            if (etudiants.get(i).getCode().matches(code))
-                 etudiants.get(i);{
-                etudiants.remove(i);
+        Etudiant etudiantScanne=null;
+        //for(int i=0;i< etudiants.size();i++) {
+            if (etudiants.get(0).getCode().matches(code)) {
+                etudiantScanne =  etudiants.get(0);
+                etudiants.remove(0);
                 pointage += interfacerMinuteur.getTempsRestant();
                 observateurFindMePartie.notifierChangementEtudiantATrouver(getProchainEtudiant());
             }
-        }
+        //}
+        if(etudiantScanne == null)
+            observateurFindMePartie.notifierChangementEtudiantATrouver(null);
     }
 
 
-    private String getProchainEtudiant()
+    public String getProchainEtudiant()
     {
         if(!etudiants.isEmpty())
         {
@@ -50,7 +53,7 @@ public class FindMePartie implements ObservateurMinuteur {
     }
 
 
-    public void restoreStudents(ArrayList<Etudiant> etudiants) {
+    public void restorerEtudiants(ArrayList<Etudiant> etudiants) {
         this.etudiants = etudiants;
     }
 
@@ -58,6 +61,9 @@ public class FindMePartie implements ObservateurMinuteur {
 
     }
 
+    public int getScore(){
+        return pointage;
+    }
     @Override
     public void notifierTempsTrouverEtudiantExpire() {
         etudiants.remove(0);
@@ -66,6 +72,6 @@ public class FindMePartie implements ObservateurMinuteur {
 
     @Override
     public void notifierPartieTerminee() {
-    observateurFindMePartie.notifierTempsPourLaPartieFinie(pointage);
+        observateurFindMePartie.notifierTempsPourLaPartieFinie(pointage);
     }
 }

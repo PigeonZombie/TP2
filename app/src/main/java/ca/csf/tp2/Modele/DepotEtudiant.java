@@ -5,18 +5,26 @@ import java.util.Collections;
 import java.util.Random;
 
 import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
+import ca.csf.tp2.Vue_Controleur.Portail.ObservateurDepot;
 import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 /**
- * Simulation d'une base de données
+ * Simulation d'une base de données contenant des étudiants avec leur code unique
  */
 public class DepotEtudiant implements InterfaceDepotEtudiant{
+    // Liste contenant un ensemble d'objets Etudiant
     ArrayList<Etudiant> etudiantList;
-    ObservateurFindMePartie observateurFindMePartie;
+    // Le lien vers l'activité de départ
+    ObservateurDepot observateurDepot;
 
-    public DepotEtudiant (ObservateurFindMePartie observateurFindMePartie)
+    /**
+     * Constructeur de DepotEtudiant. Initialise 3 nouveaux étudiants
+     * et les mets dans la liste, puis mélange cette liste.
+     * @param observateurDepot le lien vers l'activité de départ
+     */
+    public DepotEtudiant (ObservateurDepot observateurDepot)
     {
-        this.observateurFindMePartie = observateurFindMePartie;
+        this.observateurDepot = observateurDepot;
 
         etudiantList = new ArrayList<Etudiant>();
 
@@ -29,16 +37,21 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
         melangerListe();
     }
 
+    /**
+     * Place les étudiants de la liste dans un ordre aléatoire
+     */
     private void melangerListe()
     {
         long seed = System.nanoTime();
         Collections.shuffle(etudiantList, new Random(seed));
     }
 
-    public ArrayList<Etudiant> getEtudiantList(){
-        return etudiantList;
-    }
-
+    /**
+     * Obtient un Etudiant selon le code passé en paramètre.
+     * @param code Le code de l'étudiant
+     * @return Un étudiant si le code correspond à un Etudiant de la liste,
+     * null si l'Etudiant n'existe pas
+     */
     public Etudiant getEtudiantParCode(String code)
     {
         for(int i=0;i< etudiantList.size();i++) {
@@ -48,27 +61,33 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
         return null;
     }
 
+    /**
+     * Enlève un étudiant de liste selon son code passé en paramètre
+     * @param code Le code unique de l'Etudiant à retirer
+     */
     public void retirerJoueurDeLaListe(String code)
     {
         for(int i=0;i< etudiantList.size();i++) {
             if (etudiantList.get(i).getCode().matches(code)) {
                 etudiantList.remove(i);
-                observateurFindMePartie.notify(this);
+                observateurDepot.notifier(this);
                 break;
             }
         }
     }
 
-    @Override
-    public String creerVue()
-    {
-        return "";
-    }
-
-    public void restoreStudents(ArrayList<Etudiant> etudiants) {
+    /**
+     * Assigne des nouvelles valeurs à la liste d'étudiants
+     * @param etudiants la nouvelle liste d'étudiants
+     */
+    public void restorerEtudiants(ArrayList<Etudiant> etudiants) {
         this.etudiantList = etudiants;
     }
 
+    /**
+     * Obtient la liste d'étudiants pour pouvoir la sauvegarder dans une activité
+     * @return la liste d'étudiants
+     */
     @Override
     public ArrayList<Etudiant> sauvegarderEtudiant()
     {

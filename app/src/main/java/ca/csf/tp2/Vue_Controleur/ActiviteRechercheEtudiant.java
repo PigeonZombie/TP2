@@ -7,34 +7,75 @@ import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.Modele.FindMePartie;
+import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
+import ca.csf.tp2.Modele.Portail.InterfaceMinuteur;
 import ca.csf.tp2.R;
+import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 /**
- * Created by Utilisateur on 2016-03-18.
+ * L'activité de recherche d'étudiant est le coeur de l'application. Elle demande au joueur d'identifier
+ * des étudiants en scannant leur code barre. Lorsque tous les étudiants on été trouvés ou que le temps
+ * de la partie est écoulé, l'activité de fin est lancée.
  */
-public class ActiviteRechercheEtudiant extends AppCompatActivity {
+public class ActiviteRechercheEtudiant extends AppCompatActivity implements ObservateurFindMePartie, InterfaceMinuteur {
 
+    // Le bouton dans la vue servant à ouvrir l'application de scan
     private Button boutonScan;
+    // Le code qui sert à s'assurer que le résultat de l'activité de scan
+    // est celui auquel on s'attend
     private static final int CODE_REQUETE = 42;
+    // Constante qui permet d'identifier la liste d'étudiants à trouver quand on
+    // la passe en extra à un intent
+    public static final String ETUDIANTS_ACTUELS = "ETUDIANTS_ACTUELS";
+    // La partie s'occupe de gérer les joueurs et le temps
     private FindMePartie partie;
+    // La liste d'étudiants à trouver
+    private ArrayList<Etudiant> etudiants;
+    // Le TextView permettant d'afficher le nom de l'étudiant actuellement recherché
+    private TextView nomEtudiantAChercher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recherche);
 
+
         boutonScan = (Button)findViewById(R.id.boutonScanEtudiant);
         boutonScan.setOnClickListener(clickScan);
 
+        Intent extras = getIntent();
+        etudiants = new ArrayList<Etudiant>();
+
+        if(extras!=null && etudiants.isEmpty()) {
+            etudiants = extras.getParcelableArrayListExtra(ETUDIANTS_ACTUELS);
+        }
+        else if(savedInstanceState!=null){
+            etudiants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
+        }
+
+        partie = new FindMePartie(etudiants,200000,10000,this, this);
+
+        nomEtudiantAChercher = (TextView)findViewById(R.id.textViewNom);
+        nomEtudiantAChercher.setText(partie.getProchainEtudiant());
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        // Si notre liste comprend déjà des étudiants, on la réassigne dans le
+        // modèle de données (dans la partie)
+        if(etudiants!=null){
+            partie.restorerEtudiants(etudiants);
+        }
     }
 
     @Override
@@ -43,15 +84,29 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelableArrayList(ETUDIANTS_ACTUELS, etudiants);
     }
 
+    /**
+     * Restore la liste d'étudiants à trouver, entre autre après un changement d'orientation
+     * @param outState
+     */
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+    protected void onRestoreInstanceState(Bundle outState) {
+        super.onRestoreInstanceState(outState);
+
+        etudiants = outState.getParcelableArrayList(ETUDIANTS_ACTUELS);
+        if(etudiants!=null)
+            partie.restorerEtudiants(etudiants);
     }
 
+    /**
+     * Méthode qui lance l'application de scan de code barre lorsque
+     * le bouton boutonScan est activé
+     */
     private View.OnClickListener clickScan = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -62,13 +117,64 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity {
         }
     };
 
+    /**
+     * Vérifie, lors du retour de l'application de scan, si le code barre scanné
+     * correspond à une élève de la liste à trouver. La partie s'occupe ensuite
+     * de choisir le prochain étudiant ou d'afficher un message d'erreur
+     * @param requestCode le code de la requête
+     * @param resultCode le résultat de la requête
+     * @param data les données dans l'intent
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == CODE_REQUETE){
             if(resultCode == Activity.RESULT_OK){
-
+                partie.getEtudiantParCode(data.getStringExtra("SCAN_RESULT"));
             }
         }
+    }
+
+    /**
+     * Événement lancé par FindMePartie. Lors d'un changement d'étudiant à trouver,
+     * un nouveau nom est passé en paramètre. Si le nom est null, c'est soit que le
+     * mauvais étudiant a été scanné, dans quel cas on affiche un message d'erreur, soit
+     * qu'il ne reste plus d'étudiants, dans quel cas on lance l'activité de fin.
+     * @param nomEtudiant le nom du nouvel étudiant à trouver
+     */
+    @Override
+    public void notifierChangementEtudiantATrouver(String nomEtudiant) {
+
+        if(nomEtudiant!=null){
+            nomEtudiantAChercher.setText(nomEtudiant);
+        }
+        else if(partie.getProchainEtudiant() == null){
+            Intent intent = new Intent(this, ActiviteFin.class);
+            intent.putExtra(ActiviteFin.SCORE, partie.getScore());
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(ActiviteRechercheEtudiant.this, getResources().getString(R.string.MauvaisJoueur), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void notifierTempsEcoulePourTrouverEtudiant(String nomEtudiant) {
+
+    }
+
+    @Override
+    public void notifierTempsPourLaPartieFinie(long pointage) {
+
+    }
+
+    @Override
+    public void notifierEtudiantRetire(InterfaceDepotEtudiant interfaceDepotEtudiant) {
+
+    }
+
+    @Override
+    public long getTempsRestant() {
+        return 0;
     }
 }

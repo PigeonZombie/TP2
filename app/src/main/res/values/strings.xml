@@ -4,4 +4,7 @@
     <string name="OrdreIdentification">Identify yourself!</string>
     <string name="JoueurPasInscrit">You are not on our list for this activity, please try again</string>
     <string name="JoueurInscrit">Your are ready to play, have fun !</string>
+    <string name="MauvaisJoueur">This is not the right student! Try another one.</string>
+    <string name="TitreFin">It\'s over!</string>
+    <string name="TexteFin">Please wait for the others to finish. You can also retry if you believe you can do better.</string>
 </resources>

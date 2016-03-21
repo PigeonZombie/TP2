@@ -10,4 +10,5 @@ public interface ObservateurFindMePartie {
     void notifierChangementEtudiantATrouver(String nomEtudiant);
     void notifierTempsEcoulePourTrouverEtudiant(String nomEtudiant);
     void notifierTempsPourLaPartieFinie(long pointage);
+    void notifierEtudiantRetire(InterfaceDepotEtudiant interfaceDepotEtudiant);
 }

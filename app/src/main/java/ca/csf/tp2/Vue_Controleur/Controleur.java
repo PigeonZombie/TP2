@@ -34,7 +34,7 @@ public class Controleur {
         return messagePourUtilisateur;
     }
 
-    public void restore(ArrayList<Etudiant> liste){
-        depot.restoreStudents(liste);
+    public void restorer(ArrayList<Etudiant> liste){
+        depot.restorerEtudiants(liste);
     }
 }

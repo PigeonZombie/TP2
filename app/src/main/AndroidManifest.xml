@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".Vue_Controleur.ActiviteRechercheEtudiant">
         </activity>
+        <activity android:name=".Vue_Controleur.ActiviteFin">
+        </activity>
     </application>
 
 </manifest>
