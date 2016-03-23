@@ -18,7 +18,7 @@ public class Minuteur implements InterfaceMinuteur {
     private Timer minuteurEtudiant = null;
     private long tempsPourEtudiant = 60000;
 
-    private Minuteur(ObservateurMinuteur _observateurMinuteur){
+    public Minuteur(ObservateurMinuteur _observateurMinuteur){
         this.observateurMinuteur = _observateurMinuteur;
         minuteurPartie = new Timer();
         creerMinuteurEtudiant();
@@ -36,10 +36,6 @@ public class Minuteur implements InterfaceMinuteur {
         return aRetourner;
     }
 
-    @Override
-    public void creerMinuteur(ObservateurMinuteur observateurMinuteur) {
-        new Minuteur(observateurMinuteur);
-    }
 
     private TimerTask initialiserTacheMinuteurPartie(){
         TimerTask tacheMinuteurPartie = new TimerTask() {

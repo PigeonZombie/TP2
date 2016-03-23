@@ -23,24 +23,48 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
  * L'activité de recherche d'étudiant est le coeur de l'application. Elle demande au joueur d'identifier
  * des étudiants en scannant leur code barre. Lorsque tous les étudiants on été trouvés ou que le temps
  * de la partie est écoulé, l'activité de fin est lancée.
+ * @author Alicia Lamontagne
+ * @author Félix Rivard
+ *
  */
-public class ActiviteRechercheEtudiant extends AppCompatActivity implements ObservateurFindMePartie, InterfaceMinuteur {
+public class ActiviteRechercheEtudiant extends AppCompatActivity implements ObservateurFindMePartie {
 
-    // Le bouton dans la vue servant à ouvrir l'application de scan
+    /**
+     * Le bouton dans la vue servant à ouvrir l'application de scan
+     */
     private Button boutonScan;
-    // Le code qui sert à s'assurer que le résultat de l'activité de scan
-    // est celui auquel on s'attend
+    /**
+     *  Le code qui sert à s'assurer que le résultat de l'activité de scan
+     *  est celui auquel on s'attend
+     */
     private static final int CODE_REQUETE = 42;
-    // Constante qui permet d'identifier la liste d'étudiants à trouver quand on
-    // la passe en extra à un intent
+    /**
+     * Constante qui permet d'identifier la liste d'étudiants à trouver quand on
+     * la passe en extra à un intent
+     */
     public static final String ETUDIANTS_ACTUELS = "ETUDIANTS_ACTUELS";
-    // La partie s'occupe de gérer les joueurs et le temps
+    /**
+     * La partie s'occupe de gérer les joueurs, le temps et le pointage
+     */
     private FindMePartie partie;
-    // La liste d'étudiants à trouver
+    /**
+     * La liste d'étudiants à trouver
+     */
     private ArrayList<Etudiant> etudiants;
-    // Le TextView permettant d'afficher le nom de l'étudiant actuellement recherché
+    /**
+     * Le TextView permettant d'afficher le nom de l'étudiant actuellement recherché
+     */
     private TextView nomEtudiantAChercher;
 
+    /**
+     * Crée la vue, assigne le bouton scan en attribut, crée un nouvelle
+     * liste d'étudiants et la restore au besoin, démarre un nouvelle partie
+     * et affiche le nom de l'étudiant à trouver
+     * @param savedInstanceState le bundle contenant les paramètres sauvegardées
+     * @see ActiviteRechercheEtudiant#etudiants
+     * @see ActiviteRechercheEtudiant#partie
+     * @see ActiviteRechercheEtudiant#nomEtudiantAChercher
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +84,17 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
             etudiants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
         }
 
-        partie = new FindMePartie(etudiants,200000,10000,this, this);
+        partie = new FindMePartie(etudiants,this);
 
         nomEtudiantAChercher = (TextView)findViewById(R.id.textViewNom);
         nomEtudiantAChercher.setText(partie.getProchainEtudiant());
 
     }
 
+    /**
+     * Restore la liste d'étudiants dans le modèle de données (FindMePartie)
+     * @see FindMePartie#restorerEtudiants(ArrayList)
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -78,11 +106,12 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
+    /**
+     * Sauvegarde la liste d'étudiants restants à trouver en la
+     * plaçant dans le bundle qui sera restoré lors de la reprise
+     * de l'application. La liste est identifiée par l'attribut ETUDIANTS_ACTUELS.
+     * @param outState le bundle servant à sauvegarder les paramètres
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -92,7 +121,10 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
     /**
      * Restore la liste d'étudiants à trouver, entre autre après un changement d'orientation
-     * @param outState
+     * La liste d'étudiants est récupérée avec l'attribut ETUDIANTS_ACTUELS
+     * @param outState le bundle contenant les données sauvegardées.
+     * @see ActiviteRechercheEtudiant#etudiants
+     * @see ActiviteRechercheEtudiant#ETUDIANTS_ACTUELS
      */
     @Override
     protected void onRestoreInstanceState(Bundle outState) {
@@ -105,7 +137,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
     /**
      * Méthode qui lance l'application de scan de code barre lorsque
-     * le bouton boutonScan est activé
+     * le bouton boutonScan est cliqué
      */
     private View.OnClickListener clickScan = new View.OnClickListener() {
         @Override
@@ -119,8 +151,8 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
     /**
      * Vérifie, lors du retour de l'application de scan, si le code barre scanné
-     * correspond à une élève de la liste à trouver. La partie s'occupe ensuite
-     * de choisir le prochain étudiant ou d'afficher un message d'erreur
+     * correspond à un élève de la liste à trouver. La partie s'occupe ensuite
+     * de choisir le prochain étudiant ou d'afficher un message d'erreur.
      * @param requestCode le code de la requête
      * @param resultCode le résultat de la requête
      * @param data les données dans l'intent
@@ -141,6 +173,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      * mauvais étudiant a été scanné, dans quel cas on affiche un message d'erreur, soit
      * qu'il ne reste plus d'étudiants, dans quel cas on lance l'activité de fin.
      * @param nomEtudiant le nom du nouvel étudiant à trouver
+     * @see ActiviteFin
      */
     @Override
     public void notifierChangementEtudiantATrouver(String nomEtudiant) {
@@ -173,8 +206,8 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
     }
 
-    @Override
-    public long getTempsRestant() {
-        return 0;
-    }
+
+
+
+
 }

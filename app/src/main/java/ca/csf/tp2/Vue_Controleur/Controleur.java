@@ -7,10 +7,16 @@ import ca.csf.tp2.Modele.DepotEtudiant;
 import ca.csf.tp2.R;
 
 /**
- * Created by Utilisateur on 2016-03-14.
+ * Classe qui fait le lien entre l'activité de départ et le modèle de données.
+ * S'occupe de valider les entrées provenant de la vue dans le but de vérifier
+ * si le joueur qui utilise l'application fait partie de la liste dans le modèle.
+ * @author Alicia Lamontagne
  */
 public class Controleur {
 
+    /**
+     *
+     */
     DepotEtudiant depot;
     ActiviteDepart vue;
 

@@ -11,18 +11,15 @@ public class FindMePartie implements ObservateurMinuteur {
 
     private ArrayList<Etudiant> etudiants;
     private int pointage = 0;
-    private final long dureeDePartie;
-    private final long tempsPourTrouverEtudiant;
     private final ObservateurFindMePartie observateurFindMePartie;
     private final InterfaceMinuteur interfacerMinuteur;
 
 
-    public FindMePartie(ArrayList<Etudiant> etudiants, long dureeDePartie, long tempsPourTrouverEtudiant, InterfaceMinuteur minuteur,
+    public FindMePartie(ArrayList<Etudiant> etudiants,
                         ObservateurFindMePartie observateurFindMePartie){
         this.etudiants = etudiants;
-        this. dureeDePartie = dureeDePartie;
-        this.tempsPourTrouverEtudiant = tempsPourTrouverEtudiant;
-        this.interfacerMinuteur = minuteur;
+
+        this.interfacerMinuteur = new Minuteur(this);
         this.observateurFindMePartie = observateurFindMePartie;
     }
 
@@ -55,10 +52,6 @@ public class FindMePartie implements ObservateurMinuteur {
 
     public void restorerEtudiants(ArrayList<Etudiant> etudiants) {
         this.etudiants = etudiants;
-    }
-
-    public void commencerPartie(){
-        interfacerMinuteur.creerMinuteur(this);
     }
 
     public int getScore(){

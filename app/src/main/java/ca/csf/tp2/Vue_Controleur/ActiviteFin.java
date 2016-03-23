@@ -10,21 +10,42 @@ import ca.csf.tp2.R;
 /**
  * L'activité de fin permet au joueur de voir son score final et lui
  * indique d'attendre la fin de la partie ou d'en recommencer une.
+ * @author Alicia Lamontagne
  */
 public class ActiviteFin extends AppCompatActivity {
 
-    // Le titre annonçant la fin de la partie
+    /**
+     * Le titre annonçant la fin de la partie
+     */
     TextView titreFin;
-    // Le texte donnant des instructions au joueur
+    /**
+     * Le texte donnant des instructions au joueur
+     */
     TextView texteFin;
-    // Le pointage final du joueur
+    /**
+     * Le pointage final du joueur
+     */
     Integer pointage;
-    // Le texte qui affiche le score du joueur
+    /**
+     * Le texte qui affiche le score du joueur
+     */
     TextView score;
-    // La constante qui permet d'identifier le score du joueur quand
-    // il est reçu dans le bundle lors de la création de l'activité
+    /**
+     * La constante qui permet d'identifier le score du joueur quand
+     * il est reçu dans le bundle lors de la création de l'activité
+     */
     public static final String SCORE = "SCORE";
 
+
+    /**
+     * Crée la vue et assigne tous les textes dans des attributs.
+     * Restore aussi le score si nécessaire.
+     * @param savedInstanceState Le bundle contenant les données sauvegardées
+     * @see ActiviteFin#titreFin
+     * @see ActiviteFin#texteFin
+     * @see ActiviteFin#score
+     * @see ActiviteFin#pointage
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -55,8 +76,12 @@ public class ActiviteFin extends AppCompatActivity {
     }
 
     /**
-     * Sauvegarde le score du joueur
-     * @param outState
+     * Sauvegarde le pointage du joueur pour le restorer à la reprise de l'application.
+     * L'attribut utilisé pour sauvegarder le pointage est SCORE
+     * @param outState le bundle dans lequel sont sauvegardées les données
+     * @see ActiviteFin#SCORE
+     * @see ActiviteFin#pointage
+     * @see ActiviteFin#onRestoreInstanceState(Bundle)
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -65,9 +90,13 @@ public class ActiviteFin extends AppCompatActivity {
         outState.putInt(SCORE, pointage);
     }
 
-    /**
-     * Restore le score du joueur
-     * @param savedInstanceState
+     /**
+      * Restore le pointage du joueur et met à jour le texte dans la vue.
+      * L'attribut utilisé pour récupérer le pointage est SCORE.
+      * @param savedInstanceState le bundle contenant les données sauvegardées
+      * @see ActiviteFin#score
+      * @see ActiviteFin#pointage
+      * @see ActiviteFin#onSaveInstanceState(Bundle)
      */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {

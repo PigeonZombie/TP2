@@ -20,25 +20,44 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 /**
  * La première activité que l'utilisateur voit. Elle accueille le joueur et lui demande
  * de scanner son propore code barre.
+ * @author Alicia Lamontagne
  */
 public class ActiviteDepart extends AppCompatActivity implements ObservateurDepot{
-    // Le bouton dans la vue activity_main permettant au joueur d'ouvrir une application
-    // pour scanner un code barre
+    /**
+     *  Le bouton dans la vue activity_main permettant au joueur d'ouvrir une application
+     *  pour scanner un code barre
+    */
     Button scanButton;
-    // Classe qui fait le lien avec le modèle et qui vérifie que l'étudiant
-    // qui utilise l'application existe.
+    /**
+     * Classe qui fait le lien avec le modèle et qui vérifie que l'étudiant
+     * qui utilise l'application existe.
+     */
     Controleur controleur;
-    // Le code qui sert à s'assurer que le résultat de l'activité de scan
-    // est celui auquel on s'attend
+    /**
+     * Le code qui sert à s'assurer que le résultat de l'activité de scan
+     * est celui auquel on s'attend
+     */
     public static final int CODE_REQUETE = 42;
-    // Le numéro du code barre de l'étudiant qui utilise l'application
+    /**
+     * Le numéro du code barre de l'étudiant qui utilise l'application
+     */
     private String codeEtudiant;
-    // Constante qui permet d'identifier la liste d'étudiants à trouver quand on
-    // la passe en extra à un intent
+    /** Constante qui permet d'identifier la liste d'étudiants à trouver quand on
+     *  la passe en extra à un intent
+     */
     public static final String ETUDIANTS_ACTUELS = "ETUDIANTS_ACTUELS";
-    // La liste complète de tous les étudiants à trouver
+    /**
+     *     La liste complète de tous les étudiants à trouver
+     */
     private ArrayList<Etudiant> etudiantsRestants;
 
+
+    /**
+     * Crée la vue et assigne le bouton scan à un attribut, en plus de
+     * restorer la liste d'étudiants si le paramètre savedInstanceState n'est pas null
+     * @param savedInstanceState
+     * @see ActiviteDepart#etudiantsRestants
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +74,11 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
         }
     }
 
+    /**
+     * Initialise le contrôleur et restore la liste d'étudiants dans le
+     * modèle de données (DepotEtudiant)
+     * @see ca.csf.tp2.Modele.DepotEtudiant
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -66,12 +90,13 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
         // Établir la connexion à la base de données
         }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
-
+    /**
+     * Méthode appelée lorsqu'il a un clic sur le bouton Scan. Elle s'occupe
+     * de lancer une nouvelle activité pour scanner un code barre provenant
+     * d'une application tierce.
+     * @see ActiviteDepart#onActivityResult(int, int, Intent)
+     */
     private View.OnClickListener clickScan = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -89,6 +114,7 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
      * @param requestCode le code de la requête
      * @param resultCode le résultat de la requête
      * @param data les données dans l'intent
+     * @see ActiviteDepart#clickScan
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -111,6 +137,10 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
         }
     }
 
+    /**
+     * Sauvegarde la liste d'étudiants en la plaçant dans le bundle de sortie
+     * @param outState le bundle servant à stocker les paramètres à sauvegarder
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -119,8 +149,11 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
     }
 
     /**
-     * Restore la liste d'étudiants à trouver
-     * @param outState
+     * Restore la liste d'étudiants à trouver à partir de ce qui a
+     * été sauvegarder précédemment
+     * @param outState le bundle contenant les paramètres sauvegarder
+     * @see ActiviteDepart#onSaveInstanceState(Bundle)
+     * @see ActiviteDepart#etudiantsRestants
      */
     @Override
     protected void onRestoreInstanceState(Bundle outState) {
@@ -134,6 +167,8 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
      * Le modèle lance un évènement dans l'activité de départ quand un étudiant est retiré de la liste
      * pour qu'elle soit mise à jour
      * @param interfaceDepot le lien vers le dépôt d'étudiants
+     * @see ca.csf.tp2.Modele.DepotEtudiant
+     * @see ActiviteDepart#etudiantsRestants
      */
     @Override
     public void notifier(InterfaceDepotEtudiant interfaceDepot)
