@@ -3,7 +3,6 @@ package ca.csf.tp2.Vue_Controleur;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.Modele.FindMePartie;
 import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
-import ca.csf.tp2.Modele.Portail.InterfaceMinuteur;
 import ca.csf.tp2.R;
 import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
@@ -183,7 +181,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         }
         else if(partie.getProchainEtudiant() == null){
             Intent intent = new Intent(this, ActiviteFin.class);
-            intent.putExtra(ActiviteFin.SCORE, partie.getScore());
+            intent.putExtra(ActiviteFin.SCORE, partie.getPointage());
             startActivity(intent);
         }
         else{

@@ -7,6 +7,12 @@ import ca.csf.tp2.Modele.Portail.ObservateurMinuteur;
 import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 
+/**
+ *S'occupe de la logique du jeu, serre à récupérer le score, s'occupe des minuteurs
+ * confirme qu'un étudiant est dans la liste et le retire.
+ *
+ * @author Felix
+ */
 public class FindMePartie implements ObservateurMinuteur {
 
     private ArrayList<Etudiant> etudiants;
@@ -14,7 +20,11 @@ public class FindMePartie implements ObservateurMinuteur {
     private final ObservateurFindMePartie observateurFindMePartie;
     private final InterfaceMinuteur interfacerMinuteur;
 
-
+    /**
+     * Constructeur de la classe
+     * @param etudiants La liste d'étudiant
+     * @param observateurFindMePartie quelle activité l'appel
+     */
     public FindMePartie(ArrayList<Etudiant> etudiants,
                         ObservateurFindMePartie observateurFindMePartie){
         this.etudiants = etudiants;
@@ -23,7 +33,12 @@ public class FindMePartie implements ObservateurMinuteur {
         this.observateurFindMePartie = observateurFindMePartie;
     }
 
-
+    /**
+     *Vérifie qu'un étudiant fait partie de la liste, le retire si c'est le cas
+     * s'occupe du minuteur de temps pour trouver un étudiant et incrémente le score.
+     *
+     * @param code Le code barre de l'étudiant scanné.
+     */
     public void getEtudiantParCode(String code)
     {
         Etudiant etudiantScanne=null;
@@ -39,7 +54,11 @@ public class FindMePartie implements ObservateurMinuteur {
             observateurFindMePartie.notifierChangementEtudiantATrouver(null);
     }
 
-
+    /**
+     * Retourne le prochain étudiant à trouver
+     *
+     * @return le prochain étudiant à trouver
+     */
     public String getProchainEtudiant()
     {
         if(!etudiants.isEmpty())
@@ -49,20 +68,36 @@ public class FindMePartie implements ObservateurMinuteur {
         return null;
     }
 
-
+    /**
+     * Updater la liste d,étudiant lors du changement d'orientation
+     *
+     * @param etudiants La liste d'Étudiant
+     */
     public void restorerEtudiants(ArrayList<Etudiant> etudiants) {
         this.etudiants = etudiants;
     }
 
-    public int getScore(){
+    /**
+     * Obtenir le pointage du joueur
+     *
+     * @return le pointage du joueur
+     */
+    public int getPointage(){
         return pointage;
     }
+
+    /**
+     * Envoie le message que le temps pour trouver un étudiant est expiré et envoie un nouvel étudiant
+     */
     @Override
     public void notifierTempsTrouverEtudiantExpire() {
         etudiants.remove(0);
         observateurFindMePartie.notifierTempsEcoulePourTrouverEtudiant(getProchainEtudiant());
     }
 
+    /**
+     * Envoie le message que el temps pour la partie est finie et envoie le pointage.
+     */
     @Override
     public void notifierPartieTerminee() {
         observateurFindMePartie.notifierTempsPourLaPartieFinie(pointage);
