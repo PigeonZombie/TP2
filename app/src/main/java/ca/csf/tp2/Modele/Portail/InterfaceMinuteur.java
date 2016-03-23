@@ -5,5 +5,6 @@ package ca.csf.tp2.Modele.Portail;
  */
 public interface InterfaceMinuteur {
 
-    long getTempsRestant();
+    long quandEtudiantTrouvee();
+    void creerMinuteur(ObservateurMinuteur observateurMinuteur);
 }

@@ -34,7 +34,7 @@ public class FindMePartie implements ObservateurMinuteur {
             if (etudiants.get(0).getCode().matches(code)) {
                 etudiantScanne =  etudiants.get(0);
                 etudiants.remove(0);
-                pointage += interfacerMinuteur.getTempsRestant();
+                pointage += interfacerMinuteur.quandEtudiantTrouvee();
                 observateurFindMePartie.notifierChangementEtudiantATrouver(getProchainEtudiant());
             }
         //}
@@ -58,7 +58,7 @@ public class FindMePartie implements ObservateurMinuteur {
     }
 
     public void commencerPartie(){
-
+        interfacerMinuteur.creerMinuteur(this);
     }
 
     public int getScore(){
