@@ -91,11 +91,13 @@ public class FindMePartieTest extends TestCase {
 
 
     public void testNotifierTempsTrouverEtudiantExpireAppelMethodeNotifier() throws Exception {
+        findMePartie.notifierTempsTrouverEtudiantExpire();
         verify(observateurFindMePartie,times(1)).notifierTempsEcoulePourTrouverEtudiant("B");
     }
 
 
     public void testNotifierPartieTerminee() throws Exception {
+        findMePartie.notifierPartieTerminee();
         verify(observateurFindMePartie,times(1)).notifierTempsPourLaPartieFinie(0);
     }
 }
