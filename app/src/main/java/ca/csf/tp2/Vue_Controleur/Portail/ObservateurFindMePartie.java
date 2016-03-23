@@ -6,9 +6,31 @@ import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
 /**
  * Created by Utilisateur on 2016-03-14.
  */
+
+/**
+ * Permet aux activités d'avoir accèsà une partie des actions de la classe FindMePartie
+ * @author Felix
+ */
 public interface ObservateurFindMePartie {
+    /**
+     *Averti que l'étudiant à trouver à changé
+     *
+     * @param nomEtudiant Nom du nouvel étudiant à trouver
+     */
     void notifierChangementEtudiantATrouver(String nomEtudiant);
+
+    /**
+     *Le temps pour trouver l'étudiant est écoulé, envoie donc un autre étudiant
+     *
+     * @param nomEtudiant Nom du nouvel étudiant à trouver
+     */
     void notifierTempsEcoulePourTrouverEtudiant(String nomEtudiant);
+
+    /**
+     * Le temps pour la partie est finie, averti l'activité et envoie le pointage du joueur
+     *
+     * @param pointage le pointage du joueur
+     */
     void notifierTempsPourLaPartieFinie(long pointage);
     void notifierEtudiantRetire(InterfaceDepotEtudiant interfaceDepotEtudiant);
 }
