@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import ca.csf.tp2.Modele.Etudiant;
 
 /**
- * Created by Utilisateur on 2016-03-14.
+ * Classe qui obtient la liste d'étudiants présente dans le dépôt
+ *
+ * @author Alicia Lamontagne
  */
 public interface InterfaceDepotEtudiant {
     public ArrayList<Etudiant> sauvegarderEtudiant();

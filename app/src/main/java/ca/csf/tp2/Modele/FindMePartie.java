@@ -63,7 +63,7 @@ public class FindMePartie implements ObservateurMinuteur {
     {
         if(!etudiants.isEmpty())
         {
-            return etudiants.get(0).getName();
+            return etudiants.get(0).getNom();
         }
         return null;
     }

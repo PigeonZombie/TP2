@@ -14,15 +14,24 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
  * @author Alicia Lamontagne
  */
 public class DepotEtudiant implements InterfaceDepotEtudiant{
-    // Liste contenant un ensemble d'objets Etudiant
+    /**
+     * Liste contenant un ensemble d'objets Etudiant.
+     *
+     * @see DepotEtudiant#sauvegarderEtudiant()
+     */
     ArrayList<Etudiant> etudiantList;
-    // Le lien vers l'activité de départ
+    /**
+     * Le lien vers l'activité de départ
+     *
+     * @see ca.csf.tp2.Vue_Controleur.ActiviteDepart
+     */
     ObservateurDepot observateurDepot;
 
     /**
      * Constructeur de DepotEtudiant. Initialise 3 nouveaux étudiants
      * et les mets dans la liste, puis mélange cette liste.
      * @param observateurDepot le lien vers l'activité de départ
+     * @see DepotEtudiant#etudiantList
      */
     public DepotEtudiant (ObservateurDepot observateurDepot)
     {
@@ -53,6 +62,7 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
      * @param code Le code de l'étudiant
      * @return Un étudiant si le code correspond à un Etudiant de la liste,
      * null si l'Etudiant n'existe pas
+     * @see DepotEtudiant#etudiantList
      */
     public Etudiant getEtudiantParCode(String code)
     {
@@ -66,6 +76,7 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
     /**
      * Enlève un étudiant de liste selon son code passé en paramètre
      * @param code Le code unique de l'Etudiant à retirer
+     * @see DepotEtudiant#etudiantList
      */
     public void retirerJoueurDeLaListe(String code)
     {
