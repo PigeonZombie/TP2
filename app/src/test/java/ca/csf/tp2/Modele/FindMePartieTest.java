@@ -85,6 +85,7 @@ public class FindMePartieTest extends TestCase {
 
 
     public void testNotifierTempsTrouverEtudiantExpireRetraitEtudiant() throws Exception {
+        findMePartie.notifierTempsTrouverEtudiantExpire();
         Assert.assertEquals("B", etudiants.get(0).getNom());
     }
 
