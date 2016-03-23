@@ -5,5 +5,11 @@ package ca.csf.tp2.Modele.Portail;
  */
 public interface InterfaceMinuteur {
 
+    /**
+     * Quand un étudiant est trouvé, crée un nouveau timer pour un autre étudiant et retourne le temps restant pour
+     * trouver l'ancien étudiant pour servire de pointage
+     *
+     * @return le temps restant pour trovuer l'ancien étudiant
+     */
     long quandEtudiantTrouvee();
 }
