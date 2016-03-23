@@ -10,6 +10,8 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 /**
  * Simulation d'une base de données contenant des étudiants avec leur code unique
+ *
+ * @author Alicia Lamontagne
  */
 public class DepotEtudiant implements InterfaceDepotEtudiant{
     // Liste contenant un ensemble d'objets Etudiant
