@@ -34,6 +34,21 @@ public class FindMePartie implements ObservateurMinuteur {
     }
 
     /**
+     * Constructeur de la classe ne servant qu'aux tests
+     * @param etudiants La liste d'étudiant
+     * @param observateurFindMePartie quelle activité l'appel
+     * @param minuteur le minuteur relié
+     */
+    public FindMePartie(ArrayList<Etudiant> etudiants,
+                        ObservateurFindMePartie observateurFindMePartie, InterfaceMinuteur minuteur){
+        this.etudiants = etudiants;
+
+        this.interfacerMinuteur = minuteur;
+        this.observateurFindMePartie = observateurFindMePartie;
+    }
+
+
+    /**
      *Vérifie qu'un étudiant fait partie de la liste, le retire si c'est le cas
      * s'occupe du minuteur de temps pour trouver un étudiant et incrémente le score.
      *

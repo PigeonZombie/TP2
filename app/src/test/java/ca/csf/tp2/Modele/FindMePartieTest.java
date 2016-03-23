@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by Felix on 2016-03-23.
+ * @author Felix
  */
 public class FindMePartieTest extends TestCase {
     private  ArrayList<Etudiant> etudiants = new ArrayList<>();
@@ -28,67 +28,72 @@ public class FindMePartieTest extends TestCase {
     private FindMePartie findMePartie = null;
 
 
-    @Before
-            void initialiserPourTest(){
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        initialiserTest();
+    }
+
+    void initialiserTest (){
         etudiants.add(new Etudiant("A","1"));
         etudiants.add(new Etudiant("B","2"));
         etudiants.add(new Etudiant("C","3"));
         observateurFindMePartie = mock(ObservateurFindMePartie.class);
         interfacerMinuteur = mock(InterfaceMinuteur.class);
-        findMePartie = new FindMePartie(etudiants,observateurFindMePartie);
+        findMePartie = new FindMePartie(etudiants,observateurFindMePartie, interfacerMinuteur);
         when(interfacerMinuteur.quandEtudiantTrouvee()).thenReturn((long) 100);
     }
 
 
-    @Test
+
     public void testGetEtudiantParCodeRetraitEtudiant() throws Exception {
         findMePartie.getEtudiantParCode("1");
-        assertEquals("B",etudiants.get(0));
+        assertEquals("B",etudiants.get(0).getNom());
     }
 
-    @Test
+
     public void testGetEtudiantParCodeIncrementerPointage() throws Exception {
         findMePartie.getEtudiantParCode("1");
-        assertEquals(pointage,100);
+        assertEquals(100,pointage);
     }
 
-    @Test
+
     public void testGetEtudiantParCodeRetournerAutreEtudiant() throws Exception {
         findMePartie.getEtudiantParCode("1");
         verify(observateurFindMePartie,times(1)).notifierChangementEtudiantATrouver("B");
     }
 
-    @Test
+
     public void testGetEtudiantParCodeMauvaisEtudiant() throws Exception {
         findMePartie.getEtudiantParCode("Badger");
         verify(observateurFindMePartie,times(1)).notifierChangementEtudiantATrouver(null);
     }
 
-    @Test
+
     public void testGetProchainEtudiantListeNonVide() throws Exception {
         Assert.assertEquals("A",findMePartie.getProchainEtudiant());
         etudiants.remove(0);
         Assert.assertEquals("B",findMePartie.getProchainEtudiant());
     }
 
-    @Test
+
     public void testGetProchainEtudiantListeVide() throws Exception {
         etudiants.clear();
         Assert.assertNull(findMePartie.getProchainEtudiant());
 
     }
 
-    @Test
+
     public void testNotifierTempsTrouverEtudiantExpireRetraitEtudiant() throws Exception {
-        Assert.assertEquals("B", etudiants.get(0));
+        Assert.assertEquals("B", etudiants.get(0).getNom());
     }
 
-    @Test
+
     public void testNotifierTempsTrouverEtudiantExpireAppelMethodeNotifier() throws Exception {
         verify(observateurFindMePartie,times(1)).notifierTempsEcoulePourTrouverEtudiant("B");
     }
 
-    @Test
+
     public void testNotifierPartieTerminee() throws Exception {
         verify(observateurFindMePartie,times(1)).notifierTempsPourLaPartieFinie(0);
     }
