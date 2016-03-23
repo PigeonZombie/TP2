@@ -49,6 +49,20 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
     }
 
     /**
+     * Constructeur par défaut utilisé pour les tests avec une liste non mélangée
+     */
+    public DepotEtudiant(){
+        etudiantList = new ArrayList<Etudiant>();
+
+        Etudiant etudiant1 = new Etudiant("BanabaBBQ Mcgehee","aa83dac4c78a");
+        Etudiant etudiant2 = new Etudiant("Ron Busse","e8334a6b37c0");
+        Etudiant etudiant3 = new Etudiant("Kandy Vangilder","3caea9dbc7c9");
+        etudiantList.add(etudiant1);
+        etudiantList.add(etudiant2);
+        etudiantList.add(etudiant3);
+    }
+
+    /**
      * Place les étudiants de la liste dans un ordre aléatoire
      */
     private void melangerListe()
@@ -66,9 +80,11 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
      */
     public Etudiant getEtudiantParCode(String code)
     {
-        for(int i=0;i< etudiantList.size();i++) {
-            if (etudiantList.get(i).getCode().matches(code))
-                return etudiantList.get(i);
+        if(code!=null) {
+            for (int i = 0; i < etudiantList.size(); i++) {
+                if (etudiantList.get(i).getCode().matches(code))
+                    return etudiantList.get(i);
+            }
         }
         return null;
     }
@@ -76,17 +92,21 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
     /**
      * Enlève un étudiant de liste selon son code passé en paramètre
      * @param code Le code unique de l'Etudiant à retirer
+     * @return vrai si un joueur a été retiré, faux sinon
      * @see DepotEtudiant#etudiantList
      */
-    public void retirerJoueurDeLaListe(String code)
+    public boolean retirerJoueurDeLaListe(String code)
     {
         for(int i=0;i< etudiantList.size();i++) {
             if (etudiantList.get(i).getCode().matches(code)) {
                 etudiantList.remove(i);
-                observateurDepot.notifier(this);
-                break;
+                // Si c'est pour un test, la vue n'est pas avertie
+                if(observateurDepot!=null)
+                    observateurDepot.notifier(this);
+                return true;
             }
         }
+        return false;
     }
 
     /**
