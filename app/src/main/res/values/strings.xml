@@ -7,4 +7,5 @@
     <string name="MauvaisJoueur">This is not the right student! Try another one.</string>
     <string name="TitreFin">It\'s over!</string>
     <string name="TexteFin">Please wait for the others to finish. You can also retry if you believe you can do better.</string>
+    <string name="text_vousDevezTrouvez">You must find</string>
 </resources>

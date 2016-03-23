@@ -8,4 +8,5 @@
     <string name="MauvaisJoueur">Ce n\'est pas le bon étudiant! Essayez-en un autre.</string>
     <string name="TitreFin">C\'est terminé!</string>
     <string name="TexteFin">Veuillez attendre que les autres aient terminé. Vous pouvez aussi réessayer si vous croyez pouvoir faire mieux.</string>
+    <string name="text_vousDevezTrouvez">Vous devez trouver</string>
 </resources>
