@@ -14,12 +14,13 @@ import ca.csf.tp2.R;
  */
 public class Controleur {
 
-    /**
-     *
-     */
     DepotEtudiant depot;
     ActiviteDepart vue;
 
+    /**
+     * Constructeur de la classe.
+     * @param vue La vue que la classe controle
+     */
     public Controleur(ActiviteDepart vue)
     {
         this.vue = vue;
@@ -27,6 +28,12 @@ public class Controleur {
 
     }
 
+    /**
+     *Retire le joueur de la liste des étudiants à trouver lors du début de l'activité.
+     *
+     * @param code Le code de l'utilisateur à retirer de la liste.
+     * @return Le message qui sera affiché dans le toast indiquant au joueur de recommencer ou de commencer l'activité.
+     */
     public String validerEntreeUtilisateur(String code) {
         String messagePourUtilisateur = "";
         if (depot.getEtudiantParCode(code) != null) {
@@ -40,6 +47,10 @@ public class Controleur {
         return messagePourUtilisateur;
     }
 
+    /**
+     * Restaure la liste d'étudiant lors du changement d'orientation.
+     * @param liste la liste d'étudiants
+     */
     public void restorer(ArrayList<Etudiant> liste){
         depot.restorerEtudiants(liste);
     }
