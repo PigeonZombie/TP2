@@ -54,7 +54,7 @@ public class FindMePartieTest extends TestCase {
 
     public void testGetEtudiantParCodeIncrementerPointage() throws Exception {
         findMePartie.getEtudiantParCode("1");
-        assertEquals(100,pointage);
+        assertEquals(100,findMePartie.getPointage());
     }
 
 
