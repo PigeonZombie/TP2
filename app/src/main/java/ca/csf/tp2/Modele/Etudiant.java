@@ -75,7 +75,8 @@ public class Etudiant implements Parcelable{
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(nom);
+        dest.writeString(code);
     }
 
     /**

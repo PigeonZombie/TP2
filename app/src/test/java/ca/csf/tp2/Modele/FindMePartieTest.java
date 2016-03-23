@@ -83,18 +83,15 @@ public class FindMePartieTest extends TestCase {
 
     }
 
-
     public void testNotifierTempsTrouverEtudiantExpireRetraitEtudiant() throws Exception {
         findMePartie.notifierTempsTrouverEtudiantExpire();
         Assert.assertEquals("B", etudiants.get(0).getNom());
     }
 
-
     public void testNotifierTempsTrouverEtudiantExpireAppelMethodeNotifier() throws Exception {
         findMePartie.notifierTempsTrouverEtudiantExpire();
         verify(observateurFindMePartie,times(1)).notifierTempsEcoulePourTrouverEtudiant("B");
     }
-
 
     public void testNotifierPartieTerminee() throws Exception {
         findMePartie.notifierPartieTerminee();
