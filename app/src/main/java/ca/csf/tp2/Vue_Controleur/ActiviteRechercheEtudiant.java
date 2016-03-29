@@ -191,7 +191,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
     @Override
     public void notifierTempsEcoulePourTrouverEtudiant(String nomEtudiant) {
-
+        nomEtudiantAChercher.setText(nomEtudiant);
     }
 
     @Override
