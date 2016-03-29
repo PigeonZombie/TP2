@@ -8,7 +8,7 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 
 /**
- *S'occupe de la logique du jeu, serre à récupérer le score, s'occupe des minuteurs
+ *S'occupe de la logique du jeu, est utilisé pour à récupérer le score, s'occupe des minuteurs
  * confirme qu'un étudiant est dans la liste et le retire.
  *
  * @author Felix
@@ -84,7 +84,7 @@ public class FindMePartie implements ObservateurMinuteur {
     }
 
     /**
-     * Updater la liste d,étudiant lors du changement d'orientation
+     * Updater la liste d'étudiant lors du changement d'orientation
      *
      * @param etudiants La liste d'Étudiant
      */
@@ -111,7 +111,7 @@ public class FindMePartie implements ObservateurMinuteur {
     }
 
     /**
-     * Envoie le message que el temps pour la partie est finie et envoie le pointage.
+     * Envoie le message que le temps pour la partie est finie et envoie le pointage.
      */
     @Override
     public void notifierPartieTerminee() {
