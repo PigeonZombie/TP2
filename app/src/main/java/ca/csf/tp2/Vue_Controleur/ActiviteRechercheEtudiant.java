@@ -223,12 +223,20 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      * @param tempsRestantEnMillisecondes Le temps restant pour trouver le joueur
      */
     @Override
-    public void notifierDiminutionDuTempsPourTrouverUnEtudiant(long tempsRestantEnMillisecondes) {
-       String tempsRestantPourTrouverEtudiant = String.format("%d min, %d sec",
-                TimeUnit.MILLISECONDS.toMinutes(tempsRestantEnMillisecondes),
-                TimeUnit.MILLISECONDS.toSeconds(tempsRestantEnMillisecondes) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestantEnMillisecondes))
-        );
+    public void notifierDiminutionDuTempsPourTrouverUnEtudiant(final long tempsRestantEnMillisecondes) {
+
+        final long tempsRestant = tempsRestantEnMillisecondes;
+
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String tempsRestantPourTrouverEtudiant = String.format("%d min, %d sec",
+                        TimeUnit.MILLISECONDS.toMinutes(tempsRestant),
+                        TimeUnit.MILLISECONDS.toSeconds(tempsRestant) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestant))
+                );
+            }
+        });
     }
 
     /**
@@ -239,11 +247,18 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     @Override
     public void notifierDIminutionDuTempsPourLaPArtieTotale(long tempsRestantEnMillisecondes) {
 
-        String tempsRestantPourLaPartie =  String.format("%d min, %d sec",
-                TimeUnit.MILLISECONDS.toMinutes(tempsRestantEnMillisecondes),
-                TimeUnit.MILLISECONDS.toSeconds(tempsRestantEnMillisecondes) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestantEnMillisecondes))
-        );
+        final long tempsRestant = tempsRestantEnMillisecondes;
+
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String tempsRestantPourLaPartie = String.format("%d min, %d sec",
+                        TimeUnit.MILLISECONDS.toMinutes(tempsRestant),
+                        TimeUnit.MILLISECONDS.toSeconds(tempsRestant) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestant))
+                );
+            }
+        });
 
     }
 
