@@ -119,7 +119,9 @@ public class FindMePartie implements ObservateurMinuteur {
     }
 
     /**
-     * Envoie à la vue le temps formaté en String sous le format MM:SS indiquant le temps restant pour trouver un joueur
+     * Envoie à la vue le temps  restant pour trouver un joueur
+     *
+     * @param tempsRestant Le temps restant en long
      */
     @Override
     public void notifierChangementAuTempsRestantPourJoueur(long tempsRestant) {
@@ -127,9 +129,9 @@ public class FindMePartie implements ObservateurMinuteur {
     }
 
     /**
-     * Envoie à la vue le temps formaté en String sous le format MM:SS indiquant le temps restant pour trouver un joueur
+     * Envoie à la vue le temps s restant pour trouver un joueur
      *
-     * @param tempsRestant
+     * @param tempsRestant  Le temps restant en long
      */
     @Override
     public void notifierChangementAuTempsRestantPourPartieTotale(long tempsRestant) {
