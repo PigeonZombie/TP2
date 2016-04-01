@@ -58,7 +58,7 @@ public class FindMePartie implements ObservateurMinuteur {
     {
         Etudiant etudiantScanne=null;
         //for(int i=0;i< etudiants.size();i++) {
-            if (etudiants.get(0).getCode().matches(code)) {
+            if (etudiants.get(0).getUniqueIdentifier().matches(code)) {
                 etudiantScanne =  etudiants.get(0);
                 etudiants.remove(0);
                 pointage += interfacerMinuteur.quandEtudiantTrouvee();
@@ -78,7 +78,7 @@ public class FindMePartie implements ObservateurMinuteur {
     {
         if(!etudiants.isEmpty())
         {
-            return etudiants.get(0).getNom();
+            return etudiants.get(0).getFullName();
         }
         return null;
     }

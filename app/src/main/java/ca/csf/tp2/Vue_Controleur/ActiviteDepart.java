@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
 import ca.csf.tp2.Modele.Etudiant;
+import ca.csf.tp2.Modele.TacheTelechargerListeEtudiant;
 import ca.csf.tp2.R;
 import ca.csf.tp2.Vue_Controleur.Portail.ObservateurDepot;
 import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
@@ -22,7 +23,7 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
  * de scanner son propore code barre.
  * @author Alicia Lamontagne
  */
-public class ActiviteDepart extends AppCompatActivity implements ObservateurDepot{
+public class ActiviteDepart extends AppCompatActivity implements ObservateurDepot, TacheTelechargerListeEtudiant.Callback{
     /**
      *  Le bouton dans la vue activity_main permettant au joueur d'ouvrir une application
      *  pour scanner un code barre
@@ -90,6 +91,13 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
         // Établir la connexion à la base de données
         }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        TacheTelechargerListeEtudiant telechargerListeEtudiant = new TacheTelechargerListeEtudiant(this);
+        telechargerListeEtudiant.execute("https://findme-acodebreak.rhcloud.com/students.json");
+    }
 
     /**
      * Méthode appelée lorsqu'il a un clic sur le bouton Scan. Elle s'occupe
@@ -177,5 +185,9 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
     }
 
 
+    @Override
+    public void onEtudiantsTelecharges(ArrayList etudiants) {
+
+    }
 }
 

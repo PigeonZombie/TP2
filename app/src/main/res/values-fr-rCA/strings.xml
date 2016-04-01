@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Find.me</string>
-    <string name="DebutActivite">Premièrement, nous devons savoir qui vous êtes. Appuyez sur le bouton et scannez votre code barre. Ensuite, l\'activité commencera automatiquement.</string>
+    <string name="DebutActivite">Premièrement, nous devons savoir qui vous êtes. Appuyez sur le bouton et scannez votre uniqueIdentifier barre. Ensuite, l\'activité commencera automatiquement.</string>
     <string name="OrdreIdentification">Identifiez-vous !</string>
     <string name="JoueurPasInscrit">Vous n\'êtes pas sur notre liste pour cette activité. Veuillez réassayez</string>
     <string name="JoueurInscrit">Vous êtes prêt à jouer. Bonne chance !</string>

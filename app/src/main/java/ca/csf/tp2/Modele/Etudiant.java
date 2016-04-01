@@ -5,42 +5,46 @@ import android.os.Parcelable;
 
 /**
  * Classe servant à la simulation d'un étudiant qui sera plus tard obtenu
- * par un service Web. L'étudiant possède un nom et un code. Il implémente
+ * par un service Web. L'étudiant possède un fullName et un uniqueIdentifier. Il implémente
  * la classe Parcelable afin de pouvoir être sauvegardé et récupéré lors
  * des sauvegardes et resaurations d'instances.
  *
  * @author Alicia Lamontagne
- * @see Etudiant#nom
- * @see Etudiant#code
+ * @see Etudiant#fullName
+ * @see Etudiant#uniqueIdentifier
  */
 public class Etudiant implements Parcelable{
 
     /**
-     * Le prénom et le nom de famille de l'étudiant.
-     * @see Etudiant#getNom()
+     * Le prénom et le fullName de famille de l'étudiant.
+     * @see Etudiant#getFullName()
      * @see Etudiant#setNom(String)
      */
-    private String nom;
+    private String fullName;
     /**
-     * Le code venant d'un code barre représentant l'étudiant
-     * @see Etudiant#code
+     * Le uniqueIdentifier venant d'un uniqueIdentifier barre représentant l'étudiant
+     * @see Etudiant#uniqueIdentifier
      * @see Etudiant#setCode(String)
      */
-    private String code;
+    private String uniqueIdentifier;
 
     /**
-     * Constructeur de la classe étudiant. Assigne le nom du joueur et son code selon les valeurs
+     * Constructeur de la classe étudiant. Assigne le fullName du joueur et son uniqueIdentifier selon les valeurs
      * passées en paramètre, si non nulles. Si le paramètre est null, l'attribut est initialisé
      * à "defaut".
-     * @param nom Le nom du joueur
-     * @param code Le code du joueur
+     * @param fullName Le fullName du joueur
+     * @param uniqueIdentifier Le uniqueIdentifier du joueur
      */
-    public Etudiant(String nom, String code){
-        if(!setNom(nom))
-            this.nom = new String("defaut");
+    public Etudiant(String fullName, String uniqueIdentifier){
+        if(!setNom(fullName))
+            this.fullName = new String("defaut");
 
-        if(!setCode(code))
-            this.code  = new String("defaut");
+        if(!setCode(uniqueIdentifier))
+            this.uniqueIdentifier = new String("defaut");
+    }
+
+    public Etudiant(){
+
     }
 
     /**
@@ -48,8 +52,8 @@ public class Etudiant implements Parcelable{
      * @param in
      */
     private Etudiant(Parcel in) {
-        nom = in.readString();
-        code = in.readString();
+        fullName = in.readString();
+        uniqueIdentifier = in.readString();
     }
 
     /**
@@ -72,8 +76,8 @@ public class Etudiant implements Parcelable{
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(nom);
-        dest.writeString(code);
+        dest.writeString(fullName);
+        dest.writeString(uniqueIdentifier);
     }
 
     /**
@@ -90,24 +94,24 @@ public class Etudiant implements Parcelable{
     };
 
     /**
-     * Obtient le code de l'étudiant
-     * @return le code de l'étudiant
-     * @see Etudiant#code
+     * Obtient le uniqueIdentifier de l'étudiant
+     * @return le uniqueIdentifier de l'étudiant
+     * @see Etudiant#uniqueIdentifier
      */
-    public String getCode() {
-        return code;
+    public String getUniqueIdentifier() {
+        return uniqueIdentifier;
     }
 
     /**
-     * Modifie la valeur du code de l'étudiant selon la valeur du paramètre
-     * @param code le nouveau code de l'étudiant
-     * @see Etudiant#code
+     * Modifie la valeur du uniqueIdentifier de l'étudiant selon la valeur du paramètre
+     * @param code le nouveau uniqueIdentifier de l'étudiant
+     * @see Etudiant#uniqueIdentifier
      */
     public boolean setCode(String code) {
         if(code!=null) {
             code = code.trim();
             if (code.length() == 12) {
-                this.code = code;
+                this.uniqueIdentifier = code;
                 return true;
             }
         }
@@ -115,12 +119,12 @@ public class Etudiant implements Parcelable{
     }
 
     /**
-     * Obtient le nom de l'étudiant
-     * @return le nom de l'étudiant
-     * @see Etudiant#nom
+     * Obtient le fullName de l'étudiant
+     * @return le fullName de l'étudiant
+     * @see Etudiant#fullName
      */
-    public String getNom() {
-        return nom;
+    public String getFullName() {
+        return fullName;
     }
 
 
@@ -128,7 +132,7 @@ public class Etudiant implements Parcelable{
         if(nom!=null) {
             nom = nom.trim();
             if(nom.length()>0) {
-                this.nom = new String(nom);
+                this.fullName = new String(nom);
                 return true;
             }
         }

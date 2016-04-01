@@ -3,10 +3,6 @@ package ca.csf.tp2.Modele;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-
 import java.util.ArrayList;
 
 import ca.csf.tp2.Modele.Portail.InterfaceMinuteur;
@@ -48,7 +44,7 @@ public class FindMePartieTest extends TestCase {
 
     public void testGetEtudiantParCodeRetraitEtudiant() throws Exception {
         findMePartie.getEtudiantParCode("123456789000");
-        assertEquals("B",etudiants.get(0).getNom());
+        assertEquals("B",etudiants.get(0).getFullName());
     }
 
 
@@ -85,7 +81,7 @@ public class FindMePartieTest extends TestCase {
 
     public void testNotifierTempsTrouverEtudiantExpireRetraitEtudiant() throws Exception {
         findMePartie.notifierTempsTrouverEtudiantExpire();
-        Assert.assertEquals("B", etudiants.get(0).getNom());
+        Assert.assertEquals("B", etudiants.get(0).getFullName());
     }
 
     public void testNotifierTempsTrouverEtudiantExpireAppelMethodeNotifier() throws Exception {

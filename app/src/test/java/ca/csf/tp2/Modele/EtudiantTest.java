@@ -1,9 +1,5 @@
 package ca.csf.tp2.Modele;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcel;
-
 import junit.framework.TestCase;
 
 import org.junit.Before;
@@ -24,63 +20,63 @@ public class EtudiantTest extends TestCase {
     @Test
     public void testConstructionParametresNull() throws Exception {
         etudiant = new Etudiant(null, null);
-        assertEquals("defaut", etudiant.getCode());
-        assertEquals("defaut", etudiant.getNom());
+        assertEquals("defaut", etudiant.getUniqueIdentifier());
+        assertEquals("defaut", etudiant.getFullName());
     }
 
     @Test
     public void testConstructionParametresVides() throws Exception {
         etudiant = new Etudiant("", "");
-        assertEquals("defaut", etudiant.getCode());
-        assertEquals("defaut", etudiant.getNom());
+        assertEquals("defaut", etudiant.getUniqueIdentifier());
+        assertEquals("defaut", etudiant.getFullName());
 
         etudiant = new Etudiant("    ", "            ");
-        assertEquals("defaut", etudiant.getCode());
-        assertEquals("defaut", etudiant.getNom());
+        assertEquals("defaut", etudiant.getUniqueIdentifier());
+        assertEquals("defaut", etudiant.getFullName());
     }
 
     @Test
     public void testConstructionCodeInvalide() throws Exception {
         etudiant = new Etudiant("Etudiant1", "123456");
-        assertEquals("defaut", etudiant.getCode());
+        assertEquals("defaut", etudiant.getUniqueIdentifier());
     }
 
     @Test
     public void testSetCodeValide() throws Exception {
         etudiant = new Etudiant("Etudiant1", "123456789000");
         etudiant.setCode("555555555a5a");
-        assertEquals("555555555a5a", etudiant.getCode());
+        assertEquals("555555555a5a", etudiant.getUniqueIdentifier());
     }
 
     @Test
     public void testSetCodeInvalide() throws Exception {
         etudiant = new Etudiant("Etudiant1", "123456789000");
         etudiant.setCode("");
-        assertEquals("123456789000", etudiant.getCode());
+        assertEquals("123456789000", etudiant.getUniqueIdentifier());
         etudiant.setCode(" ");
-        assertEquals("123456789000", etudiant.getCode());
+        assertEquals("123456789000", etudiant.getUniqueIdentifier());
         etudiant.setCode("            ");
-        assertEquals("123456789000", etudiant.getCode());
+        assertEquals("123456789000", etudiant.getUniqueIdentifier());
         etudiant.setCode(null);
-        assertEquals("123456789000", etudiant.getCode());
+        assertEquals("123456789000", etudiant.getUniqueIdentifier());
     }
 
     @Test
     public void testSetNomValide() throws Exception {
         etudiant = new Etudiant("Etudiant1", "123456789000");
         etudiant.setNom("Rainbow Dash");
-        assertEquals("Rainbow Dash", etudiant.getNom());
+        assertEquals("Rainbow Dash", etudiant.getFullName());
     }
 
     @Test
     public void testSetNomInvalide() throws Exception {
         etudiant = new Etudiant("Etudiant1", "123456789000");
         etudiant.setNom(null);
-        assertEquals("Etudiant1", etudiant.getNom());
+        assertEquals("Etudiant1", etudiant.getFullName());
         etudiant.setNom("");
-        assertEquals("Etudiant1", etudiant.getNom());
+        assertEquals("Etudiant1", etudiant.getFullName());
         etudiant.setNom("     ");
-        assertEquals("Etudiant1", etudiant.getNom());
+        assertEquals("Etudiant1", etudiant.getFullName());
     }
 
     public void testEtudiantEnParcel(){

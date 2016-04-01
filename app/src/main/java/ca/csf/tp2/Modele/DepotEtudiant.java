@@ -6,7 +6,6 @@ import java.util.Random;
 
 import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
 import ca.csf.tp2.Vue_Controleur.Portail.ObservateurDepot;
-import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 /**
  * Simulation d'une base de données contenant des étudiants avec leur code unique
@@ -86,7 +85,7 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
     {
         if(code!=null) {
             for (int i = 0; i < etudiantList.size(); i++) {
-                if (etudiantList.get(i).getCode().matches(code))
+                if (etudiantList.get(i).getUniqueIdentifier().matches(code))
                     return etudiantList.get(i);
             }
         }
@@ -103,7 +102,7 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
     {
         if(code!=null) {
             for (int i = 0; i < etudiantList.size(); i++) {
-                if (etudiantList.get(i).getCode().matches(code)) {
+                if (etudiantList.get(i).getUniqueIdentifier().matches(code)) {
                     etudiantList.remove(i);
                     // Si c'est pour un test, la vue n'est pas avertie
                     if (observateurDepot != null)
