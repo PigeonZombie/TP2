@@ -85,7 +85,7 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
     {
         if(code!=null) {
             for (int i = 0; i < etudiantList.size(); i++) {
-                if (etudiantList.get(i).getUniqueIdentifier().matches(code))
+                if (etudiantList.get(i).getCode().matches(code))
                     return etudiantList.get(i);
             }
         }
@@ -102,7 +102,7 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
     {
         if(code!=null) {
             for (int i = 0; i < etudiantList.size(); i++) {
-                if (etudiantList.get(i).getUniqueIdentifier().matches(code)) {
+                if (etudiantList.get(i).getCode().matches(code)) {
                     etudiantList.remove(i);
                     // Si c'est pour un test, la vue n'est pas avertie
                     if (observateurDepot != null)

@@ -44,7 +44,7 @@ public class FindMePartieTest extends TestCase {
 
     public void testGetEtudiantParCodeRetraitEtudiant() throws Exception {
         findMePartie.getEtudiantParCode("123456789000");
-        assertEquals("B",etudiants.get(0).getFullName());
+        assertEquals("B",etudiants.get(0).getNom());
     }
 
 
@@ -81,7 +81,7 @@ public class FindMePartieTest extends TestCase {
 
     public void testNotifierTempsTrouverEtudiantExpireRetraitEtudiant() throws Exception {
         findMePartie.notifierTempsTrouverEtudiantExpire();
-        Assert.assertEquals("B", etudiants.get(0).getFullName());
+        Assert.assertEquals("B", etudiants.get(0).getNom());
     }
 
     public void testNotifierTempsTrouverEtudiantExpireAppelMethodeNotifier() throws Exception {

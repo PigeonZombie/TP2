@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,11 +29,13 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
      *  Le bouton dans la vue activity_main permettant au joueur d'ouvrir une application
      *  pour scanner un code barre
     */
-    Button scanButton;
+    private Button scanButton;
     /**
      * Classe qui fait le lien avec le modèle et qui vérifie que l'étudiant
      * qui utilise l'application existe.
      */
+    private ProgressBar barreProgression;
+
     Controleur controleur;
     /**
      * Le code qui sert à s'assurer que le résultat de l'activité de scan
@@ -53,6 +56,8 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
     private ArrayList<Etudiant> etudiantsRestants;
 
 
+
+
     /**
      * Crée la vue et assigne le bouton scan à un attribut, en plus de
      * restorer la liste d'étudiants si le paramètre savedInstanceState n'est pas null
@@ -67,6 +72,9 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
         scanButton = (Button)findViewById(R.id.buttonScan);
         scanButton.setOnClickListener(clickScan);
         codeEtudiant = new String("");
+
+        barreProgression = (ProgressBar)findViewById(R.id.barreProgression);
+        barreProgression.setVisibility(View.INVISIBLE);
 
         // Réassignation de la liste d'étudiants lorsque l'on revient de
         // l'application de scan
@@ -88,7 +96,10 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
         // modèle de données via le contrôleur
         if(etudiantsRestants!=null)
             controleur.restorer(etudiantsRestants);
-        // Établir la connexion à la base de données
+        else{
+            barreProgression.setVisibility(View.VISIBLE);
+            scanButton.setVisibility(View.INVISIBLE);
+        }
         }
 
     @Override
@@ -109,6 +120,7 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
         @Override
         public void onClick(View v) {
             // Utiliser la caméra pour scanner un code barre
+
             Intent barCodeIntent = new Intent("com.google.zxing.client.android.SCAN");
             barCodeIntent.putExtra("SCAN_FORMATS","CODE_128");
             startActivityForResult(barCodeIntent, CODE_REQUETE);
@@ -187,7 +199,9 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
 
     @Override
     public void onEtudiantsTelecharges(ArrayList etudiants) {
-
+        etudiantsRestants = etudiants;
+        barreProgression.setVisibility(View.INVISIBLE);
+        scanButton.setVisibility(View.VISIBLE);
     }
 }
 

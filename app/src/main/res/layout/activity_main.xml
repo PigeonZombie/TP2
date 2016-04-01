@@ -47,4 +47,12 @@
         android:textColor="#ffffff"
         android:textSize="40dp" />
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/barreProgression"
+        android:layout_below="@+id/buttonScan"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

@@ -33,4 +33,6 @@ public interface ObservateurFindMePartie {
      */
     void notifierTempsPourLaPartieFinie(long pointage);
     void notifierEtudiantRetire(InterfaceDepotEtudiant interfaceDepotEtudiant);
+
+    //TODO NOtifierchangement de temps pour partie et étudiant
 }

@@ -190,22 +190,32 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     }
 
     @Override
-    public void notifierTempsEcoulePourTrouverEtudiant(String nomEtudiant) {
-        nomEtudiantAChercher.setText(nomEtudiant);
+    public void notifierTempsEcoulePourTrouverEtudiant(final String nomEtudiant) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                nomEtudiantAChercher.setText(nomEtudiant);
+            }
+        });
     }
 
     @Override
     public void notifierTempsPourLaPartieFinie(long pointage) {
 
+//        this.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
     }
 
     @Override
     public void notifierEtudiantRetire(InterfaceDepotEtudiant interfaceDepotEtudiant) {
 
+
     }
 
 
-
-
-
+    //TODO Rafrachir et formater le temps restant pour trouver joueur et pour la partie
 }
