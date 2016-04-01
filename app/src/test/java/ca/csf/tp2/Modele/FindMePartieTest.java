@@ -35,9 +35,9 @@ public class FindMePartieTest extends TestCase {
     }
 
     void initialiserTest (){
-        etudiants.add(new Etudiant("A","1"));
-        etudiants.add(new Etudiant("B","2"));
-        etudiants.add(new Etudiant("C","3"));
+        etudiants.add(new Etudiant("A","123456789000"));
+        etudiants.add(new Etudiant("B","223456789123"));
+        etudiants.add(new Etudiant("C","345678901234"));
         observateurFindMePartie = mock(ObservateurFindMePartie.class);
         interfacerMinuteur = mock(InterfaceMinuteur.class);
         findMePartie = new FindMePartie(etudiants,observateurFindMePartie, interfacerMinuteur);
@@ -47,19 +47,19 @@ public class FindMePartieTest extends TestCase {
 
 
     public void testGetEtudiantParCodeRetraitEtudiant() throws Exception {
-        findMePartie.getEtudiantParCode("1");
+        findMePartie.getEtudiantParCode("123456789000");
         assertEquals("B",etudiants.get(0).getNom());
     }
 
 
     public void testGetEtudiantParCodeIncrementerPointage() throws Exception {
-        findMePartie.getEtudiantParCode("1");
+        findMePartie.getEtudiantParCode("123456789000");
         assertEquals(100,findMePartie.getPointage());
     }
 
 
     public void testGetEtudiantParCodeRetournerAutreEtudiant() throws Exception {
-        findMePartie.getEtudiantParCode("1");
+        findMePartie.getEtudiantParCode("123456789000");
         verify(observateurFindMePartie,times(1)).notifierChangementEtudiantATrouver("B");
     }
 

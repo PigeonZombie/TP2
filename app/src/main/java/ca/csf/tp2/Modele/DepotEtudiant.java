@@ -65,10 +65,14 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
     /**
      * Place les étudiants de la liste dans un ordre aléatoire
      */
-    private void melangerListe()
+    public void melangerListe()
     {
-        long seed = System.nanoTime();
-        Collections.shuffle(etudiantList, new Random(seed));
+        ArrayList<Etudiant> listeOrginale = new ArrayList<>(etudiantList);
+        long seed;
+        while(listeOrginale.equals(etudiantList)) {
+            seed = System.nanoTime();
+            Collections.shuffle(etudiantList, new Random(seed));
+        }
     }
 
     /**
@@ -97,13 +101,15 @@ public class DepotEtudiant implements InterfaceDepotEtudiant{
      */
     public boolean retirerJoueurDeLaListe(String code)
     {
-        for(int i=0;i< etudiantList.size();i++) {
-            if (etudiantList.get(i).getCode().matches(code)) {
-                etudiantList.remove(i);
-                // Si c'est pour un test, la vue n'est pas avertie
-                if(observateurDepot!=null)
-                    observateurDepot.notifier(this);
-                return true;
+        if(code!=null) {
+            for (int i = 0; i < etudiantList.size(); i++) {
+                if (etudiantList.get(i).getCode().matches(code)) {
+                    etudiantList.remove(i);
+                    // Si c'est pour un test, la vue n'est pas avertie
+                    if (observateurDepot != null)
+                        observateurDepot.notifier(this);
+                    return true;
+                }
             }
         }
         return false;

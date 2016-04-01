@@ -1,5 +1,9 @@
 package ca.csf.tp2.Modele;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcel;
+
 import junit.framework.TestCase;
 
 import org.junit.Before;
@@ -15,6 +19,30 @@ public class EtudiantTest extends TestCase {
     @Before
     public void before(){
         etudiant = new Etudiant("Etudiant1","123456789000");
+    }
+
+    @Test
+    public void testConstructionParametresNull() throws Exception {
+        etudiant = new Etudiant(null, null);
+        assertEquals("defaut", etudiant.getCode());
+        assertEquals("defaut", etudiant.getNom());
+    }
+
+    @Test
+    public void testConstructionParametresVides() throws Exception {
+        etudiant = new Etudiant("", "");
+        assertEquals("defaut", etudiant.getCode());
+        assertEquals("defaut", etudiant.getNom());
+
+        etudiant = new Etudiant("    ", "            ");
+        assertEquals("defaut", etudiant.getCode());
+        assertEquals("defaut", etudiant.getNom());
+    }
+
+    @Test
+    public void testConstructionCodeInvalide() throws Exception {
+        etudiant = new Etudiant("Etudiant1", "123456");
+        assertEquals("defaut", etudiant.getCode());
     }
 
     @Test
@@ -53,5 +81,9 @@ public class EtudiantTest extends TestCase {
         assertEquals("Etudiant1", etudiant.getNom());
         etudiant.setNom("     ");
         assertEquals("Etudiant1", etudiant.getNom());
+    }
+
+    public void testEtudiantEnParcel(){
+
     }
 }
