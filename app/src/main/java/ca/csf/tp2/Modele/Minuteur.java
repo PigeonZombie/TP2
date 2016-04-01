@@ -40,7 +40,6 @@ public class Minuteur implements InterfaceMinuteur {
     /**
      * Quand un étudiant est trouvé, crée un nouveau timer pour un autre étudiant et retourne le temps restant pour
      * trouver l'ancien étudiant pour servire de pointage
-     *
      * @return le temps restant pour trovuer l'ancien étudiant
      */
     @Override
@@ -54,6 +53,14 @@ public class Minuteur implements InterfaceMinuteur {
 
 
     //Fonction lors de la fin du temps pour un étudiant
+
+    public void quandTempsPourTrouverEtudiantExpire(){
+        minuteurEtudiant.cancel();
+        observateurMinuteur.notifierTempsTrouverEtudiantExpire();
+        creerMinuteurEtudiant();
+
+    }
+
 
     /**
      * Crée la tâche du minuteur globale
@@ -78,7 +85,7 @@ public class Minuteur implements InterfaceMinuteur {
             @Override
             public void run() {
                 tempsPourEtudiant--;
-                //Avertir la vue
+
             }
         };
         return tacheMinuteurJoueurScore;
@@ -92,7 +99,7 @@ public class Minuteur implements InterfaceMinuteur {
         TimerTask tacheMinuteurJoueurTempsTotal = new TimerTask() {
             @Override
             public void run() {
-                observateurMinuteur.notifierTempsTrouverEtudiantExpire();
+                quandTempsPourTrouverEtudiantExpire();
             }
         };
         return tacheMinuteurJoueurTempsTotal;
@@ -119,7 +126,7 @@ public class Minuteur implements InterfaceMinuteur {
      */
     private void creerMinuteurEtudiant(){
         minuteurEtudiant = new Timer();
-        tempsPourEtudiant = 60000;
+        tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
         minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsRestant(),1);
         minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), DUREE_TROUVER_ETUDIANT);
     }
