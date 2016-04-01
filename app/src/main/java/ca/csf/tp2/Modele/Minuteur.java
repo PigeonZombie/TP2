@@ -6,9 +6,6 @@ import java.util.TimerTask;
 import ca.csf.tp2.Modele.Portail.InterfaceMinuteur;
 import ca.csf.tp2.Modele.Portail.ObservateurMinuteur;
 
-/**
- * Created by Utilisateur on 2016-03-18.
- */
 
 /**
  * Classe pour faire le minuteur de la partie, contient deux timer Java. Un pour la partie , et un pour le joueur en cour
