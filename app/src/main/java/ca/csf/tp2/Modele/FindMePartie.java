@@ -17,20 +17,18 @@ public class FindMePartie implements ObservateurMinuteur {
 
     private ArrayList<Etudiant> etudiants;
     private int pointage = 0;
-    private final ObservateurFindMePartie observateurFindMePartie;
-    private final InterfaceMinuteur interfacerMinuteur;
+    private ObservateurFindMePartie observateurFindMePartie;
+    private InterfaceMinuteur interfacerMinuteur;
 
     /**
      * Constructeur de la classe
      * @param etudiants La liste d'étudiant
-     * @param observateurFindMePartie quelle activité l'appel
      */
-    public FindMePartie(ArrayList<Etudiant> etudiants,
-                        ObservateurFindMePartie observateurFindMePartie){
+    public FindMePartie(ArrayList<Etudiant> etudiants){
         this.etudiants = etudiants;
 
-        this.interfacerMinuteur = new Minuteur(this);
-        this.observateurFindMePartie = observateurFindMePartie;
+        //this.interfacerMinuteur = new Minuteur(this);
+        //this.observateurFindMePartie = observateurFindMePartie;
     }
 
     /**
@@ -62,11 +60,17 @@ public class FindMePartie implements ObservateurMinuteur {
                 etudiantScanne =  etudiants.get(0);
                 etudiants.remove(0);
                 pointage += interfacerMinuteur.quandEtudiantTrouvee();
-                observateurFindMePartie.notifierChangementEtudiantATrouver(getProchainEtudiant());
+                if(observateurFindMePartie!=null)
+                    observateurFindMePartie.notifierChangementEtudiantATrouver(getProchainEtudiant());
             }
         //}
         if(etudiantScanne == null)
             observateurFindMePartie.notifierChangementEtudiantATrouver(null);
+    }
+
+    public void setObservateurFindMePartie(ObservateurFindMePartie observateurFindMePartie){
+        this.observateurFindMePartie = observateurFindMePartie;
+        this.interfacerMinuteur = new Minuteur(this);
     }
 
     /**
@@ -136,6 +140,16 @@ public class FindMePartie implements ObservateurMinuteur {
     @Override
     public void notifierChangementAuTempsRestantPourPartieTotale(long tempsRestant) {
         //TODO Appeler observateurFindMePartie avec la bonne méthode
+    }
+
+    public boolean enleverEtudiantParCode(String code){
+        for(int i=0;i<etudiants.size();i++){
+            if(etudiants.get(i).getCode().matches(code)){
+                etudiants.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 
 

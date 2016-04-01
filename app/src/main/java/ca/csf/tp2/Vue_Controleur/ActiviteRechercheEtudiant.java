@@ -83,7 +83,8 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
             etudiants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
         }
 
-        partie = new FindMePartie(etudiants,this);
+        partie = new FindMePartie(etudiants);
+        partie.setObservateurFindMePartie(this);
 
         nomEtudiantAChercher = (TextView)findViewById(R.id.textViewNom);
         nomEtudiantAChercher.setText(partie.getProchainEtudiant());
@@ -101,8 +102,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         // Si notre liste comprend déjà des étudiants, on la réassigne dans le
         // modèle de données (dans la partie)
         if(etudiants!=null){
-            partie.restorerEtudiants(etudiants);
-        }
+            partie.restorerEtudiants(etudiants); }
     }
 
     /**

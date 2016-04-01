@@ -3,6 +3,7 @@ package ca.csf.tp2.Vue_Controleur;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import ca.csf.tp2.Modele.FindMePartie;
 import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
 import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.Modele.TacheTelechargerListeEtudiant;
@@ -24,19 +26,18 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
  * de scanner son propore code barre.
  * @author Alicia Lamontagne
  */
-public class ActiviteDepart extends AppCompatActivity implements ObservateurDepot, TacheTelechargerListeEtudiant.Callback{
+public class ActiviteDepart extends AppCompatActivity implements /*ObservateurDepot,*/ TacheTelechargerListeEtudiant.Callback{
     /**
      *  Le bouton dans la vue activity_main permettant au joueur d'ouvrir une application
      *  pour scanner un code barre
     */
     private Button scanButton;
-    /**
-     * Classe qui fait le lien avec le modèle et qui vérifie que l'étudiant
-     * qui utilise l'application existe.
-     */
+
+
     private ProgressBar barreProgression;
 
-    Controleur controleur;
+    FindMePartie partie;
+
     /**
      * Le code qui sert à s'assurer que le résultat de l'activité de scan
      * est celui auquel on s'attend
@@ -81,21 +82,22 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
         if(savedInstanceState!=null) {
             etudiantsRestants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
         }
+
+        partie = new FindMePartie(null);
     }
 
     /**
      * Initialise le contrôleur et restore la liste d'étudiants dans le
-     * modèle de données (DepotEtudiant)
-     * @see ca.csf.tp2.Modele.DepotEtudiant
+     * modèle de données
      */
     @Override
     protected void onStart() {
         super.onStart();
-        controleur = new Controleur(this);
+
         // Si notre liste comprend déjà des étudiants, on la réassigne dans le
         // modèle de données via le contrôleur
         if(etudiantsRestants!=null)
-            controleur.restorer(etudiantsRestants);
+            partie.restorerEtudiants(etudiantsRestants);
         else{
             barreProgression.setVisibility(View.VISIBLE);
             scanButton.setVisibility(View.INVISIBLE);
@@ -144,14 +146,14 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
         if(requestCode == CODE_REQUETE){
             if(resultCode == Activity.RESULT_OK){
                 codeEtudiant =data.getStringExtra("SCAN_RESULT");
-                String messageErreur = controleur.validerEntreeUtilisateur(codeEtudiant);
-                if(messageErreur.equals(getResources().getString(R.string.JoueurInscrit))){
+                //String messageErreur = controleur.validerEntreeUtilisateur(codeEtudiant);
+                if(partie.enleverEtudiantParCode(codeEtudiant)){
                     Intent partie = new Intent(this, ActiviteRechercheEtudiant.class);
                     partie.putExtra(ActiviteRechercheEtudiant.ETUDIANTS_ACTUELS, etudiantsRestants);
                     startActivity(partie);
                 }
                 else{
-                    Toast.makeText(ActiviteDepart.this, messageErreur, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActiviteDepart.this, R.string.JoueurPasInscrit, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -180,21 +182,19 @@ public class ActiviteDepart extends AppCompatActivity implements ObservateurDepo
         super.onRestoreInstanceState(outState);
         etudiantsRestants = outState.getParcelableArrayList(ETUDIANTS_ACTUELS);
         if(etudiantsRestants!=null)
-            controleur.restorer(etudiantsRestants);
+            partie.restorerEtudiants(etudiantsRestants);
     }
 
     /**
      * Le modèle lance un évènement dans l'activité de départ quand un étudiant est retiré de la liste
      * pour qu'elle soit mise à jour
-     * @param interfaceDepot le lien vers le dépôt d'étudiants
-     * @see ca.csf.tp2.Modele.DepotEtudiant
      * @see ActiviteDepart#etudiantsRestants
      */
-    @Override
+   /* @Override
     public void notifier(InterfaceDepotEtudiant interfaceDepot)
     {
         etudiantsRestants = interfaceDepot.sauvegarderEtudiant();
-    }
+    }*/
 
 
     @Override
