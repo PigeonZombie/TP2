@@ -200,6 +200,7 @@ public class ActiviteDepart extends AppCompatActivity implements /*ObservateurDe
     @Override
     public void onEtudiantsTelecharges(ArrayList etudiants) {
         etudiantsRestants = etudiants;
+        partie.restorerEtudiants(this.etudiantsRestants);
         barreProgression.setVisibility(View.INVISIBLE);
         scanButton.setVisibility(View.VISIBLE);
     }

@@ -1,6 +1,7 @@
 package ca.csf.tp2.Modele;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import ca.csf.tp2.Modele.Portail.InterfaceMinuteur;
 import ca.csf.tp2.Modele.Portail.ObservateurMinuteur;
@@ -27,8 +28,6 @@ public class FindMePartie implements ObservateurMinuteur {
     public FindMePartie(ArrayList<Etudiant> etudiants){
         this.etudiants = etudiants;
 
-        //this.interfacerMinuteur = new Minuteur(this);
-        //this.observateurFindMePartie = observateurFindMePartie;
     }
 
     /**
@@ -93,7 +92,9 @@ public class FindMePartie implements ObservateurMinuteur {
      * @param etudiants La liste d'Étudiant
      */
     public void restorerEtudiants(ArrayList<Etudiant> etudiants) {
+
         this.etudiants = etudiants;
+        Collections.shuffle(etudiants);
     }
 
     /**
