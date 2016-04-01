@@ -32,9 +32,10 @@ public interface ObservateurFindMePartie {
      * @param pointage le pointage du joueur
      */
     void notifierTempsPourLaPartieFinie(long pointage);
+
+
     void notifierEtudiantRetire(InterfaceDepotEtudiant interfaceDepotEtudiant);
 
-    //TODO Notifierchangement de temps pour partie et étudiant
 
     /**
      * Formate le temps restant en millisecondes pour trouver l'étudiant recherché en temps affichable dans la vue

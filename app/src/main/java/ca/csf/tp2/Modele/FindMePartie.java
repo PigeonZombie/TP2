@@ -123,7 +123,7 @@ public class FindMePartie implements ObservateurMinuteur {
      */
     @Override
     public void notifierChangementAuTempsRestantPourJoueur(long tempsRestant) {
-
+        //TODO Appeler observateurFindMePartie avec la bonne méthode
     }
 
     /**
@@ -133,7 +133,7 @@ public class FindMePartie implements ObservateurMinuteur {
      */
     @Override
     public void notifierChangementAuTempsRestantPourPartieTotale(long tempsRestant) {
-
+        //TODO Appeler observateurFindMePartie avec la bonne méthode
     }
 
 
