@@ -36,13 +36,10 @@ public class Etudiant implements Parcelable{
      * @param code Le code du joueur
      */
     public Etudiant(String nom, String code){
-        if(nom!=null)
-            this.nom = new String(nom);
-        else
+        if(!setNom(nom))
             this.nom = new String("defaut");
-        if(code!=null)
-            this.code = code;
-        else
+
+        if(!setCode(code))
             this.code  = new String("defaut");
     }
 
@@ -106,13 +103,15 @@ public class Etudiant implements Parcelable{
      * @param code le nouveau code de l'étudiant
      * @see Etudiant#code
      */
-    public void setCode(String code) {
+    public boolean setCode(String code) {
         if(code!=null) {
             code = code.trim();
             if (code.length() == 12) {
                 this.code = code;
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -125,12 +124,16 @@ public class Etudiant implements Parcelable{
     }
 
 
-    public void setNom(String nom) {
+    public boolean setNom(String nom) {
         if(nom!=null) {
             nom = nom.trim();
             if(nom.length()>0) {
                 this.nom = new String(nom);
+                return true;
             }
         }
+        return false;
     }
+
+
 }
