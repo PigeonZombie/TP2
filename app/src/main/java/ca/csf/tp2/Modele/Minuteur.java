@@ -33,7 +33,8 @@ public class Minuteur implements InterfaceMinuteur {
         this.observateurMinuteur = _observateurMinuteur;
         minuteurPartie = new Timer();
         creerMinuteurEtudiant();
-        minuteurPartie.schedule (initialiserTacheMinuteurPartie(), DUREE_PARTIE);
+        minuteurPartie.schedule(initialiserTacheMinuteurPartie(), DUREE_PARTIE);
+        minuteurPartie.schedule(initialiserTachePourAfficherTempsPartieTotale(),1);
     }
 
 
@@ -82,12 +83,12 @@ public class Minuteur implements InterfaceMinuteur {
      * Crée la tâche du minuteur du joueur servant à décrémenter le temps restant
      * @return la tâche du minuteur du joueur servant à décrémenter le temps restant
      */
-    private TimerTask initialiserTacheMinuteurJoueurTempsRestant(){
+    private TimerTask initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(){
         TimerTask tacheMinuteurJoueurScore = new TimerTask() {
             @Override
             public void run() {
                 tempsPourEtudiant--;
-
+                observateurMinuteur.notifierChangementAuTempsRestantPourJoueur(tempsPourEtudiant);
             }
         };
         return tacheMinuteurJoueurScore;
@@ -111,12 +112,12 @@ public class Minuteur implements InterfaceMinuteur {
      * Décrémente d'une miliseconde le temps et l'envoie à l'affichage.
      * @return La tâche initialisée à envoyé au timer
      */
-    private TimerTask initialiserTachePourAfficherTempsEtudiant(){
+    private TimerTask initialiserTachePourAfficherTempsPartieTotale(){
         TimerTask tacheMinuteurTempsTotalAfficher = new TimerTask() {
             @Override
             public void run() {
                 tempsPourPartieTotale--;
-                //L'envoye à l'affichage
+                observateurMinuteur.notifierChangementAuTempsRestantPourPartieTotale(tempsPourPartieTotale);
             }
         };
                 return tacheMinuteurTempsTotalAfficher;
@@ -129,7 +130,7 @@ public class Minuteur implements InterfaceMinuteur {
     private void creerMinuteurEtudiant(){
         minuteurEtudiant = new Timer();
         tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
-        minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsRestant(),1);
+        minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(),1);
         minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), DUREE_TROUVER_ETUDIANT);
     }
 }

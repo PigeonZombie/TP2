@@ -14,7 +14,12 @@ public interface ObservateurMinuteur {
     void notifierPartieTerminee();
 
     /**
-     * Envoie à la vue le temps formaté en String indiquant le temps restant pour trouver un joueur
+     * Envoie à la vue le temps formaté en String sous le format MM:SS indiquant le temps restant pour trouver un joueur
      */
-    void notifierChangementAuTempsRestant();
+    void notifierChangementAuTempsRestantPourJoueur(long tempsRestant);
+
+    /**
+     * Envoie à la vue le temps formaté en String sous le format MM:SS indiquant le temps restant pour trouver un joueur
+     */
+    void notifierChangementAuTempsRestantPourPartieTotale(long tempsRestant);
 }
