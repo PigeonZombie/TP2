@@ -12,4 +12,9 @@ public interface ObservateurMinuteur {
      * Envoie le message que el temps pour la partie est finie et envoie le pointage.
      */
     void notifierPartieTerminee();
+
+    /**
+     * Envoie à la vue le temps formaté en String indiquant le temps restant pour trouver un joueur
+     */
+    void notifierChangementAuTempsRestant();
 }

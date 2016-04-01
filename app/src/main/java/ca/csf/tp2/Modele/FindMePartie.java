@@ -117,4 +117,14 @@ public class FindMePartie implements ObservateurMinuteur {
     public void notifierPartieTerminee() {
         observateurFindMePartie.notifierTempsPourLaPartieFinie(pointage);
     }
+
+    /**
+     * Envoie à la vue le temps formaté en String indiquant le temps restant pour trouver un joueur
+     */
+    @Override
+    public void notifierChangementAuTempsRestant() {
+
+    }
+
+
 }

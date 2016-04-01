@@ -26,8 +26,8 @@ public class Minuteur implements InterfaceMinuteur {
     private long tempsPourPartieTotale = DUREE_PARTIE;
 
     /**
-     * Constructeur de la classe minuteur, crée le minuteur globale ainci que la première instance du minuteur de joueur
-     * @param _observateurMinuteur
+     * Constructeur de la classe minuteur, crée le minuteur global ainsi que la première instance du minuteur de joueur
+     * @param _observateurMinuteur La classe qui observe le déroulement du minuteur
      */
     public Minuteur(ObservateurMinuteur _observateurMinuteur){
         this.observateurMinuteur = _observateurMinuteur;
@@ -52,9 +52,11 @@ public class Minuteur implements InterfaceMinuteur {
     }
 
 
-    //Fonction lors de la fin du temps pour un étudiant
-
-    public void quandTempsPourTrouverEtudiantExpire(){
+    /**
+     * Fonction appelée quand le temps alloué pour trouver un étudiant est fini.
+     * Elle appele l'observateur du minuteur.
+     */
+    private void quandTempsPourTrouverEtudiantExpire(){
         minuteurEtudiant.cancel();
         observateurMinuteur.notifierTempsTrouverEtudiantExpire();
         creerMinuteurEtudiant();
