@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.Modele.FindMePartie;
@@ -216,6 +217,36 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
     }
 
+    /**
+     * Formate le temps restant en millisecondes pour trouver l'étudiant recherché en temps affichable dans la vue
+     *
+     * @param tempsRestantEnMillisecondes Le temps restant pour trouver le joueur
+     */
+    @Override
+    public void notifierDiminutionDuTempsPourTrouverUnEtudiant(long tempsRestantEnMillisecondes) {
+       String tempsRestantPourTrouverEtudiant = String.format("%d min, %d sec",
+                TimeUnit.MILLISECONDS.toMinutes(tempsRestantEnMillisecondes),
+                TimeUnit.MILLISECONDS.toSeconds(tempsRestantEnMillisecondes) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestantEnMillisecondes))
+        );
+    }
 
-    //TODO Rafrachir et formater le temps restant pour trouver joueur et pour la partie
+    /**
+     * Formate le temps restant en millisecondes pour trouver l'étudiant recherché en temps affichable dans la vue
+     *
+     * @param tempsRestantEnMillisecondes Le temps restant pour trouver le joueur
+     */
+    @Override
+    public void notifierDIminutionDuTempsPourLaPArtieTotale(long tempsRestantEnMillisecondes) {
+
+        String tempsRestantPourLaPartie =  String.format("%d min, %d sec",
+                TimeUnit.MILLISECONDS.toMinutes(tempsRestantEnMillisecondes),
+                TimeUnit.MILLISECONDS.toSeconds(tempsRestantEnMillisecondes) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestantEnMillisecondes))
+        );
+
+    }
+
+
+    //TODO Rafrachir  le temps restant pour trouver joueur et pour la partie
 }
