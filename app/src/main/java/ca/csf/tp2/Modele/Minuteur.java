@@ -11,7 +11,7 @@ import ca.csf.tp2.Modele.Portail.ObservateurMinuteur;
  */
 
 /**
- * Classe pour faire le minuteur de la partie, contient deux timer Java un pour la partie , et un pour le joueur en cour
+ * Classe pour faire le minuteur de la partie, contient deux timer Java. Un pour la partie , et un pour le joueur en cour
  *
  *@author Felix
  */
