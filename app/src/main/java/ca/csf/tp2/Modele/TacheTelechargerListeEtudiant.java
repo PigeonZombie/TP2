@@ -47,7 +47,13 @@ public class TacheTelechargerListeEtudiant extends AsyncTask<String,Void,ArrayLi
 
             connectionHttp.disconnect();
 
-            return etudiants;
+            ArrayList<Etudiant>  etudiants1 = new ArrayList<>();
+            etudiants1.add(etudiants.get(0));
+            etudiants1.add(etudiants.get(1));
+            etudiants1.add(etudiants.get(2));
+            etudiants1.add(etudiants.get(3));
+
+            return etudiants1;
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

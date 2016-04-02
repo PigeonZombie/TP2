@@ -8,4 +8,7 @@
     <string name="TitreFin">It\'s over!</string>
     <string name="TexteFin">Please wait for the others to finish. You can also retry if you believe you can do better.</string>
     <string name="text_vousDevezTrouvez">You must find</string>
+    <string name="BoutonFin">Retry</string>
+    <string name="ErreurConnexion">Cannot establish connection to the server. Please make sure you are connected to a network.</string>
+    <string name="MenuPrincipal">Main menu</string>
 </resources>

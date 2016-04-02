@@ -2,19 +2,12 @@ package ca.csf.tp2.Modele;
 
 import junit.framework.TestCase;
 
-import org.junit.Test;
-import org.junit.Before;
-import java.util.ArrayList;
-
-import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
-import ca.csf.tp2.Vue_Controleur.Portail.ObservateurDepot;
-
 /**
  * @author Alicia Lamontagne
  */
 public class DepotEtudiantTest extends TestCase {
 
-    ArrayList<Etudiant> etudiants;
+    /*ArrayList<Etudiant> etudiants;
     DepotEtudiant depotEtudiant;
     ObservateurDepot observateurDepot= new ObservateurDepot() {
         @Override
@@ -130,6 +123,6 @@ public class DepotEtudiantTest extends TestCase {
     public void testConstructeurAvecParametre(){
         depotEtudiant = new DepotEtudiant(observateurDepot);
         assertFalse(etudiants.equals(depotEtudiant.sauvegarderEtudiant()));
-    }
+    }*/
 
 }

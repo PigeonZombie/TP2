@@ -9,7 +9,7 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 
 /**
- *S'occupe de la logique du jeu, est utilisé pour à récupérer le score, s'occupe des minuteurs
+ * S'occupe de la logique du jeu, est utilisé pour à récupérer le score, s'occupe des minuteurs
  * confirme qu'un étudiant est dans la liste et le retire.
  *
  * @author Felix
@@ -23,21 +23,23 @@ public class FindMePartie implements ObservateurMinuteur {
 
     /**
      * Constructeur de la classe
+     *
      * @param etudiants La liste d'étudiant
      */
-    public FindMePartie(ArrayList<Etudiant> etudiants){
+    public FindMePartie(ArrayList<Etudiant> etudiants) {
         this.etudiants = etudiants;
 
     }
 
     /**
      * Constructeur de la classe ne servant qu'aux tests
-     * @param etudiants La liste d'étudiant
+     *
+     * @param etudiants               La liste d'étudiant
      * @param observateurFindMePartie quelle activité l'appel
-     * @param minuteur le minuteur relié
+     * @param minuteur                le minuteur relié
      */
     public FindMePartie(ArrayList<Etudiant> etudiants,
-                        ObservateurFindMePartie observateurFindMePartie, InterfaceMinuteur minuteur){
+                        ObservateurFindMePartie observateurFindMePartie, InterfaceMinuteur minuteur) {
         this.etudiants = etudiants;
 
         this.interfacerMinuteur = minuteur;
@@ -46,30 +48,29 @@ public class FindMePartie implements ObservateurMinuteur {
 
 
     /**
-     *Vérifie qu'un étudiant fait partie de la liste, le retire si c'est le cas
+     * Vérifie qu'un étudiant fait partie de la liste, le retire si c'est le cas
      * s'occupe du minuteur de temps pour trouver un étudiant et incrémente le score.
      *
      * @param code Le code barre de l'étudiant scanné.
      */
-    public void getEtudiantParCode(String code)
-    {
-        Etudiant etudiantScanne=null;
-        //for(int i=0;i< etudiants.size();i++) {
-            if (etudiants.get(0).getCode().matches(code)) {
-                etudiantScanne =  etudiants.get(0);
-                etudiants.remove(0);
-                pointage += interfacerMinuteur.quandEtudiantTrouvee();
-                if(observateurFindMePartie!=null)
-                    observateurFindMePartie.notifierChangementEtudiantATrouver(getProchainEtudiant());
-            }
-        //}
-        if(etudiantScanne == null)
+    public void getEtudiantParCode(String code) {
+        Etudiant etudiantScanne = null;
+
+        if (etudiants.get(0).getCode().matches(code)) {
+            etudiantScanne = etudiants.get(0);
+            etudiants.remove(0);
+            pointage += interfacerMinuteur.quandEtudiantTrouvee();
+            if (observateurFindMePartie != null)
+                observateurFindMePartie.notifierChangementEtudiantATrouver(getProchainEtudiant());
+        }
+        if (etudiantScanne == null)
             observateurFindMePartie.notifierChangementEtudiantATrouver(null);
     }
 
-    public void setObservateurFindMePartie(ObservateurFindMePartie observateurFindMePartie){
+    public void setObservateurFindMePartie(ObservateurFindMePartie observateurFindMePartie) {
         this.observateurFindMePartie = observateurFindMePartie;
         this.interfacerMinuteur = new Minuteur(this);
+        Collections.shuffle(etudiants);
     }
 
     /**
@@ -77,11 +78,9 @@ public class FindMePartie implements ObservateurMinuteur {
      *
      * @return le prochain étudiant à trouver
      */
-    public String getProchainEtudiant()
-    {
-        if(!etudiants.isEmpty())
-        {
-            return etudiants.get(0).getNom();
+    public Etudiant getProchainEtudiant() {
+        if (!etudiants.isEmpty()) {
+            return etudiants.get(0);
         }
         return null;
     }
@@ -94,7 +93,10 @@ public class FindMePartie implements ObservateurMinuteur {
     public void restorerEtudiants(ArrayList<Etudiant> etudiants) {
 
         this.etudiants = etudiants;
-        Collections.shuffle(etudiants);
+    }
+
+    public ArrayList<Etudiant> getListeEtudiants() {
+        return etudiants;
     }
 
     /**
@@ -102,8 +104,18 @@ public class FindMePartie implements ObservateurMinuteur {
      *
      * @return le pointage du joueur
      */
-    public int getPointage(){
+    public int getPointage() {
         return pointage;
+    }
+
+    public void setEtudiantATrouver(Etudiant etudiantATrouver) {
+        for (int i = 0; i < etudiants.size(); i++) {
+            if (etudiants.get(i).getCode().matches(etudiantATrouver.getCode())) {
+                etudiants.add(0, etudiantATrouver);
+                etudiants.remove(i + 1);
+                break;
+            }
+        }
     }
 
     /**
@@ -111,8 +123,10 @@ public class FindMePartie implements ObservateurMinuteur {
      */
     @Override
     public void notifierTempsTrouverEtudiantExpire() {
-        etudiants.remove(0);
-        observateurFindMePartie.notifierTempsEcoulePourTrouverEtudiant(getProchainEtudiant());
+        if(etudiants.size()>0) {
+            etudiants.remove(0);
+            observateurFindMePartie.notifierTempsEcoulePourTrouverEtudiant(getProchainEtudiant().getNom());
+        }
     }
 
     /**
@@ -136,16 +150,16 @@ public class FindMePartie implements ObservateurMinuteur {
     /**
      * Envoie à la vue le temps s restant pour trouver un joueur
      *
-     * @param tempsRestant  Le temps restant en long
+     * @param tempsRestant Le temps restant en long
      */
     @Override
     public void notifierChangementAuTempsRestantPourPartieTotale(long tempsRestant) {
         //TODO Appeler observateurFindMePartie avec la bonne méthode
     }
 
-    public boolean enleverEtudiantParCode(String code){
-        for(int i=0;i<etudiants.size();i++){
-            if(etudiants.get(i).getCode().matches(code)){
+    public boolean enleverEtudiantParCode(String code) {
+        for (int i = 0; i < etudiants.size(); i++) {
+            if (etudiants.get(i).getCode().matches(code)) {
                 etudiants.remove(i);
                 return true;
             }

@@ -3,6 +3,8 @@ package ca.csf.tp2.Vue_Controleur;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import ca.csf.tp2.R;
@@ -30,6 +32,8 @@ public class ActiviteFin extends AppCompatActivity {
      * Le texte qui affiche le score du joueur
      */
     TextView score;
+
+    Button boutonReessayer;
     /**
      * La constante qui permet d'identifier le score du joueur quand
      * il est reçu dans le bundle lors de la création de l'activité
@@ -57,6 +61,9 @@ public class ActiviteFin extends AppCompatActivity {
         texteFin = (TextView)findViewById(R.id.texteFin);
         texteFin.setText(getResources().getString(R.string.TexteFin));
         score = (TextView)findViewById(R.id.texteScore);
+        boutonReessayer = (Button)findViewById(R.id.boutonReessayer);
+        boutonReessayer.setText(R.string.BoutonFin);
+        boutonReessayer.setOnClickListener(clickReessayer);
 
         Intent extras = getIntent();
         if(extras!=null){
@@ -106,5 +113,20 @@ public class ActiviteFin extends AppCompatActivity {
         score.setText(pointage.toString());
     }
 
+    private View.OnClickListener clickReessayer = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            recommencerActivite();
+        }
+    };
+
+    private void recommencerActivite()
+    {
+        Intent intent = new Intent(this,ActiviteDepart.class);
+        finish();
+        startActivity(intent);
+        //Arrêter le timer
+    }
 
 }

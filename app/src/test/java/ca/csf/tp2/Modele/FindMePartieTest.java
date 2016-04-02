@@ -56,7 +56,7 @@ public class FindMePartieTest extends TestCase {
 
     public void testGetEtudiantParCodeRetournerAutreEtudiant() throws Exception {
         findMePartie.getEtudiantParCode("123456789000");
-        verify(observateurFindMePartie,times(1)).notifierChangementEtudiantATrouver("B");
+        verify(observateurFindMePartie,times(1)).notifierChangementEtudiantATrouver(etudiants.get(1));
     }
 
 

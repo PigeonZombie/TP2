@@ -9,4 +9,7 @@
     <string name="TitreFin">C\'est terminé!</string>
     <string name="TexteFin">Veuillez attendre que les autres aient terminé. Vous pouvez aussi réessayer si vous croyez pouvoir faire mieux.</string>
     <string name="text_vousDevezTrouvez">Vous devez trouver</string>
+    <string name="BoutonFin">Réessayer</string>
+    <string name="ErreurConnexion">Impossible de se connecter au serveur. Veuillez vous assurez que vous êtes connecté à un réseau.</string>
+    <string name="MenuPrincipal">Menu principal</string>
 </resources>

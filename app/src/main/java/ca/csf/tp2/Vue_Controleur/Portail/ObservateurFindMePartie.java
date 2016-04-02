@@ -1,7 +1,6 @@
 package ca.csf.tp2.Vue_Controleur.Portail;
 
 import ca.csf.tp2.Modele.Etudiant;
-import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
 
 /**
  * Created by Utilisateur on 2016-03-14.
@@ -14,10 +13,8 @@ import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
 public interface ObservateurFindMePartie {
     /**
      *Averti que l'étudiant à trouver à changé
-     *
-     * @param nomEtudiant Nom du nouvel étudiant à trouver
      */
-    void notifierChangementEtudiantATrouver(String nomEtudiant);
+    void notifierChangementEtudiantATrouver(Etudiant etudiant);
 
     /**
      *Le temps pour trouver l'étudiant est écoulé, envoie donc un autre étudiant
@@ -33,8 +30,6 @@ public interface ObservateurFindMePartie {
      */
     void notifierTempsPourLaPartieFinie(long pointage);
 
-
-    void notifierEtudiantRetire(InterfaceDepotEtudiant interfaceDepotEtudiant);
 
 
     /**

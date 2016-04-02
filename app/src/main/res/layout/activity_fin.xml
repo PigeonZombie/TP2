@@ -55,6 +55,18 @@
             android:layout_marginTop="83dp"
             android:textColor="#000000"
             android:textSize="35dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/boutonReessayer"
+            android:layout_below="@+id/texteFin"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="37dp"
+            android:layout_marginEnd="37dp"
+            android:layout_marginTop="29dp" />
     </RelativeLayout>
 
 </LinearLayout>

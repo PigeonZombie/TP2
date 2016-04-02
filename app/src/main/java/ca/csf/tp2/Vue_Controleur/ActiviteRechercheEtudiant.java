@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 
 import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.Modele.FindMePartie;
-import ca.csf.tp2.Modele.Portail.InterfaceDepotEtudiant;
 import ca.csf.tp2.R;
 import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
@@ -32,6 +31,8 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      * Le bouton dans la vue servant à ouvrir l'application de scan
      */
     private Button boutonScan;
+
+    private Button boutonMenu;
     /**
      *  Le code qui sert à s'assurer que le résultat de l'activité de scan
      *  est celui auquel on s'attend
@@ -42,6 +43,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      * la passe en extra à un intent
      */
     public static final String ETUDIANTS_ACTUELS = "ETUDIANTS_ACTUELS";
+    public static final String ETUDIANT_RECHERCHE = "ETUDIANT_RECHERCHE";
     /**
      * La partie s'occupe de gérer les joueurs, le temps et le pointage
      */
@@ -49,7 +51,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     /**
      * La liste d'étudiants à trouver
      */
-    private ArrayList<Etudiant> etudiants;
+    //private ArrayList<Etudiant> etudiants;
     /**
      * Le TextView permettant d'afficher le nom de l'étudiant actuellement recherché
      */
@@ -60,7 +62,6 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      * liste d'étudiants et la restore au besoin, démarre un nouvelle partie
      * et affiche le nom de l'étudiant à trouver
      * @param savedInstanceState le bundle contenant les paramètres sauvegardées
-     * @see ActiviteRechercheEtudiant#etudiants
      * @see ActiviteRechercheEtudiant#partie
      * @see ActiviteRechercheEtudiant#nomEtudiantAChercher
      */
@@ -73,21 +74,28 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         boutonScan = (Button)findViewById(R.id.boutonScanEtudiant);
         boutonScan.setOnClickListener(clickScan);
 
+        boutonMenu = (Button)findViewById(R.id.boutonMenu);
+        boutonMenu.setOnClickListener(clickMenuPrincipal);
+        boutonMenu.setText(R.string.MenuPrincipal);
+
         Intent extras = getIntent();
-        etudiants = new ArrayList<Etudiant>();
+        //etudiants = new ArrayList<Etudiant>();
 
-        if(extras!=null && etudiants.isEmpty()) {
+        /*if(extras!=null /*&& etudiants.isEmpty()) {
             etudiants = extras.getParcelableArrayListExtra(ETUDIANTS_ACTUELS);
-        }
-        else if(savedInstanceState!=null){
-            etudiants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
+        }*/
+       /* else*/
+
+        partie = new FindMePartie((ArrayList)extras.getParcelableArrayListExtra(ETUDIANTS_ACTUELS));
+        if(savedInstanceState!=null){
+            //etudiants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
+            partie.restorerEtudiants((ArrayList)savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS));
         }
 
-        partie = new FindMePartie(etudiants);
         partie.setObservateurFindMePartie(this);
 
         nomEtudiantAChercher = (TextView)findViewById(R.id.textViewNom);
-        nomEtudiantAChercher.setText(partie.getProchainEtudiant());
+        nomEtudiantAChercher.setText(partie.getProchainEtudiant().getNom());
 
     }
 
@@ -101,8 +109,8 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
         // Si notre liste comprend déjà des étudiants, on la réassigne dans le
         // modèle de données (dans la partie)
-        if(etudiants!=null){
-            partie.restorerEtudiants(etudiants); }
+        /*if(etudiants!=null){
+            partie.restorerEtudiants(etudiants); }*/
     }
 
     /**
@@ -115,23 +123,26 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putParcelableArrayList(ETUDIANTS_ACTUELS, etudiants);
+        outState.putParcelableArrayList(ETUDIANTS_ACTUELS, partie.getListeEtudiants());
+        outState.putParcelable(ETUDIANT_RECHERCHE, partie.getProchainEtudiant());
     }
 
     /**
      * Restore la liste d'étudiants à trouver, entre autre après un changement d'orientation
      * La liste d'étudiants est récupérée avec l'attribut ETUDIANTS_ACTUELS
      * @param outState le bundle contenant les données sauvegardées.
-     * @see ActiviteRechercheEtudiant#etudiants
      * @see ActiviteRechercheEtudiant#ETUDIANTS_ACTUELS
      */
     @Override
     protected void onRestoreInstanceState(Bundle outState) {
         super.onRestoreInstanceState(outState);
 
-        etudiants = outState.getParcelableArrayList(ETUDIANTS_ACTUELS);
-        if(etudiants!=null)
-            partie.restorerEtudiants(etudiants);
+        //etudiants = outState.getParcelableArrayList(ETUDIANTS_ACTUELS);
+        if(outState.getParcelableArrayList(ETUDIANTS_ACTUELS)!=null) {
+            partie.restorerEtudiants((ArrayList)outState.getParcelableArrayList(ETUDIANTS_ACTUELS));
+            partie.setEtudiantATrouver((Etudiant)outState.getParcelable(ETUDIANT_RECHERCHE));
+            nomEtudiantAChercher.setText(partie.getProchainEtudiant().getNom());
+        }
     }
 
     /**
@@ -145,6 +156,13 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
             Intent barCodeIntent = new Intent("com.google.zxing.client.android.SCAN");
             barCodeIntent.putExtra("SCAN_FORMATS","CODE_128");
             startActivityForResult(barCodeIntent, CODE_REQUETE);
+        }
+    };
+
+    private View.OnClickListener clickMenuPrincipal = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            retournerMenuPrincipal();
         }
     };
 
@@ -166,23 +184,30 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         }
     }
 
+    private void retournerMenuPrincipal()
+    {
+        Intent intent = new Intent(this,ActiviteDepart.class);
+        startActivity(intent);
+    }
+
     /**
      * Événement lancé par FindMePartie. Lors d'un changement d'étudiant à trouver,
      * un nouveau nom est passé en paramètre. Si le nom est null, c'est soit que le
      * mauvais étudiant a été scanné, dans quel cas on affiche un message d'erreur, soit
      * qu'il ne reste plus d'étudiants, dans quel cas on lance l'activité de fin.
-     * @param nomEtudiant le nom du nouvel étudiant à trouver
+     * @param etudiant le nouvel étudiant à trouver
      * @see ActiviteFin
      */
     @Override
-    public void notifierChangementEtudiantATrouver(String nomEtudiant) {
+    public void notifierChangementEtudiantATrouver(Etudiant etudiant) {
 
-        if(nomEtudiant!=null){
-            nomEtudiantAChercher.setText(nomEtudiant);
+        if(etudiant!=null){
+            nomEtudiantAChercher.setText(etudiant.getNom());
         }
         else if(partie.getProchainEtudiant() == null){
             Intent intent = new Intent(this, ActiviteFin.class);
             intent.putExtra(ActiviteFin.SCORE, partie.getPointage());
+            finish();
             startActivity(intent);
         }
         else{
@@ -211,11 +236,6 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 //        });
     }
 
-    @Override
-    public void notifierEtudiantRetire(InterfaceDepotEtudiant interfaceDepotEtudiant) {
-
-
-    }
 
     /**
      * Formate le temps restant en millisecondes pour trouver l'étudiant recherché en temps affichable dans la vue
