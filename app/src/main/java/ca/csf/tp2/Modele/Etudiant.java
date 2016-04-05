@@ -45,6 +45,8 @@ public class Etudiant implements Parcelable{
             this.code = new String("defaut");
     }
 
+    // Constructeur utilisé uniquement par l'ObjectMapper lorsque
+    // la liste d'étudiants est obtenue sur le serveur
     public Etudiant(){
 
     }
@@ -58,33 +60,24 @@ public class Etudiant implements Parcelable{
         code = in.readString();
     }
 
-    /**
-     * Décrit le type d'objet spécial contenu dans le parcelable
-     *
-     * @return un bitmask indiquant le type d'objet
-     */
+    /*Méthode non testée puisqu'il s'agit de code généré et qui
+    * ne s'applique pas à la logique de l'application */
     @Override
     public int describeContents() {
         return 0;
     }
 
 
-    /**
-     * Écrit l'objet dans un Parcel
-     *
-     * @param dest  Le Parcel dans lequel l'objet doit être écrit
-     * @param flags Flag indiquant comment l'objet doit être écrit
-     *              Peut être 0 ou {@link #PARCELABLE_WRITE_RETURN_VALUE}.
-     */
+    /*Méthode non testée puisqu'il s'agit de code généré et qui
+    * ne s'applique pas à la logique de l'application */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(nom);
         dest.writeString(code);
     }
 
-    /**
-     * Créateur de parcel
-     */
+    /*Méthode non testée puisqu'il s'agit de code généré et qui
+    * ne s'applique pas à la logique de l'application */
     public static final Parcelable.Creator<Etudiant> CREATOR = new Parcelable.Creator<Etudiant>() {
         public Etudiant createFromParcel(Parcel in) {
             return new Etudiant(in);

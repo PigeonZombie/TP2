@@ -1,7 +1,11 @@
 package ca.csf.tp2.Modele;
 
+import android.opengl.ETC1;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
+
+import org.junit.Test;
 
 import java.util.ArrayList;
 
@@ -44,13 +48,13 @@ public class FindMePartieTest extends TestCase {
 
     public void testGetEtudiantParCodeRetraitEtudiant() throws Exception {
         findMePartie.getEtudiantParCode("123456789000");
-        assertEquals("B",etudiants.get(0).getNom());
+        assertEquals("B", etudiants.get(0).getNom());
     }
 
 
     public void testGetEtudiantParCodeIncrementerPointage() throws Exception {
         findMePartie.getEtudiantParCode("123456789000");
-        assertEquals(100,findMePartie.getPointage());
+        assertEquals(100, findMePartie.getPointage());
     }
 
 
@@ -67,9 +71,9 @@ public class FindMePartieTest extends TestCase {
 
 
     public void testGetProchainEtudiantListeNonVide() throws Exception {
-        Assert.assertEquals("A",findMePartie.getProchainEtudiant());
+        Assert.assertEquals(etudiants.get(0),findMePartie.getProchainEtudiant());
         etudiants.remove(0);
-        Assert.assertEquals("B",findMePartie.getProchainEtudiant());
+        Assert.assertEquals(etudiants.get(1), findMePartie.getProchainEtudiant());
     }
 
 
@@ -93,4 +97,62 @@ public class FindMePartieTest extends TestCase {
         findMePartie.notifierPartieTerminee();
         verify(observateurFindMePartie,times(1)).notifierTempsPourLaPartieFinie(0);
     }
+
+    public void testSetEtudiantATrouverEtudiantExistant(){
+        findMePartie.setEtudiantATrouver(etudiants.get(0));
+        assertEquals(etudiants.get(0), findMePartie.getProchainEtudiant());
+    }
+
+    public void testSetEtudiantATrouverEtudiantInexistant(){
+        Etudiant etudiant = new Etudiant("D", "012345567789");
+        findMePartie.setEtudiantATrouver(etudiant);
+        assertEquals(etudiants.get(0),findMePartie.getProchainEtudiant());
+    }
+
+    public void testRestorerEtudiantListeNonVide(){
+        ArrayList<Etudiant> listeEtudiants = new ArrayList<>();
+        Etudiant etudiant = new Etudiant("D", "012345567789");
+        findMePartie.restorerEtudiants(listeEtudiants);
+        assertEquals(listeEtudiants,findMePartie.getListeEtudiants());
+    }
+
+    public void testRestorerEtudiantListeVide(){
+        ArrayList<Etudiant> listeEtudiants = new ArrayList<>();
+        findMePartie.restorerEtudiants(listeEtudiants);
+        assertEquals(listeEtudiants, findMePartie.getListeEtudiants());
+    }
+
+
+    public void testRestorerEtudiantListeNulle(){
+        ArrayList<Etudiant> listeEtudiants = null;
+        findMePartie.restorerEtudiants(listeEtudiants);
+        assertEquals(listeEtudiants,findMePartie.getListeEtudiants());
+    }
+
+    public void testEnleverEtudiantParCodeEtudiantExistant(){
+        assertTrue(findMePartie.enleverEtudiantParCode(etudiants.get(0).getCode()));
+    }
+
+    public void testEnleverEtudiantParCodeEtudiantInexistant(){
+        assertFalse(findMePartie.enleverEtudiantParCode("888888888888"));
+    }
+
+    public void testEnleverEtudiantParCodeEtudiantNul(){
+        assertFalse(findMePartie.enleverEtudiantParCode(null));
+    }
+
+    public void testEnleverEtudiantParCodeListeVide(){
+        assertTrue(findMePartie.enleverEtudiantParCode(etudiants.get(0).getCode()));
+        assertTrue(findMePartie.enleverEtudiantParCode(etudiants.get(0).getCode()));
+        assertTrue(findMePartie.enleverEtudiantParCode(etudiants.get(0).getCode()));
+        assertFalse(findMePartie.enleverEtudiantParCode("123456789000"));
+    }
+
+    public void testSetObservateurShuffleListeEtudiants(){
+        ArrayList<Etudiant> listeOriginale = new ArrayList<>(etudiants);
+        FindMePartie partie = new FindMePartie(etudiants);
+        partie.setObservateurFindMePartie(observateurFindMePartie);
+        assertFalse(partie.getListeEtudiants().equals(listeOriginale));
+    }
+
 }

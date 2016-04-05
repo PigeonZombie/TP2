@@ -158,10 +158,12 @@ public class FindMePartie implements ObservateurMinuteur {
     }
 
     public boolean enleverEtudiantParCode(String code) {
-        for (int i = 0; i < etudiants.size(); i++) {
-            if (etudiants.get(i).getCode().matches(code)) {
-                etudiants.remove(i);
-                return true;
+        if(code!=null) {
+            for (int i = 0; i < etudiants.size(); i++) {
+                if (etudiants.get(i).getCode().matches(code)) {
+                    etudiants.remove(i);
+                    return true;
+                }
             }
         }
         return false;

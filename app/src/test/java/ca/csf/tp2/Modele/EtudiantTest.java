@@ -79,7 +79,5 @@ public class EtudiantTest extends TestCase {
         assertEquals("Etudiant1", etudiant.getNom());
     }
 
-    public void testEtudiantEnParcel(){
 
-    }
 }
