@@ -46,6 +46,9 @@ public class Minuteur implements InterfaceMinuteur {
     public long quandEtudiantTrouvee() {
         long aRetourner = tempsPourEtudiant;
         tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
+        minuteurEtudiant.cancel();
+        //minuteurEtudiant = null;
+        creerMinuteurEtudiant();
         return aRetourner;
     }
 
@@ -123,11 +126,8 @@ public class Minuteur implements InterfaceMinuteur {
      * Crée le minuteur pour le joueur et lui assigne ses tâches.
      */
     private void creerMinuteurEtudiant(){
-        //if(minuteurEtudiant == null)
-        {
-            minuteurEtudiant = new Timer();
-        }
 
+            minuteurEtudiant = new Timer();
         tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
         minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(),1,1);
         minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), DUREE_TROUVER_ETUDIANT,DUREE_TROUVER_ETUDIANT);
