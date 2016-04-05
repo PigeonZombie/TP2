@@ -30,8 +30,8 @@ public class Minuteur implements InterfaceMinuteur {
         this.observateurMinuteur = _observateurMinuteur;
         minuteurPartie = new Timer();
         creerMinuteurEtudiant();
-        minuteurPartie.schedule(initialiserTacheMinuteurPartie(), DUREE_PARTIE);
-        minuteurPartie.schedule(initialiserTachePourAfficherTempsPartieTotale(),1);
+        minuteurPartie.schedule(initialiserTacheMinuteurPartie(), DUREE_PARTIE,DUREE_PARTIE);
+        minuteurPartie.schedule(initialiserTachePourAfficherTempsPartieTotale(),1,1);
 
 
     }
@@ -129,7 +129,7 @@ public class Minuteur implements InterfaceMinuteur {
         }
 
         tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
-        minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(),1);
-        minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), DUREE_TROUVER_ETUDIANT);
+        minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(),1,1);
+        minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), DUREE_TROUVER_ETUDIANT,DUREE_TROUVER_ETUDIANT);
     }
 }
