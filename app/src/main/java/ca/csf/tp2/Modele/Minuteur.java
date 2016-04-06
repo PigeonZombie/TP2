@@ -14,13 +14,14 @@ import ca.csf.tp2.Modele.Portail.ObservateurMinuteur;
  */
 public class Minuteur implements InterfaceMinuteur {
 
-    public static final int DUREE_PARTIE = 20000;
-    public static final int DUREE_TROUVER_ETUDIANT = 60000;
+    public static final int DUREE_PARTIE = 120000;
+    public static final int DUREE_TROUVER_ETUDIANT = 5000;
     private ObservateurMinuteur observateurMinuteur = null;
     private Timer minuteurPartie = null;
     private Timer minuteurEtudiant = null;
     private long tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
     private long tempsPourPartieTotale = DUREE_PARTIE;
+    private int passagePourDebug =0;
 
     /**
      * Constructeur de la classe minuteur, crée le minuteur global ainsi que la première instance du minuteur de joueur
@@ -58,6 +59,7 @@ public class Minuteur implements InterfaceMinuteur {
      * Elle appele l'observateur du minuteur.
      */
     private void quandTempsPourTrouverEtudiantExpire(){
+        passagePourDebug++;
         tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
         observateurMinuteur.notifierTempsTrouverEtudiantExpire();
     }
@@ -131,5 +133,14 @@ public class Minuteur implements InterfaceMinuteur {
         tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
         minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(),1,1);
         minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), DUREE_TROUVER_ETUDIANT,DUREE_TROUVER_ETUDIANT);
+    }
+
+    public void pause(){
+
+        minuteurEtudiant.cancel();
+    }
+
+    public void resume(){
+
     }
 }

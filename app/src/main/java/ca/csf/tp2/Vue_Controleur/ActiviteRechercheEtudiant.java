@@ -226,14 +226,18 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     }
 
     @Override
-    public void notifierTempsPourLaPartieFinie(long pointage) {
+    public void notifierTempsPourLaPartieFinie(final long pointage) {
 
-//        this.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        });
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(ActiviteRechercheEtudiant.this, ActiviteFin.class);
+                intent.putExtra(ActiviteFin.SCORE, pointage);
+                finish();
+                startActivity(intent);
+
+            }
+        });
     }
 
 

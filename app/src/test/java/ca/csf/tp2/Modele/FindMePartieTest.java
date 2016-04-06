@@ -19,6 +19,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * @author Felix
+ * @author Alicia
  */
 public class FindMePartieTest extends TestCase {
     private  ArrayList<Etudiant> etudiants = new ArrayList<>();

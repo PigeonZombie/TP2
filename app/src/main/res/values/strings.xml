@@ -11,4 +11,6 @@
     <string name="BoutonFin">Retry</string>
     <string name="ErreurConnexion">Cannot establish connection to the server. Please make sure you are connected to a network.</string>
     <string name="MenuPrincipal">Main menu</string>
+    <string name="TempsRestantPourEtudiant">You have </string>
+    <string name="Reste">left</string>
 </resources>

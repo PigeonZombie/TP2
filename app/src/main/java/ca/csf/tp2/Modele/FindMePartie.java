@@ -28,7 +28,6 @@ public class FindMePartie implements ObservateurMinuteur {
      */
     public FindMePartie(ArrayList<Etudiant> etudiants) {
         this.etudiants = etudiants;
-
     }
 
     /**
@@ -125,7 +124,10 @@ public class FindMePartie implements ObservateurMinuteur {
     public void notifierTempsTrouverEtudiantExpire() {
         if(etudiants.size()>0) {
             etudiants.remove(0);
-            observateurFindMePartie.notifierTempsEcoulePourTrouverEtudiant(getProchainEtudiant().getNom());
+            if(etudiants.size()==0)
+                notifierPartieTerminee();
+            else
+                observateurFindMePartie.notifierTempsEcoulePourTrouverEtudiant(getProchainEtudiant().getNom());
         }
     }
 
