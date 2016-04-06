@@ -12,4 +12,9 @@ public interface InterfaceMinuteur {
      * @return le temps restant pour trovuer l'ancien étudiant
      */
     long quandEtudiantTrouvee();
+
+    void mettreLesMinuteursEnPause();
+
+    void repartirLesMinuteurs();
+
 }

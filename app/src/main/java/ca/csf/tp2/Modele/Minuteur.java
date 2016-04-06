@@ -52,6 +52,24 @@ public class Minuteur implements InterfaceMinuteur {
         return aRetourner;
     }
 
+    @Override
+    public void mettreLesMinuteursEnPause() {
+        minuteurEtudiant.cancel();
+        minuteurPartie.cancel();
+    }
+
+    @Override
+    public void repartirLesMinuteurs() {
+
+        minuteurPartie = new Timer();
+        minuteurPartie.schedule(initialiserTacheMinuteurPartie(),tempsPourPartieTotale);
+        minuteurPartie.schedule(initialiserTachePourAfficherTempsPartieTotale(), 1, 1);
+
+        minuteurEtudiant = new Timer();
+        minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), tempsPourEtudiant,DUREE_TROUVER_ETUDIANT);
+        minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(),1,1);
+    }
+
 
     /**
      * Fonction appelée quand le temps alloué pour trouver un étudiant est fini.
