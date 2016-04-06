@@ -13,4 +13,5 @@
     <string name="MenuPrincipal">Main menu</string>
     <string name="TempsRestantPourEtudiant">You have </string>
     <string name="Reste">left</string>
+    <string name="TempsActivite">Whole activity ends in </string>
 </resources>

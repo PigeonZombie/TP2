@@ -24,12 +24,10 @@
             android:text="Large Text"
             android:id="@+id/titreFin"
             android:layout_gravity="left"
-            android:layout_marginTop="40dp"
+            android:textSize="30dp"
             android:layout_below="@+id/imageView"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="30dp"
-            android:layout_marginLeft="10dp" />
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -153,12 +153,4 @@ public class Minuteur implements InterfaceMinuteur {
         minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), DUREE_TROUVER_ETUDIANT,DUREE_TROUVER_ETUDIANT);
     }
 
-    public void pause(){
-
-        minuteurEtudiant.cancel();
-    }
-
-    public void resume(){
-
-    }
 }

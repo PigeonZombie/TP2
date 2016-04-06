@@ -44,6 +44,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      */
     public static final String ETUDIANTS_ACTUELS = "ETUDIANTS_ACTUELS";
     public static final String ETUDIANT_RECHERCHE = "ETUDIANT_RECHERCHE";
+
     /**
      * La partie s'occupe de gérer les joueurs, le temps et le pointage
      */
@@ -56,6 +57,8 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      * Le TextView permettant d'afficher le nom de l'étudiant actuellement recherché
      */
     private TextView nomEtudiantAChercher;
+    private TextView tempsRestantEtudiant;
+    private TextView tempsRestantPartie;
 
     /**
      * Crée la vue, assigne le bouton scan en attribut, crée un nouvelle
@@ -97,6 +100,9 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         nomEtudiantAChercher = (TextView)findViewById(R.id.textViewNom);
         nomEtudiantAChercher.setText(partie.getProchainEtudiant().getNom());
 
+        tempsRestantEtudiant = (TextView)findViewById(R.id.texteTempsEtudiant);
+        tempsRestantPartie = (TextView)findViewById(R.id.texteTempsActivité);
+
     }
 
     /**
@@ -125,6 +131,8 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
         outState.putParcelableArrayList(ETUDIANTS_ACTUELS, partie.getListeEtudiants());
         outState.putParcelable(ETUDIANT_RECHERCHE, partie.getProchainEtudiant());
+
+        partie.pauserTemps();
     }
 
     /**
@@ -143,6 +151,8 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
             partie.setEtudiantATrouver((Etudiant)outState.getParcelable(ETUDIANT_RECHERCHE));
             nomEtudiantAChercher.setText(partie.getProchainEtudiant().getNom());
         }
+
+        partie.repartirTemps();
     }
 
     /**
@@ -259,6 +269,10 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
                         TimeUnit.MILLISECONDS.toSeconds(tempsRestant) -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestant))
                 );
+                String tempsMisEnForme = getResources().getString(R.string.TempsRestantPourEtudiant)+ " "+
+                        tempsRestantPourTrouverEtudiant+ " "+
+                        getResources().getString(R.string.Reste);
+                tempsRestantEtudiant.setText(tempsMisEnForme);
             }
         });
     }
@@ -281,9 +295,10 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
                         TimeUnit.MILLISECONDS.toSeconds(tempsRestant) -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestant))
                 );
+                String tempsMisEnForme = getResources().getString(R.string.TempsActivite)+" "+tempsRestantPourLaPartie;
+                tempsRestantPartie.setText(tempsMisEnForme);
             }
         });
-
     }
 
 

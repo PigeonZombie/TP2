@@ -146,7 +146,7 @@ public class FindMePartie implements ObservateurMinuteur {
      */
     @Override
     public void notifierChangementAuTempsRestantPourJoueur(long tempsRestant) {
-        //TODO Appeler observateurFindMePartie avec la bonne méthode
+        observateurFindMePartie.notifierDiminutionDuTempsPourTrouverUnEtudiant(tempsRestant);
     }
 
     /**
@@ -156,7 +156,7 @@ public class FindMePartie implements ObservateurMinuteur {
      */
     @Override
     public void notifierChangementAuTempsRestantPourPartieTotale(long tempsRestant) {
-        //TODO Appeler observateurFindMePartie avec la bonne méthode
+        observateurFindMePartie.notifierDIminutionDuTempsPourLaPArtieTotale(tempsRestant);
     }
 
     public boolean enleverEtudiantParCode(String code) {
@@ -171,5 +171,12 @@ public class FindMePartie implements ObservateurMinuteur {
         return false;
     }
 
+    public void pauserTemps(){
+        interfacerMinuteur.mettreLesMinuteursEnPause();
+    }
+
+    public void repartirTemps(){
+        interfacerMinuteur.repartirLesMinuteurs();
+    }
 
 }

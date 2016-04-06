@@ -45,4 +45,5 @@ public interface ObservateurFindMePartie {
      * @param tempsRestantEnMillisecondes Le temps restant pour trouver le joueur
      */
     void notifierDIminutionDuTempsPourLaPArtieTotale(long tempsRestantEnMillisecondes);
+
 }

@@ -17,11 +17,12 @@
         android:id="@+id/buttonScan"
         android:layout_row="14"
         android:layout_column="9"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:background="#424242"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:layout_below="@+id/textBienvenue"
+        android:layout_alignRight="@+id/textBienvenue"
+        android:layout_alignEnd="@+id/textBienvenue"
+        android:layout_marginTop="29dp" />
 
     <TextView
         android:layout_width="wrap_content"

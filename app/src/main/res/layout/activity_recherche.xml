@@ -6,8 +6,8 @@
     android:touchscreenBlocksFocus="false">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="131dp"
+        android:layout_height="131dp"
         android:id="@+id/imagePersonnage"
         android:background="@drawable/ic_findme"
         android:layout_gravity="center_horizontal" />
@@ -48,6 +48,26 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/texteTempsEtudiant"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="18dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/texteTempsActivité"
+            android:layout_below="@+id/texteTempsEtudiant"
+            android:layout_centerHorizontal="true"
+            android:textSize="18dp" />
     </RelativeLayout>
 
 </LinearLayout>
