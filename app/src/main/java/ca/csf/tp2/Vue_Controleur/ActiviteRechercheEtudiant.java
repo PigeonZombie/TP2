@@ -44,6 +44,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      */
     public static final String ETUDIANTS_ACTUELS = "ETUDIANTS_ACTUELS";
     public static final String ETUDIANT_RECHERCHE = "ETUDIANT_RECHERCHE";
+    public static final String TEMPS_RESTANT = "TEMPS_RESTANT";
 
     /**
      * La partie s'occupe de gérer les joueurs, le temps et le pointage
@@ -97,12 +98,12 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
         partie.setObservateurFindMePartie(this);
 
+
         nomEtudiantAChercher = (TextView)findViewById(R.id.textViewNom);
         nomEtudiantAChercher.setText(partie.getProchainEtudiant().getNom());
 
         tempsRestantEtudiant = (TextView)findViewById(R.id.texteTempsEtudiant);
         tempsRestantPartie = (TextView)findViewById(R.id.texteTempsActivité);
-
     }
 
     /**
@@ -129,10 +130,9 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        outState.putLong(TEMPS_RESTANT, partie.pauserTemps());
         outState.putParcelableArrayList(ETUDIANTS_ACTUELS, partie.getListeEtudiants());
         outState.putParcelable(ETUDIANT_RECHERCHE, partie.getProchainEtudiant());
-
-        partie.pauserTemps();
     }
 
     /**
@@ -146,13 +146,14 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         super.onRestoreInstanceState(outState);
 
         //etudiants = outState.getParcelableArrayList(ETUDIANTS_ACTUELS);
-        if(outState.getParcelableArrayList(ETUDIANTS_ACTUELS)!=null) {
+        if(outState.getParcelableArrayList(ETUDIANTS_ACTUELS) != null) {
             partie.restorerEtudiants((ArrayList)outState.getParcelableArrayList(ETUDIANTS_ACTUELS));
             partie.setEtudiantATrouver((Etudiant)outState.getParcelable(ETUDIANT_RECHERCHE));
             nomEtudiantAChercher.setText(partie.getProchainEtudiant().getNom());
+
         }
 
-        partie.repartirTemps();
+        partie.repartirTemps(outState.getLong(TEMPS_RESTANT));
     }
 
     /**

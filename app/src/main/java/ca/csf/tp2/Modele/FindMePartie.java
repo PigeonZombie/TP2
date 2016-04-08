@@ -28,6 +28,7 @@ public class FindMePartie implements ObservateurMinuteur {
      */
     public FindMePartie(ArrayList<Etudiant> etudiants) {
         this.etudiants = etudiants;
+
     }
 
     /**
@@ -37,13 +38,13 @@ public class FindMePartie implements ObservateurMinuteur {
      * @param observateurFindMePartie quelle activité l'appel
      * @param minuteur                le minuteur relié
      */
-    public FindMePartie(ArrayList<Etudiant> etudiants,
+    /*public FindMePartie(ArrayList<Etudiant> etudiants,
                         ObservateurFindMePartie observateurFindMePartie, InterfaceMinuteur minuteur) {
         this.etudiants = etudiants;
 
         this.interfacerMinuteur = minuteur;
         this.observateurFindMePartie = observateurFindMePartie;
-    }
+    }*/
 
 
     /**
@@ -71,6 +72,7 @@ public class FindMePartie implements ObservateurMinuteur {
         this.interfacerMinuteur = new Minuteur(this);
         Collections.shuffle(etudiants);
     }
+
 
     /**
      * Retourne le prochain étudiant à trouver
@@ -171,12 +173,12 @@ public class FindMePartie implements ObservateurMinuteur {
         return false;
     }
 
-    public void pauserTemps(){
-        interfacerMinuteur.mettreLesMinuteursEnPause();
+    public long pauserTemps(){
+        return interfacerMinuteur.mettreLesMinuteursEnPause();
     }
 
-    public void repartirTemps(){
-        interfacerMinuteur.repartirLesMinuteurs();
+    public void repartirTemps(long tempsRestant){
+        interfacerMinuteur.repartirLesMinuteurs(tempsRestant);
     }
 
 }

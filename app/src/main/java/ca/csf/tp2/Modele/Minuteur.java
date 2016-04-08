@@ -17,7 +17,7 @@ import ca.csf.tp2.Modele.Portail.ObservateurMinuteur;
 public class Minuteur implements InterfaceMinuteur {
 
     public static final int DUREE_PARTIE = 120000;
-    public static final int DUREE_TROUVER_ETUDIANT = 5000;
+    public static final int DUREE_TROUVER_ETUDIANT = 15000;
     private ObservateurMinuteur observateurMinuteur = null;
     private Timer minuteurPartie = null;
     private Timer minuteurEtudiant = null;
@@ -72,6 +72,8 @@ public class Minuteur implements InterfaceMinuteur {
         Log.v("TIMER", "Arret d'un thread minuteur étudiant dans la reprise");
         minuteurPartie.cancel();
         Log.v("TIMER", "Arret d'un thread minuteur partie dans la reprise");
+
+        tempsPourEtudiant=tempsRestantPourEtudiant;
 
         minuteurPartie = new Timer();
         Log.v("TIMER","Creation d'un thread minuteur partie dans la reprise");
