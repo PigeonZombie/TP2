@@ -17,4 +17,6 @@ public interface InterfaceMinuteur {
 
     void repartirLesMinuteurs(long[] tempsRestant);
 
+    long[] obtenirTempsRestantPourLesMinuteurs();
+
 }

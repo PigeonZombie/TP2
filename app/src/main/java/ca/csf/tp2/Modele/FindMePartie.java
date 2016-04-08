@@ -63,6 +63,9 @@ public class FindMePartie implements ObservateurMinuteur {
             if (observateurFindMePartie != null)
                 observateurFindMePartie.notifierChangementEtudiantATrouver(getProchainEtudiant());
         }
+        else {
+            interfacerMinuteur.repartirLesMinuteurs(interfacerMinuteur.obtenirTempsRestantPourLesMinuteurs());
+        }
         if (etudiantScanne == null)
             observateurFindMePartie.notifierChangementEtudiantATrouver(null);
     }

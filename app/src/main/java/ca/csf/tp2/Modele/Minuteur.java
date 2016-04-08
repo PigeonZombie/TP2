@@ -93,6 +93,14 @@ public class Minuteur implements InterfaceMinuteur {
         minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), tempsRestant[1], DUREE_TROUVER_ETUDIANT);
     }
 
+    @Override
+    public long[] obtenirTempsRestantPourLesMinuteurs() {
+        long[] aRetourner = new long[2];
+        aRetourner[0] = tempsPourPartieTotale;
+        aRetourner[1] = tempsPourEtudiant;
+        return aRetourner;
+    }
+
 
     /**
      * Fonction appelée quand le temps alloué pour trouver un étudiant est fini.
