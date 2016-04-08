@@ -27,6 +27,7 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
  */
 public class ActiviteRechercheEtudiant extends AppCompatActivity implements ObservateurFindMePartie {
 
+    public static final String POINTAGE = "POINTAGE";
     /**
      * Le bouton dans la vue servant à ouvrir l'application de scan
      */
@@ -128,6 +129,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         outState.putLongArray(TEMPS_RESTANT, partie.pauserTemps());
         outState.putParcelableArrayList(ETUDIANTS_ACTUELS, partie.getListeEtudiants());
         outState.putParcelable(ETUDIANT_RECHERCHE, partie.getProchainEtudiant());
+        outState.putInt(POINTAGE,partie.getPointage());
     }
 
     /**
@@ -148,6 +150,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         }
 
         partie.repartirTemps(outState.getLongArray(TEMPS_RESTANT));
+        partie.setPointage(outState.getInt(POINTAGE));
     }
 
     /**
@@ -159,7 +162,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         public void onClick(View v) {
             // Utiliser la caméra pour scanner un code barre
             Intent barCodeIntent = new Intent("com.google.zxing.client.android.SCAN");
-            barCodeIntent.putExtra("SCAN_FORMATS","CODE_128");
+            barCodeIntent.putExtra("SCAN_FORMATS", "CODE_128");
             startActivityForResult(barCodeIntent, CODE_REQUETE);
         }
     };
