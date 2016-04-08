@@ -57,23 +57,28 @@ public class Minuteur implements InterfaceMinuteur {
     }
 
     @Override
-    public long mettreLesMinuteursEnPause() {
+    public long[] mettreLesMinuteursEnPause() {
+        long[] aRetourner = new long[2];
+        aRetourner[0] = tempsPourPartieTotale;
+        aRetourner[1] = tempsPourEtudiant;
         minuteurEtudiant.cancel();
         Log.v("TIMER", "Arret d'un thread minuteur étudiant dans la mise en pause");
         minuteurPartie.cancel();
         Log.v("TIMER", "Arret d'un thread minuteur partie dans la mise en pause");
-        return tempsPourEtudiant;
+
+        return aRetourner;
     }
 
     @Override
-    public void repartirLesMinuteurs(long tempsRestantPourEtudiant) {
+    public void repartirLesMinuteurs(long[] tempsRestant) {
 
         minuteurEtudiant.cancel();
         Log.v("TIMER", "Arret d'un thread minuteur étudiant dans la reprise");
         minuteurPartie.cancel();
         Log.v("TIMER", "Arret d'un thread minuteur partie dans la reprise");
 
-        tempsPourEtudiant=tempsRestantPourEtudiant;
+        tempsPourPartieTotale = tempsRestant[0];
+        tempsPourEtudiant=tempsRestant[1];
 
         minuteurPartie = new Timer();
         Log.v("TIMER","Creation d'un thread minuteur partie dans la reprise");
@@ -83,7 +88,7 @@ public class Minuteur implements InterfaceMinuteur {
         minuteurEtudiant = new Timer();
         Log.v("TIMER","creation d'un thread minuteur étudiant dans la reprise");
         minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(), 1, 1);
-        minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), tempsRestantPourEtudiant, DUREE_TROUVER_ETUDIANT);
+        minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), tempsRestant[1], DUREE_TROUVER_ETUDIANT);
     }
 
 

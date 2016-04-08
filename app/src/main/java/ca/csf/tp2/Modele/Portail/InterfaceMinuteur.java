@@ -13,8 +13,8 @@ public interface InterfaceMinuteur {
      */
     long quandEtudiantTrouvee();
 
-    long mettreLesMinuteursEnPause();
+    long[] mettreLesMinuteursEnPause();
 
-    void repartirLesMinuteurs(long tempsRestantPourEtudiant);
+    void repartirLesMinuteurs(long[] tempsRestant);
 
 }
