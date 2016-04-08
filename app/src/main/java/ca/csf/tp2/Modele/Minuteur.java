@@ -31,8 +31,8 @@ public class Minuteur implements InterfaceMinuteur {
         this.observateurMinuteur = _observateurMinuteur;
         minuteurPartie = new Timer();
         creerMinuteurEtudiant();
-        minuteurPartie.schedule(initialiserTacheMinuteurPartie(), DUREE_PARTIE,DUREE_PARTIE);
-        minuteurPartie.schedule(initialiserTachePourAfficherTempsPartieTotale(),1,1);
+        minuteurPartie.scheduleAtFixedRate(initialiserTacheMinuteurPartie(), DUREE_PARTIE, DUREE_PARTIE);
+        minuteurPartie.scheduleAtFixedRate(initialiserTachePourAfficherTempsPartieTotale(), 1, 1);
 
 
     }
@@ -63,12 +63,12 @@ public class Minuteur implements InterfaceMinuteur {
     public void repartirLesMinuteurs(long tempsRestantPourEtudiant) {
 
         minuteurPartie = new Timer();
-        minuteurPartie.schedule(initialiserTacheMinuteurPartie(),tempsPourPartieTotale);
-        minuteurPartie.schedule(initialiserTachePourAfficherTempsPartieTotale(), 1, 1);
+        minuteurPartie.scheduleAtFixedRate(initialiserTacheMinuteurPartie(), tempsPourPartieTotale);
+        minuteurPartie.scheduleAtFixedRate(initialiserTachePourAfficherTempsPartieTotale(), 1, 1);
 
         minuteurEtudiant = new Timer();
-        minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(),1,1);
-        minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), tempsRestantPourEtudiant,DUREE_TROUVER_ETUDIANT);
+        minuteurEtudiant.scheduleAtFixedRate(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(), 1, 1);
+        minuteurEtudiant.scheduleAtFixedRate(initialiserTacheMinuteurJoueurTempsTotal(), tempsRestantPourEtudiant, DUREE_TROUVER_ETUDIANT);
     }
 
 
@@ -149,8 +149,8 @@ public class Minuteur implements InterfaceMinuteur {
 
             minuteurEtudiant = new Timer();
         tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
-        minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(),1,1);
-        minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), DUREE_TROUVER_ETUDIANT,DUREE_TROUVER_ETUDIANT);
+        minuteurEtudiant.scheduleAtFixedRate(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(), 1, 1);
+        minuteurEtudiant.scheduleAtFixedRate(initialiserTacheMinuteurJoueurTempsTotal(), DUREE_TROUVER_ETUDIANT,DUREE_TROUVER_ETUDIANT);
     }
 
 }
