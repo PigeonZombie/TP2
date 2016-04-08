@@ -13,6 +13,7 @@ import ca.csf.tp2.Modele.Portail.InterfaceMinuteur;
 import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,8 +42,11 @@ public class FindMePartieTest extends TestCase {
         etudiants.add(new Etudiant("C","345678901234"));
         observateurFindMePartie = mock(ObservateurFindMePartie.class);
         interfacerMinuteur = mock(InterfaceMinuteur.class);
-        findMePartie = new FindMePartie(etudiants);
+        findMePartie = new FindMePartie(etudiants, observateurFindMePartie,interfacerMinuteur);
         when(interfacerMinuteur.quandEtudiantTrouvee()).thenReturn((long) 100);
+        long tempsTimers [] = new long[2];
+        when(interfacerMinuteur.mettreLesMinuteursEnPause()).thenReturn(tempsTimers);
+
     }
 
 
@@ -59,12 +63,6 @@ public class FindMePartieTest extends TestCase {
     }
 
 
-    public void testGetEtudiantParCodeRetournerAutreEtudiant() throws Exception {
-        findMePartie.getEtudiantParCode("123456789000");
-        verify(observateurFindMePartie,times(1)).notifierChangementEtudiantATrouver(etudiants.get(1));
-    }
-
-
     public void testGetEtudiantParCodeMauvaisEtudiant() throws Exception {
         findMePartie.getEtudiantParCode("Badger");
         verify(observateurFindMePartie,times(1)).notifierChangementEtudiantATrouver(null);
@@ -72,9 +70,9 @@ public class FindMePartieTest extends TestCase {
 
 
     public void testGetProchainEtudiantListeNonVide() throws Exception {
-        Assert.assertEquals(etudiants.get(0),findMePartie.getProchainEtudiant());
+        Assert.assertEquals(etudiants.get(0), findMePartie.getProchainEtudiant());
         etudiants.remove(0);
-        Assert.assertEquals(etudiants.get(1), findMePartie.getProchainEtudiant());
+        Assert.assertEquals(etudiants.get(0), findMePartie.getProchainEtudiant());
     }
 
 
@@ -100,14 +98,14 @@ public class FindMePartieTest extends TestCase {
     }
 
     public void testSetEtudiantATrouverEtudiantExistant(){
-        findMePartie.setEtudiantATrouver(etudiants.get(0));
+        assertTrue(findMePartie.setEtudiantATrouver(etudiants.get(0)));
         assertEquals(etudiants.get(0), findMePartie.getProchainEtudiant());
     }
 
     public void testSetEtudiantATrouverEtudiantInexistant(){
         Etudiant etudiant = new Etudiant("D", "012345567789");
-        findMePartie.setEtudiantATrouver(etudiant);
-        assertEquals(etudiants.get(0),findMePartie.getProchainEtudiant());
+        assertFalse(findMePartie.setEtudiantATrouver(etudiant));
+        assertEquals(etudiants.get(0), findMePartie.getProchainEtudiant());
     }
 
     public void testRestorerEtudiantListeNonVide(){
@@ -156,4 +154,47 @@ public class FindMePartieTest extends TestCase {
         assertFalse(partie.getListeEtudiants().equals(listeOriginale));
     }
 
+    public void testSetPointagePositif(){
+        assertTrue(findMePartie.getPointage()==0);
+        findMePartie.setPointage(43221);
+        assertTrue(findMePartie.getPointage() == 43221);
+    }
+
+    public void testSetPointageNegatif(){
+        assertTrue(findMePartie.getPointage()==0);
+        findMePartie.setPointage(-43221);
+        assertTrue(findMePartie.getPointage() == 0);
+    }
+
+    public void testRepartirTempsValide(){
+        long temps [] = new long[2];
+        temps[0] = 123145;
+        temps[1] = 1234325544;
+        assertTrue(findMePartie.repartirTemps(temps));
+    }
+
+    public void testRepartirTempsNulle(){
+        assertFalse(findMePartie.repartirTemps(null));
+    }
+
+    public void testRepartirTempsMauvaiseTailleTableau(){
+        long temps [] = new long[3];
+        temps[0] = 123145;
+        temps[1] = 1234325544;
+        temps[2] = 442363;
+        assertFalse(findMePartie.repartirTemps(temps));
+    }
+
+    public void testPauserTempsRetourneTableauDeTaille2(){
+        long tableauTest [] = findMePartie.pauserTemps();
+
+        assertEquals(2, tableauTest.length);
+        assertNotNull(tableauTest[0]);
+        assertNotNull(tableauTest[1]);
+    }
+
+    /*public void testNotifierFinPartieAppelee(){
+
+        verify(observateurFindMePartie,times(1)).notifierTempsPourLaPartieFinie(findMePartie.getPointage());
+    }*/
 }
