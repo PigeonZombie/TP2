@@ -38,13 +38,13 @@ public class FindMePartie implements ObservateurMinuteur {
      * @param observateurFindMePartie quelle activité l'appel
      * @param minuteur                le minuteur relié
      */
-    /*public FindMePartie(ArrayList<Etudiant> etudiants,
+    public FindMePartie(ArrayList<Etudiant> etudiants,
                         ObservateurFindMePartie observateurFindMePartie, InterfaceMinuteur minuteur) {
         this.etudiants = etudiants;
 
         this.interfacerMinuteur = minuteur;
         this.observateurFindMePartie = observateurFindMePartie;
-    }*/
+    }
 
 
     /**
@@ -73,7 +73,13 @@ public class FindMePartie implements ObservateurMinuteur {
     public void setObservateurFindMePartie(ObservateurFindMePartie observateurFindMePartie) {
         this.observateurFindMePartie = observateurFindMePartie;
         this.interfacerMinuteur = new Minuteur(this);
-        Collections.shuffle(etudiants);
+        melangerListe();
+    }
+
+    private void melangerListe(){
+        ArrayList<Etudiant> listeOriginale = new ArrayList<>(etudiants);
+        while (etudiants.equals(listeOriginale))
+            Collections.shuffle(etudiants);
     }
 
 
@@ -103,32 +109,28 @@ public class FindMePartie implements ObservateurMinuteur {
         return etudiants;
     }
 
-    /**
-     * Obtenir le pointage du joueur
-     *
-     * @return le pointage du joueur
-     */
+    /// Obtenir le pointage du joueur
     public int getPointage() {
         return pointage;
     }
 
     public void setPointage(int pointage){
-        this.pointage = pointage;
+        if(pointage >=0)
+            this.pointage = pointage;
     }
 
-    public void setEtudiantATrouver(Etudiant etudiantATrouver) {
+    public boolean setEtudiantATrouver(Etudiant etudiantATrouver) {
         for (int i = 0; i < etudiants.size(); i++) {
             if (etudiants.get(i).getCode().matches(etudiantATrouver.getCode())) {
                 etudiants.add(0, etudiantATrouver);
                 etudiants.remove(i + 1);
-                break;
+                return true;
             }
         }
+        return false;
     }
 
-    /**
-     * Envoie le message que le temps pour trouver un étudiant est expiré et envoie un nouvel étudiant
-     */
+    ///Envoie le message que le temps pour trouver un étudiant est expiré et envoie un nouvel étudiant
     @Override
     public void notifierTempsTrouverEtudiantExpire() {
         if(etudiants.size()>0) {
@@ -148,21 +150,13 @@ public class FindMePartie implements ObservateurMinuteur {
         observateurFindMePartie.notifierTempsPourLaPartieFinie(pointage);
     }
 
-    /**
-     * Envoie à la vue le temps  restant pour trouver un joueur
-     *
-     * @param tempsRestant Le temps restant en long
-     */
+    ///Envoie à la vue le temps  restant pour trouver un joueur
     @Override
     public void notifierChangementAuTempsRestantPourJoueur(long tempsRestant) {
         observateurFindMePartie.notifierDiminutionDuTempsPourTrouverUnEtudiant(tempsRestant);
     }
 
-    /**
-     * Envoie à la vue le temps s restant pour trouver un joueur
-     *
-     * @param tempsRestant Le temps restant en long
-     */
+    /// Envoie à la vue le temps restant pour trouver un joueur
     @Override
     public void notifierChangementAuTempsRestantPourPartieTotale(long tempsRestant) {
         observateurFindMePartie.notifierDIminutionDuTempsPourLaPArtieTotale(tempsRestant);
@@ -184,8 +178,13 @@ public class FindMePartie implements ObservateurMinuteur {
         return interfacerMinuteur.mettreLesMinuteursEnPause();
     }
 
-    public void repartirTemps(long[] tempsRestant){
-        interfacerMinuteur.repartirLesMinuteurs(tempsRestant);
+    public boolean repartirTemps(long[] tempsRestant){
+        if(tempsRestant != null && tempsRestant.length==2) {
+            interfacerMinuteur.repartirLesMinuteurs(tempsRestant);
+            return true;
+        }
+        else
+            return false;
     }
 
 }
