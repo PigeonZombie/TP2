@@ -53,21 +53,22 @@ public class Minuteur implements InterfaceMinuteur {
     }
 
     @Override
-    public void mettreLesMinuteursEnPause() {
+    public long mettreLesMinuteursEnPause() {
         minuteurEtudiant.cancel();
         minuteurPartie.cancel();
+        return tempsPourEtudiant;
     }
 
     @Override
-    public void repartirLesMinuteurs() {
+    public void repartirLesMinuteurs(long tempsRestantPourEtudiant) {
 
         minuteurPartie = new Timer();
         minuteurPartie.schedule(initialiserTacheMinuteurPartie(),tempsPourPartieTotale);
         minuteurPartie.schedule(initialiserTachePourAfficherTempsPartieTotale(), 1, 1);
 
         minuteurEtudiant = new Timer();
-        minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), tempsPourEtudiant,DUREE_TROUVER_ETUDIANT);
         minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(),1,1);
+        minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), tempsRestantPourEtudiant,DUREE_TROUVER_ETUDIANT);
     }
 
 
