@@ -26,7 +26,7 @@ import ca.csf.tp2.R;
  */
 public class ActiviteDepart extends AppCompatActivity implements  TacheTelechargerListeEtudiant.Callback {
     /**
-     * Le bouton dans la vue activity_main permettant au joueur d'ouvrir une application
+     * Le bouton dans la vue activity_debut permettant au joueur d'ouvrir une application
      * pour scanner un code barre
      */
     private Button scanButton;
@@ -67,7 +67,7 @@ public class ActiviteDepart extends AppCompatActivity implements  TacheTelecharg
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_debut);
 
         scanButton = (Button) findViewById(R.id.buttonScan);
         scanButton.setOnClickListener(clickScan);

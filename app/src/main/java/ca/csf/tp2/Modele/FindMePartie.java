@@ -173,11 +173,11 @@ public class FindMePartie implements ObservateurMinuteur {
         return false;
     }
 
-    public long pauserTemps(){
+    public long[] pauserTemps(){
         return interfacerMinuteur.mettreLesMinuteursEnPause();
     }
 
-    public void repartirTemps(long tempsRestant){
+    public void repartirTemps(long[] tempsRestant){
         interfacerMinuteur.repartirLesMinuteurs(tempsRestant);
     }
 

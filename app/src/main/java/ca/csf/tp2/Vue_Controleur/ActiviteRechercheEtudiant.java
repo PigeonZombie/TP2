@@ -83,12 +83,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         boutonMenu.setText(R.string.MenuPrincipal);
 
         Intent extras = getIntent();
-        //etudiants = new ArrayList<Etudiant>();
 
-        /*if(extras!=null /*&& etudiants.isEmpty()) {
-            etudiants = extras.getParcelableArrayListExtra(ETUDIANTS_ACTUELS);
-        }*/
-       /* else*/
 
         partie = new FindMePartie((ArrayList)extras.getParcelableArrayListExtra(ETUDIANTS_ACTUELS));
         if(savedInstanceState!=null){
@@ -130,7 +125,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putLong(TEMPS_RESTANT, partie.pauserTemps());
+        outState.putLongArray(TEMPS_RESTANT, partie.pauserTemps());
         outState.putParcelableArrayList(ETUDIANTS_ACTUELS, partie.getListeEtudiants());
         outState.putParcelable(ETUDIANT_RECHERCHE, partie.getProchainEtudiant());
     }
@@ -145,7 +140,6 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     protected void onRestoreInstanceState(Bundle outState) {
         super.onRestoreInstanceState(outState);
 
-        //etudiants = outState.getParcelableArrayList(ETUDIANTS_ACTUELS);
         if(outState.getParcelableArrayList(ETUDIANTS_ACTUELS) != null) {
             partie.restorerEtudiants((ArrayList)outState.getParcelableArrayList(ETUDIANTS_ACTUELS));
             partie.setEtudiantATrouver((Etudiant)outState.getParcelable(ETUDIANT_RECHERCHE));
@@ -153,7 +147,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
         }
 
-        partie.repartirTemps(outState.getLong(TEMPS_RESTANT));
+        partie.repartirTemps(outState.getLongArray(TEMPS_RESTANT));
     }
 
     /**
