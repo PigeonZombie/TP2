@@ -32,7 +32,7 @@ public class Minuteur implements InterfaceMinuteur {
     public Minuteur(ObservateurMinuteur _observateurMinuteur){
         this.observateurMinuteur = _observateurMinuteur;
         minuteurPartie = new Timer();
-        Log.v("TIMER","Arret d'un thread minuteur Partie dans le constructeur");
+        Log.v("TIMER","Création d'un thread minuteur Partie dans le constructeur");
         creerMinuteurEtudiant();
         minuteurPartie.schedule(initialiserTacheMinuteurPartie(), DUREE_PARTIE, DUREE_PARTIE);
         minuteurPartie.schedule(initialiserTachePourAfficherTempsPartieTotale(), 1, 1);
@@ -67,6 +67,11 @@ public class Minuteur implements InterfaceMinuteur {
 
     @Override
     public void repartirLesMinuteurs(long tempsRestantPourEtudiant) {
+
+        minuteurEtudiant.cancel();
+        Log.v("TIMER", "Arret d'un thread minuteur étudiant dans la reprise");
+        minuteurPartie.cancel();
+        Log.v("TIMER", "Arret d'un thread minuteur partie dans la reprise");
 
         minuteurPartie = new Timer();
         Log.v("TIMER","Creation d'un thread minuteur partie dans la reprise");
