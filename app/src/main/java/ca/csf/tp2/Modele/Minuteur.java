@@ -51,8 +51,10 @@ public class Minuteur implements InterfaceMinuteur {
         long aRetourner = tempsPourEtudiant;
         minuteurEtudiant.cancel();
         Log.v("TIMER", "Arret d'un thread minuteur étudiant dans quand étudiant trouvé");
-        //minuteurEtudiant = null;
-        creerMinuteurEtudiant();
+        long[] tableauPourTemps = new long[2];
+        tableauPourTemps[0] = tempsPourPartieTotale;
+        tableauPourTemps[1] = tempsPourEtudiant;
+        repartirLesMinuteurs(tableauPourTemps);
         return aRetourner;
     }
 
@@ -78,7 +80,7 @@ public class Minuteur implements InterfaceMinuteur {
         Log.v("TIMER", "Arret d'un thread minuteur partie dans la reprise");
 
         tempsPourPartieTotale = tempsRestant[0];
-        tempsPourEtudiant=tempsRestant[1];
+        tempsPourEtudiant = tempsRestant[1];
 
         minuteurPartie = new Timer();
         Log.v("TIMER","Creation d'un thread minuteur partie dans la reprise");
