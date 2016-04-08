@@ -112,6 +112,10 @@ public class FindMePartie implements ObservateurMinuteur {
         return pointage;
     }
 
+    public void setPointage(int pointage){
+        this.pointage = pointage;
+    }
+
     public void setEtudiantATrouver(Etudiant etudiantATrouver) {
         for (int i = 0; i < etudiants.size(); i++) {
             if (etudiants.get(i).getCode().matches(etudiantATrouver.getCode())) {
