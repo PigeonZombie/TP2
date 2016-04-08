@@ -1,5 +1,6 @@
 package ca.csf.tp2.Modele;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.Timer;
@@ -16,8 +17,8 @@ import ca.csf.tp2.Modele.Portail.ObservateurMinuteur;
  */
 public class Minuteur implements InterfaceMinuteur {
 
-    public static final int DUREE_PARTIE = 120000;
-    public static final int DUREE_TROUVER_ETUDIANT = 15000;
+    public static final long DUREE_PARTIE = 120000;
+    public static final long DUREE_TROUVER_ETUDIANT = 15000;
     private ObservateurMinuteur observateurMinuteur = null;
     private Timer minuteurPartie = null;
     private Timer minuteurEtudiant = null;
@@ -31,7 +32,7 @@ public class Minuteur implements InterfaceMinuteur {
      */
     public Minuteur(ObservateurMinuteur _observateurMinuteur){
         this.observateurMinuteur = _observateurMinuteur;
-        minuteurPartie = new Timer();
+        minuteurPartie = getTimer();
         creerMinuteurEtudiant();
         minuteurPartie.schedule(initialiserTacheMinuteurPartie(), DUREE_PARTIE, DUREE_PARTIE);
         minuteurPartie.schedule(initialiserTachePourAfficherTempsPartieTotale(), 1, 1);
@@ -71,7 +72,7 @@ public class Minuteur implements InterfaceMinuteur {
     @Override
     public void repartirLesMinuteurs(long[] tempsRestant) {
 
-        if (tempsRestant.length != 2 || tempsRestant[0] < 0 || tempsRestant[1] < 0) {
+        if (tempsRestant.length == 2 || tempsRestant[0] > 0 || tempsRestant[1] > 0) {
             minuteurEtudiant.cancel();
 
             minuteurPartie.cancel();
@@ -80,16 +81,21 @@ public class Minuteur implements InterfaceMinuteur {
             tempsPourPartieTotale = tempsRestant[0];
             tempsPourEtudiant = tempsRestant[1];
 
-            minuteurPartie = new Timer();
+            minuteurPartie = getTimer();
 
             minuteurPartie.schedule(initialiserTacheMinuteurPartie(), tempsPourPartieTotale);
             minuteurPartie.schedule(initialiserTachePourAfficherTempsPartieTotale(), 1, 1);
 
-            minuteurEtudiant = new Timer();
+            minuteurEtudiant = getTimer();
 
             minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(), 1, 1);
             minuteurEtudiant.schedule(initialiserTacheMinuteurJoueurTempsTotal(), tempsRestant[1], DUREE_TROUVER_ETUDIANT);
         }
+    }
+
+    @NonNull
+    protected Timer getTimer() {
+        return new Timer();
     }
 
     @Override
@@ -176,7 +182,7 @@ public class Minuteur implements InterfaceMinuteur {
      */
     private void creerMinuteurEtudiant(){
 
-            minuteurEtudiant = new Timer();
+            minuteurEtudiant = getTimer();
 
         tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
         minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(), 1, 1);
