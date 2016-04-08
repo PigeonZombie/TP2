@@ -1,11 +1,7 @@
 package ca.csf.tp2.Modele;
 
-import android.opengl.ETC1;
-
 import junit.framework.Assert;
 import junit.framework.TestCase;
-
-import org.junit.Test;
 
 import java.util.ArrayList;
 

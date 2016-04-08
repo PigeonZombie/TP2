@@ -1,7 +1,6 @@
 package ca.csf.tp2.Modele;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;

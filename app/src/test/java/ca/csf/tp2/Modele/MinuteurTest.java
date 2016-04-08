@@ -1,29 +1,22 @@
 package ca.csf.tp2.Modele;
 
-import android.opengl.ETC1;
 import android.support.annotation.NonNull;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ca.csf.tp2.Modele.Portail.InterfaceMinuteur;
 import ca.csf.tp2.Modele.Portail.ObservateurMinuteur;
-import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by Felix on 2016-04-08.
