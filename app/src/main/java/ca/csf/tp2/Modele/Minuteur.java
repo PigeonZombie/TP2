@@ -46,7 +46,6 @@ public class Minuteur implements InterfaceMinuteur {
     @Override
     public long quandEtudiantTrouvee() {
         long aRetourner = tempsPourEtudiant;
-        tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
         minuteurEtudiant.cancel();
         //minuteurEtudiant = null;
         creerMinuteurEtudiant();
