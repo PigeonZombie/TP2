@@ -41,7 +41,7 @@ public class FindMePartieTest extends TestCase {
         etudiants.add(new Etudiant("C","345678901234"));
         observateurFindMePartie = mock(ObservateurFindMePartie.class);
         interfacerMinuteur = mock(InterfaceMinuteur.class);
-        findMePartie = new FindMePartie(etudiants,observateurFindMePartie, interfacerMinuteur);
+        findMePartie = new FindMePartie(etudiants);
         when(interfacerMinuteur.quandEtudiantTrouvee()).thenReturn((long) 100);
     }
 

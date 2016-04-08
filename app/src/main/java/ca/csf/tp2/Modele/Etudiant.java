@@ -45,11 +45,6 @@ public class Etudiant implements Parcelable{
             this.code = new String("defaut");
     }
 
-    // Constructeur utilisé uniquement par l'ObjectMapper lorsque
-    // la liste d'étudiants est obtenue sur le serveur
-    public Etudiant(){
-
-    }
 
     /**
      * Constructeur privé pour le parcelable
