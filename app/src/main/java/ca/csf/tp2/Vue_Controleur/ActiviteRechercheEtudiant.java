@@ -216,6 +216,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
             Intent intent = new Intent(this, ActiviteFin.class);
             intent.putExtra(ActiviteFin.SCORE, partie.getPointage());
             finish();
+            partie.pauserTemps();
             startActivity(intent);
         }
         else{
