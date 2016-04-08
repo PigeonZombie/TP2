@@ -68,8 +68,14 @@ public class MinuteurTest {
     }
 
     @Test
-    public void peutMettreLEsMinuteursEnPauseLorsDeLaFonctionPause() throws Exception {
+    public void peutMettreLEsMinuteursEnPauseLorsDeLaFonctionReprise() throws Exception {
         minuteur.repartirLesMinuteurs(liste);
+        verify(timer, times(2)).cancel();
+    }
+
+    @Test
+    public void peutMettreLEsMinuteursEnPauseLorsDeLaFonctionPause() throws Exception {
+        minuteur.mettreLesMinuteursEnPause();
         verify(timer, times(2)).cancel();
     }
 
