@@ -51,6 +51,7 @@ public class Minuteur implements InterfaceMinuteur {
         long aRetourner = tempsPourEtudiant;
         minuteurEtudiant.cancel();
         Log.v("TIMER", "Arret d'un thread minuteur étudiant dans quand étudiant trouvé");
+        tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
         long[] tableauPourTemps = new long[2];
         tableauPourTemps[0] = tempsPourPartieTotale;
         tableauPourTemps[1] = tempsPourEtudiant;
