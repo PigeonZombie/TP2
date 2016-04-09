@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ca.csf.tp2.Modele.FindMePartie;
 import ca.csf.tp2.Modele.Etudiant;
 import ca.csf.tp2.Modele.TacheTelechargerListeEtudiant;
 import ca.csf.tp2.R;
@@ -35,7 +34,8 @@ public class ActiviteDepart extends AppCompatActivity implements  TacheTelecharg
 
     private ProgressBar barreProgression;
 
-    FindMePartie partie;
+    //private PortailPartie partie;
+    private ControleurDepart controleurDepart;
 
     /**
      * Le code qui sert à s'assurer que le résultat de l'activité de scan
@@ -84,7 +84,9 @@ public class ActiviteDepart extends AppCompatActivity implements  TacheTelecharg
             etudiantsRestants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
         }
 
-        partie = new FindMePartie(null);
+        controleurDepart = new ControleurDepart(this);
+
+        //partie.demarrerPartie(null,null);
     }
 
     /**
@@ -98,7 +100,8 @@ public class ActiviteDepart extends AppCompatActivity implements  TacheTelecharg
         // Si notre liste comprend déjà des étudiants, on la réassigne dans le
         // modèle de données via le contrôleur
         if (etudiantsRestants != null)
-            partie.restorerEtudiants(etudiantsRestants);
+            controleurDepart.restorerEtudiantsPartie(etudiantsRestants);
+            //partie.restorerEtudiants(etudiantsRestants);
         else {
             barreProgression.setVisibility(View.VISIBLE);
             scanButton.setVisibility(View.INVISIBLE);
@@ -152,7 +155,7 @@ public class ActiviteDepart extends AppCompatActivity implements  TacheTelecharg
             if (resultCode == Activity.RESULT_OK) {
                 codeEtudiant = data.getStringExtra("SCAN_RESULT");
                 //String messageErreur = controleur.validerEntreeUtilisateur(codeEtudiant);
-                if (partie.enleverEtudiantParCode(codeEtudiant)) {
+                if (controleurDepart.enleverEtudiantParCode(codeEtudiant)) {
                     Intent partie = new Intent(this, ActiviteRechercheEtudiant.class);
                     partie.putExtra(ActiviteRechercheEtudiant.ETUDIANTS_ACTUELS, etudiantsRestants);
                     finish();
@@ -189,7 +192,7 @@ public class ActiviteDepart extends AppCompatActivity implements  TacheTelecharg
         super.onRestoreInstanceState(outState);
         etudiantsRestants = outState.getParcelableArrayList(ETUDIANTS_ACTUELS);
         if (etudiantsRestants != null)
-            partie.restorerEtudiants(etudiantsRestants);
+            controleurDepart.restorerEtudiantsPartie(etudiantsRestants);
     }
 
 
@@ -200,7 +203,7 @@ public class ActiviteDepart extends AppCompatActivity implements  TacheTelecharg
             texteBienvenue.setText(R.string.ErreurConnexion);
             scanButton.setVisibility(View.INVISIBLE);
         } else {
-            partie.restorerEtudiants(this.etudiantsRestants);
+            controleurDepart.restorerEtudiantsPartie(this.etudiantsRestants);
             scanButton.setVisibility(View.VISIBLE);
         }
         barreProgression.setVisibility(View.INVISIBLE);

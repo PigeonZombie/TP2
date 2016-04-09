@@ -145,8 +145,8 @@ public class FindMePartieTest extends TestCase {
 
     public void testSetObservateurShuffleListeEtudiants(){
         ArrayList<Etudiant> listeOriginale = new ArrayList<>(etudiants);
-        FindMePartie partie = new FindMePartie(etudiants);
-        partie.setObservateurFindMePartie(observateurFindMePartie);
+        FindMePartie partie = new FindMePartie(etudiants,observateurFindMePartie,interfacerMinuteur);
+        //partie.setObservateurFindMePartie(observateurFindMePartie);
         assertFalse(partie.getListeEtudiants().equals(listeOriginale));
     }
 

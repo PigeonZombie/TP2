@@ -17,19 +17,22 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
 public class FindMePartie implements ObservateurMinuteur {
 
     private ArrayList<Etudiant> etudiants;
-    private int pointage = 0;
+    private long pointage = 0;
     private ObservateurFindMePartie observateurFindMePartie;
-    private InterfaceMinuteur interfacerMinuteur;
+    private InterfaceMinuteur interfaceMinuteur;
 
     /**
      * Constructeur de la classe
      *
      * @param etudiants La liste d'étudiant
      */
-    public FindMePartie(ArrayList<Etudiant> etudiants) {
+     public FindMePartie(ArrayList<Etudiant> etudiants, ObservateurFindMePartie observateurFindMePartie) {
         this.etudiants = etudiants;
-
+        this.observateurFindMePartie = observateurFindMePartie;
+         if(etudiants!=null)
+             melangerListe();
     }
+
 
     /**
      * Constructeur de la classe ne servant qu'aux tests
@@ -42,8 +45,8 @@ public class FindMePartie implements ObservateurMinuteur {
                         ObservateurFindMePartie observateurFindMePartie, InterfaceMinuteur minuteur) {
         this.etudiants = etudiants;
 
-        this.interfacerMinuteur = minuteur;
         this.observateurFindMePartie = observateurFindMePartie;
+        this.interfaceMinuteur = minuteur;
     }
 
 
@@ -59,21 +62,20 @@ public class FindMePartie implements ObservateurMinuteur {
         if (etudiants.get(0).getCode().matches(code)) {
             etudiantScanne = etudiants.get(0);
             etudiants.remove(0);
-            pointage += interfacerMinuteur.quandEtudiantTrouvee();
+            pointage += interfaceMinuteur.quandEtudiantTrouvee();
             if (observateurFindMePartie != null)
                 observateurFindMePartie.notifierChangementEtudiantATrouver(getProchainEtudiant());
         }
         else {
-            interfacerMinuteur.repartirLesMinuteurs(interfacerMinuteur.obtenirTempsRestantPourLesMinuteurs());
+            interfaceMinuteur.repartirLesMinuteurs(interfaceMinuteur.obtenirTempsRestantPourLesMinuteurs());
         }
         if (etudiantScanne == null)
             observateurFindMePartie.notifierChangementEtudiantATrouver(null);
     }
 
-    public void setObservateurFindMePartie(ObservateurFindMePartie observateurFindMePartie) {
-        this.observateurFindMePartie = observateurFindMePartie;
-        this.interfacerMinuteur = new Minuteur(this);
-        melangerListe();
+
+    public void reinitialiserInterfaceMinuteur(){
+        this.interfaceMinuteur = new Minuteur(this);
     }
 
     private void melangerListe(){
@@ -110,11 +112,11 @@ public class FindMePartie implements ObservateurMinuteur {
     }
 
     /// Obtenir le pointage du joueur
-    public int getPointage() {
+    public long getPointage() {
         return pointage;
     }
 
-    public void setPointage(int pointage){
+    public void setPointage(long pointage){
         if(pointage >=0)
             this.pointage = pointage;
     }
@@ -175,16 +177,20 @@ public class FindMePartie implements ObservateurMinuteur {
     }
 
     public long[] pauserTemps(){
-        return interfacerMinuteur.mettreLesMinuteursEnPause();
+        return interfaceMinuteur.mettreLesMinuteursEnPause();
     }
 
     public boolean repartirTemps(long[] tempsRestant){
         if(tempsRestant != null && tempsRestant.length==2) {
-            interfacerMinuteur.repartirLesMinuteurs(tempsRestant);
+            interfaceMinuteur.repartirLesMinuteurs(tempsRestant);
             return true;
         }
         else
             return false;
     }
 
+
+
+
 }
+

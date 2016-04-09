@@ -27,7 +27,7 @@ public class ActiviteFin extends AppCompatActivity {
     /**
      * Le pointage final du joueur
      */
-    Integer pointage;
+    Long pointage;
     /**
      * Le texte qui affiche le score du joueur
      */
@@ -67,20 +67,11 @@ public class ActiviteFin extends AppCompatActivity {
 
         Intent extras = getIntent();
         if(extras!=null){
-            pointage = extras.getIntExtra(SCORE,0);
+            pointage = extras.getLongExtra(SCORE, 0);
             score.setText(pointage.toString());
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     /**
      * Sauvegarde le pointage du joueur pour le restorer à la reprise de l'application.
@@ -94,7 +85,7 @@ public class ActiviteFin extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(SCORE, pointage);
+        outState.putLong(SCORE, pointage);
     }
 
      /**
@@ -109,7 +100,7 @@ public class ActiviteFin extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        pointage = savedInstanceState.getInt(SCORE);
+        pointage = savedInstanceState.getLong(SCORE);
         score.setText(pointage.toString());
     }
 

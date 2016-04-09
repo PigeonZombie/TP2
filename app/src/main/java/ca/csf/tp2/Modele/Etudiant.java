@@ -39,11 +39,13 @@ public class Etudiant implements Parcelable{
      */
     public Etudiant(String nom, String code){
         if(!setNom(nom))
-            this.nom = new String("defaut");
+            this.nom = "defaut";
 
         if(!setCode(code))
-            this.code = new String("defaut");
+            this.code = "defaut";
     }
+
+    public Etudiant(){}
 
 
     /**
@@ -125,7 +127,7 @@ public class Etudiant implements Parcelable{
         if(nom!=null) {
             nom = nom.trim();
             if(nom.length()>0) {
-                this.nom = new String(nom);
+                this.nom = nom;
                 return true;
             }
         }

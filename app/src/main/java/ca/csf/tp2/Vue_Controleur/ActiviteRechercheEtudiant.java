@@ -50,7 +50,8 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     /**
      * La partie s'occupe de gérer les joueurs, le temps et le pointage
      */
-    private FindMePartie partie;
+    private ControleurRecherche controleur;
+
     /**
      * La liste d'étudiants à trouver
      */
@@ -67,7 +68,6 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      * liste d'étudiants et la restore au besoin, démarre un nouvelle partie
      * et affiche le nom de l'étudiant à trouver
      * @param savedInstanceState le bundle contenant les paramètres sauvegardées
-     * @see ActiviteRechercheEtudiant#partie
      * @see ActiviteRechercheEtudiant#nomEtudiantAChercher
      */
     @Override
@@ -85,35 +85,14 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
         Intent extras = getIntent();
 
-
-        partie = new FindMePartie((ArrayList)extras.getParcelableArrayListExtra(ETUDIANTS_ACTUELS));
-        if(savedInstanceState!=null){
-            //etudiants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
-            partie.restorerEtudiants((ArrayList)savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS));
-        }
-
-        partie.setObservateurFindMePartie(this);
+        controleur = new ControleurRecherche(this,(ArrayList)extras.getParcelableArrayListExtra(ETUDIANTS_ACTUELS),this);
 
 
         nomEtudiantAChercher = (TextView)findViewById(R.id.textViewNom);
-        nomEtudiantAChercher.setText(partie.getProchainEtudiant().getNom());
+        nomEtudiantAChercher.setText(controleur.getProchainEtudiant().getNom());
 
         tempsRestantEtudiant = (TextView)findViewById(R.id.texteTempsEtudiant);
         tempsRestantPartie = (TextView)findViewById(R.id.texteTempsActivité);
-    }
-
-    /**
-     * Restore la liste d'étudiants dans le modèle de données (FindMePartie)
-     * @see FindMePartie#restorerEtudiants(ArrayList)
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // Si notre liste comprend déjà des étudiants, on la réassigne dans le
-        // modèle de données (dans la partie)
-        /*if(etudiants!=null){
-            partie.restorerEtudiants(etudiants); }*/
     }
 
     /**
@@ -126,10 +105,10 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putLongArray(TEMPS_RESTANT, partie.pauserTemps());
-        outState.putParcelableArrayList(ETUDIANTS_ACTUELS, partie.getListeEtudiants());
-        outState.putParcelable(ETUDIANT_RECHERCHE, partie.getProchainEtudiant());
-        outState.putInt(POINTAGE,partie.getPointage());
+        outState.putLongArray(TEMPS_RESTANT, controleur.pause());
+        outState.putParcelableArrayList(ETUDIANTS_ACTUELS, controleur.getTousLesEtudiants());
+        outState.putParcelable(ETUDIANT_RECHERCHE, controleur.getProchainEtudiant());
+        outState.putLong(POINTAGE, controleur.getPointage());
     }
 
     /**
@@ -143,14 +122,14 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         super.onRestoreInstanceState(outState);
 
         if(outState.getParcelableArrayList(ETUDIANTS_ACTUELS) != null) {
-            partie.restorerEtudiants((ArrayList)outState.getParcelableArrayList(ETUDIANTS_ACTUELS));
-            partie.setEtudiantATrouver((Etudiant)outState.getParcelable(ETUDIANT_RECHERCHE));
-            nomEtudiantAChercher.setText(partie.getProchainEtudiant().getNom());
+            controleur.restorerListeEtudiants((ArrayList)outState.getParcelableArrayList(ETUDIANTS_ACTUELS));
+            controleur.setEtudiantATrouver((Etudiant)outState.getParcelable(ETUDIANT_RECHERCHE));
+            nomEtudiantAChercher.setText(controleur.getProchainEtudiant().getNom());
 
         }
 
-        partie.repartirTemps(outState.getLongArray(TEMPS_RESTANT));
-        partie.setPointage(outState.getInt(POINTAGE));
+        controleur.recommencer(outState.getLongArray(TEMPS_RESTANT));
+        controleur.setPointage(outState.getLong(POINTAGE));
     }
 
     /**
@@ -187,7 +166,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
         if(requestCode == CODE_REQUETE){
             if(resultCode == Activity.RESULT_OK){
-                partie.getEtudiantParCode(data.getStringExtra("SCAN_RESULT"));
+                controleur.getEtudiantParCode(data.getStringExtra("SCAN_RESULT"));
             }
         }
     }
@@ -212,11 +191,11 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         if(etudiant!=null){
             nomEtudiantAChercher.setText(etudiant.getNom());
         }
-        else if(partie.getProchainEtudiant() == null){
+        else if(controleur.getProchainEtudiant() == null){
             Intent intent = new Intent(this, ActiviteFin.class);
-            intent.putExtra(ActiviteFin.SCORE, partie.getPointage());
+            intent.putExtra(ActiviteFin.SCORE, controleur.getPointage());
             finish();
-            partie.pauserTemps();
+            controleur.pause();
             startActivity(intent);
         }
         else{
@@ -300,6 +279,4 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         });
     }
 
-
-    //TODO Rafrachir  le temps restant pour trouver joueur et pour la partie
 }
