@@ -143,10 +143,9 @@ public class FindMePartieTest extends TestCase {
         assertFalse(findMePartie.enleverEtudiantParCode("123456789000"));
     }
 
-    public void testSetObservateurShuffleListeEtudiants(){
+    public void testConstructeurListeEstMélangée(){
         ArrayList<Etudiant> listeOriginale = new ArrayList<>(etudiants);
-        FindMePartie partie = new FindMePartie(etudiants,observateurFindMePartie,interfacerMinuteur);
-        //partie.setObservateurFindMePartie(observateurFindMePartie);
+        FindMePartie partie = new FindMePartie(etudiants,observateurFindMePartie);
         assertFalse(partie.getListeEtudiants().equals(listeOriginale));
     }
 
@@ -189,8 +188,31 @@ public class FindMePartieTest extends TestCase {
         assertNotNull(tableauTest[1]);
     }
 
-    /*public void testNotifierFinPartieAppelee(){
+    public void testNotifierChangementAuTempsRestantPourJoueurMethodeAppelee(){
+        findMePartie.notifierChangementAuTempsRestantPourJoueur(2000);
+        verify(observateurFindMePartie,times(1)).notifierDiminutionDuTempsPourTrouverUnEtudiant(2000);
+    }
 
-        verify(observateurFindMePartie,times(1)).notifierTempsPourLaPartieFinie(findMePartie.getPointage());
-    }*/
+    public void testNotifierChangementAuTempsRestantPourPartieTotalee(){
+        findMePartie.notifierChangementAuTempsRestantPourPartieTotale(-2000);
+        verify(observateurFindMePartie, times(1)).notifierDIminutionDuTempsPourLaPArtieTotale(-2000);
+    }
+
+    public void testReinitialiserInterfaceMinuteur(){
+        assertEquals(interfacerMinuteur,findMePartie.getInterfaceMinuteur());
+
+        findMePartie.reinitialiserInterfaceMinuteur();
+        assertFalse(interfacerMinuteur.equals(findMePartie.getInterfaceMinuteur()));
+    }
+
+    public void testNotifierTempsPourEtudiantExpireDernierEtudiantFinDePartieAppelee(){
+        findMePartie.enleverEtudiantParCode("123456789000");
+        findMePartie.enleverEtudiantParCode("223456789123");
+        findMePartie.notifierTempsTrouverEtudiantExpire();
+
+        verify(observateurFindMePartie,times(1)).notifierTempsPourLaPartieFinie(0);
+    }
+
+
+
 }

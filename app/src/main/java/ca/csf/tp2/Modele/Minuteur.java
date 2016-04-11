@@ -181,7 +181,7 @@ public class Minuteur implements InterfaceMinuteur {
      */
     private void creerMinuteurEtudiant(){
 
-            minuteurEtudiant = getTimer();
+        minuteurEtudiant = getTimer();
 
         tempsPourEtudiant = DUREE_TROUVER_ETUDIANT;
         minuteurEtudiant.schedule(initialiserTachePourAfficherTempsRestantEtudiantEtDecrementerScore(), 1, 1);

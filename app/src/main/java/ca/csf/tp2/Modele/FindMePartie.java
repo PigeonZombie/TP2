@@ -111,6 +111,11 @@ public class FindMePartie implements ObservateurMinuteur {
         return etudiants;
     }
 
+    //Utilisée à des fins de tests seulement
+    public InterfaceMinuteur getInterfaceMinuteur(){
+        return interfaceMinuteur;
+    }
+
     /// Obtenir le pointage du joueur
     public long getPointage() {
         return pointage;
