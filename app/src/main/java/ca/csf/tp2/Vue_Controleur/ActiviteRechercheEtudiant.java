@@ -81,7 +81,6 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
         boutonMenu = (Button)findViewById(R.id.boutonMenu);
         boutonMenu.setOnClickListener(clickMenuPrincipal);
-        boutonMenu.setText(R.string.MenuPrincipal);
 
         Intent extras = getIntent();
 
@@ -89,7 +88,6 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
 
         nomEtudiantAChercher = (TextView)findViewById(R.id.textViewNom);
-        nomEtudiantAChercher.setText(controleur.getProchainEtudiant().getNom());
 
         tempsRestantEtudiant = (TextView)findViewById(R.id.texteTempsEtudiant);
         tempsRestantPartie = (TextView)findViewById(R.id.texteTempsActivité);
@@ -109,6 +107,14 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         outState.putParcelableArrayList(ETUDIANTS_ACTUELS, controleur.getTousLesEtudiants());
         outState.putParcelable(ETUDIANT_RECHERCHE, controleur.getProchainEtudiant());
         outState.putLong(POINTAGE, controleur.getPointage());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        boutonMenu.setText(R.string.MenuPrincipal);
+        nomEtudiantAChercher.setText(controleur.getProchainEtudiant().getNom());
     }
 
     /**
@@ -237,15 +243,13 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     @Override
     public void notifierDiminutionDuTempsPourTrouverUnEtudiant(final long tempsRestantEnMillisecondes) {
 
-        final long tempsRestant = tempsRestantEnMillisecondes;
-
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 String tempsRestantPourTrouverEtudiant = String.format("%d min, %d sec",
-                        TimeUnit.MILLISECONDS.toMinutes(tempsRestant),
-                        TimeUnit.MILLISECONDS.toSeconds(tempsRestant) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestant))
+                        TimeUnit.MILLISECONDS.toMinutes(tempsRestantEnMillisecondes),
+                        TimeUnit.MILLISECONDS.toSeconds(tempsRestantEnMillisecondes) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestantEnMillisecondes))
                 );
                 String tempsMisEnForme = getResources().getString(R.string.TempsRestantPourEtudiant)+ " "+
                         tempsRestantPourTrouverEtudiant+ " "+

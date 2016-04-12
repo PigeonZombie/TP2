@@ -57,21 +57,26 @@ public class ActiviteFin extends AppCompatActivity {
         setContentView(R.layout.activity_fin);
 
         titreFin = (TextView)findViewById(R.id.titreFin);
-        titreFin.setText(getResources().getString(R.string.TitreFin));
         texteFin = (TextView)findViewById(R.id.texteFin);
-        texteFin.setText(getResources().getString(R.string.TexteFin));
         score = (TextView)findViewById(R.id.texteScore);
         boutonReessayer = (Button)findViewById(R.id.boutonReessayer);
-        boutonReessayer.setText(R.string.BoutonFin);
         boutonReessayer.setOnClickListener(clickReessayer);
 
         Intent extras = getIntent();
         if(extras!=null){
             pointage = extras.getLongExtra(SCORE, 0);
-            score.setText(pointage.toString());
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        titreFin.setText(getResources().getString(R.string.TitreFin));
+        texteFin.setText(getResources().getString(R.string.TexteFin));
+        boutonReessayer.setText(R.string.BoutonFin);
+        score.setText(pointage.toString());
+    }
 
     /**
      * Sauvegarde le pointage du joueur pour le restorer à la reprise de l'application.
@@ -117,7 +122,6 @@ public class ActiviteFin extends AppCompatActivity {
         Intent intent = new Intent(this,ActiviteDepart.class);
         finish();
         startActivity(intent);
-        //Arrêter le timer
     }
 
 }

@@ -71,7 +71,7 @@ public class ActiviteDepart extends AppCompatActivity implements  TacheTelecharg
 
         scanButton = (Button) findViewById(R.id.buttonScan);
         scanButton.setOnClickListener(clickScan);
-        codeEtudiant = new String("");
+        codeEtudiant = "";
 
         barreProgression = (ProgressBar) findViewById(R.id.barreProgression);
         barreProgression.setVisibility(View.INVISIBLE);
@@ -86,7 +86,6 @@ public class ActiviteDepart extends AppCompatActivity implements  TacheTelecharg
 
         controleurDepart = new ControleurDepart(this);
 
-        //partie.demarrerPartie(null,null);
     }
 
     /**
@@ -97,24 +96,25 @@ public class ActiviteDepart extends AppCompatActivity implements  TacheTelecharg
     protected void onStart() {
         super.onStart();
 
-        // Si notre liste comprend déjà des étudiants, on la réassigne dans le
-        // modèle de données via le contrôleur
-        if (etudiantsRestants != null)
-            controleurDepart.restorerEtudiantsPartie(etudiantsRestants);
-            //partie.restorerEtudiants(etudiantsRestants);
-        else {
-            barreProgression.setVisibility(View.VISIBLE);
-            scanButton.setVisibility(View.INVISIBLE);
+
+        if (etudiantsRestants == null) {
+            TacheTelechargerListeEtudiant telechargerListeEtudiant = new TacheTelechargerListeEtudiant(this);
+            telechargerListeEtudiant.execute("https://findme-acodebreak.rhcloud.com/students.json");
         }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if (etudiantsRestants == null) {
-            TacheTelechargerListeEtudiant telechargerListeEtudiant = new TacheTelechargerListeEtudiant(this);
-            telechargerListeEtudiant.execute("https://findme-acodebreak.rhcloud.com/students.json");
+        // Si notre liste comprend déjà des étudiants, on la réassigne dans le
+        // modèle de données via le contrôleur
+        if (etudiantsRestants != null)
+            controleurDepart.restorerEtudiantsPartie(etudiantsRestants);
+        else {
+            barreProgression.setVisibility(View.VISIBLE);
+            scanButton.setVisibility(View.INVISIBLE);
         }
     }
 

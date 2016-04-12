@@ -16,8 +16,8 @@ import ca.csf.tp2.Modele.Portail.ObservateurMinuteur;
  */
 public class Minuteur implements InterfaceMinuteur {
 
-    public static final long DUREE_PARTIE = 120000;
-    public static final long DUREE_TROUVER_ETUDIANT = 15000;
+    public static final long DUREE_PARTIE = 1200000;
+    public static final long DUREE_TROUVER_ETUDIANT = 60000;
     private ObservateurMinuteur observateurMinuteur = null;
     private Timer minuteurPartie = null;
     private Timer minuteurEtudiant = null;
