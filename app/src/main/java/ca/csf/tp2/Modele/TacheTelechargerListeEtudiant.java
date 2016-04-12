@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * @author Alicia
  */
-public class TacheTelechargerListeEtudiant extends AsyncTask<String,Void,ArrayList>{
+public class TacheTelechargerListeEtudiant extends AsyncTask<String, Void, ArrayList> {
 
     private final Callback callback;
 
@@ -24,7 +24,7 @@ public class TacheTelechargerListeEtudiant extends AsyncTask<String,Void,ArrayLi
 
     @Override
     protected ArrayList doInBackground(String... params) {
-        if(params.length!=1){
+        if (params.length != 1) {
             throw new IllegalArgumentException("La tache ne prend qu'une seule String en paramètre");
         }
 
@@ -33,7 +33,7 @@ public class TacheTelechargerListeEtudiant extends AsyncTask<String,Void,ArrayLi
 
             URLConnection connection = url.openConnection();
 
-            HttpURLConnection connectionHttp = (HttpURLConnection)connection;
+            HttpURLConnection connectionHttp = (HttpURLConnection) connection;
 
             connectionHttp.setRequestProperty("Accept", "application/json");
 
@@ -60,11 +60,11 @@ public class TacheTelechargerListeEtudiant extends AsyncTask<String,Void,ArrayLi
 
 
     @Override
-    protected void onPostExecute(ArrayList  etudiants) {
+    protected void onPostExecute(ArrayList etudiants) {
         callback.onEtudiantsTelecharges(etudiants);
     }
 
-    public interface Callback{
+    public interface Callback {
         void onEtudiantsTelecharges(ArrayList etudiants);
     }
 

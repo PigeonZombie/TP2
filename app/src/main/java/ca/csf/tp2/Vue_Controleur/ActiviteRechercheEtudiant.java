@@ -21,9 +21,9 @@ import ca.csf.tp2.Vue_Controleur.Portail.ObservateurFindMePartie;
  * L'activité de recherche d'étudiant est le coeur de l'application. Elle demande au joueur d'identifier
  * des étudiants en scannant leur code barre. Lorsque tous les étudiants on été trouvés ou que le temps
  * de la partie est écoulé, l'activité de fin est lancée.
+ *
  * @author Alicia Lamontagne
  * @author Félix Rivard
- *
  */
 public class ActiviteRechercheEtudiant extends AppCompatActivity implements ObservateurFindMePartie {
 
@@ -35,8 +35,8 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
 
     private Button boutonMenu;
     /**
-     *  Le code qui sert à s'assurer que le résultat de l'activité de scan
-     *  est celui auquel on s'attend
+     * Le code qui sert à s'assurer que le résultat de l'activité de scan
+     * est celui auquel on s'attend
      */
     private static final int CODE_REQUETE = 42;
     /**
@@ -67,6 +67,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      * Crée la vue, assigne le bouton scan en attribut, crée un nouvelle
      * liste d'étudiants et la restore au besoin, démarre un nouvelle partie
      * et affiche le nom de l'étudiant à trouver
+     *
      * @param savedInstanceState le bundle contenant les paramètres sauvegardées
      * @see ActiviteRechercheEtudiant#nomEtudiantAChercher
      */
@@ -76,27 +77,28 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
         setContentView(R.layout.activity_recherche);
 
 
-        boutonScan = (Button)findViewById(R.id.boutonScanEtudiant);
+        boutonScan = (Button) findViewById(R.id.boutonScanEtudiant);
         boutonScan.setOnClickListener(clickScan);
 
-        boutonMenu = (Button)findViewById(R.id.boutonMenu);
+        boutonMenu = (Button) findViewById(R.id.boutonMenu);
         boutonMenu.setOnClickListener(clickMenuPrincipal);
 
         Intent extras = getIntent();
 
-        controleur = new ControleurRecherche(this,(ArrayList)extras.getParcelableArrayListExtra(ETUDIANTS_ACTUELS),this);
+        controleur = new ControleurRecherche((ArrayList) extras.getParcelableArrayListExtra(ETUDIANTS_ACTUELS), this);
 
 
-        nomEtudiantAChercher = (TextView)findViewById(R.id.textViewNom);
+        nomEtudiantAChercher = (TextView) findViewById(R.id.textViewNom);
 
-        tempsRestantEtudiant = (TextView)findViewById(R.id.texteTempsEtudiant);
-        tempsRestantPartie = (TextView)findViewById(R.id.texteTempsActivité);
+        tempsRestantEtudiant = (TextView) findViewById(R.id.texteTempsEtudiant);
+        tempsRestantPartie = (TextView) findViewById(R.id.texteTempsActivité);
     }
 
     /**
      * Sauvegarde la liste d'étudiants restants à trouver en la
      * plaçant dans le bundle qui sera restoré lors de la reprise
      * de l'application. La liste est identifiée par l'attribut ETUDIANTS_ACTUELS.
+     *
      * @param outState le bundle servant à sauvegarder les paramètres
      */
     @Override
@@ -120,6 +122,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     /**
      * Restore la liste d'étudiants à trouver, entre autre après un changement d'orientation
      * La liste d'étudiants est récupérée avec l'attribut ETUDIANTS_ACTUELS
+     *
      * @param outState le bundle contenant les données sauvegardées.
      * @see ActiviteRechercheEtudiant#ETUDIANTS_ACTUELS
      */
@@ -127,9 +130,9 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
     protected void onRestoreInstanceState(Bundle outState) {
         super.onRestoreInstanceState(outState);
 
-        if(outState.getParcelableArrayList(ETUDIANTS_ACTUELS) != null) {
-            controleur.restorerListeEtudiants((ArrayList)outState.getParcelableArrayList(ETUDIANTS_ACTUELS));
-            controleur.setEtudiantATrouver((Etudiant)outState.getParcelable(ETUDIANT_RECHERCHE));
+        if (outState.getParcelableArrayList(ETUDIANTS_ACTUELS) != null) {
+            controleur.restorerListeEtudiants((ArrayList) outState.getParcelableArrayList(ETUDIANTS_ACTUELS));
+            controleur.setEtudiantATrouver((Etudiant) outState.getParcelable(ETUDIANT_RECHERCHE));
             nomEtudiantAChercher.setText(controleur.getProchainEtudiant().getNom());
 
         }
@@ -163,23 +166,23 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      * Vérifie, lors du retour de l'application de scan, si le code barre scanné
      * correspond à un élève de la liste à trouver. La partie s'occupe ensuite
      * de choisir le prochain étudiant ou d'afficher un message d'erreur.
+     *
      * @param requestCode le code de la requête
-     * @param resultCode le résultat de la requête
-     * @param data les données dans l'intent
+     * @param resultCode  le résultat de la requête
+     * @param data        les données dans l'intent
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CODE_REQUETE){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == CODE_REQUETE) {
+            if (resultCode == Activity.RESULT_OK) {
                 controleur.getEtudiantParCode(data.getStringExtra("SCAN_RESULT"));
             }
         }
     }
 
-    private void retournerMenuPrincipal()
-    {
-        Intent intent = new Intent(this,ActiviteDepart.class);
+    private void retournerMenuPrincipal() {
+        Intent intent = new Intent(this, ActiviteDepart.class);
         startActivity(intent);
     }
 
@@ -188,23 +191,22 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
      * un nouveau nom est passé en paramètre. Si le nom est null, c'est soit que le
      * mauvais étudiant a été scanné, dans quel cas on affiche un message d'erreur, soit
      * qu'il ne reste plus d'étudiants, dans quel cas on lance l'activité de fin.
+     *
      * @param etudiant le nouvel étudiant à trouver
      * @see ActiviteFin
      */
     @Override
     public void notifierChangementEtudiantATrouver(Etudiant etudiant) {
 
-        if(etudiant!=null){
+        if (etudiant != null) {
             nomEtudiantAChercher.setText(etudiant.getNom());
-        }
-        else if(controleur.getProchainEtudiant() == null){
+        } else if (controleur.getProchainEtudiant() == null) {
             Intent intent = new Intent(this, ActiviteFin.class);
             intent.putExtra(ActiviteFin.SCORE, controleur.getPointage());
             finish();
             controleur.pause();
             startActivity(intent);
-        }
-        else{
+        } else {
             Toast.makeText(ActiviteRechercheEtudiant.this, getResources().getString(R.string.MauvaisJoueur), Toast.LENGTH_SHORT).show();
         }
     }
@@ -251,8 +253,8 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
                         TimeUnit.MILLISECONDS.toSeconds(tempsRestantEnMillisecondes) -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestantEnMillisecondes))
                 );
-                String tempsMisEnForme = getResources().getString(R.string.TempsRestantPourEtudiant)+ " "+
-                        tempsRestantPourTrouverEtudiant+ " "+
+                String tempsMisEnForme = getResources().getString(R.string.TempsRestantPourEtudiant) + " " +
+                        tempsRestantPourTrouverEtudiant + " " +
                         getResources().getString(R.string.Reste);
                 tempsRestantEtudiant.setText(tempsMisEnForme);
             }
@@ -277,7 +279,7 @@ public class ActiviteRechercheEtudiant extends AppCompatActivity implements Obse
                         TimeUnit.MILLISECONDS.toSeconds(tempsRestant) -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tempsRestant))
                 );
-                String tempsMisEnForme = getResources().getString(R.string.TempsActivite)+" "+tempsRestantPourLaPartie;
+                String tempsMisEnForme = getResources().getString(R.string.TempsActivite) + " " + tempsRestantPourLaPartie;
                 tempsRestantPartie.setText(tempsMisEnForme);
             }
         });

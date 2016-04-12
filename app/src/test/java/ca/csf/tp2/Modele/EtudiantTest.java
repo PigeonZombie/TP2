@@ -13,8 +13,8 @@ public class EtudiantTest extends TestCase {
     private Etudiant etudiant;
 
     @Before
-    public void before(){
-        etudiant = new Etudiant("Etudiant1","123456789000");
+    public void before() {
+        etudiant = new Etudiant("Etudiant1", "123456789000");
     }
 
     @Test

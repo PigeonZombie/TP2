@@ -11,46 +11,46 @@ public class ControleurRecherche {
 
     private FindMePartie partie;
 
-    public ControleurRecherche(ActiviteRechercheEtudiant activiteRechercheEtudiant, ArrayList<Etudiant> etudiants,
-                               ObservateurFindMePartie observateurFindMePartie){
+    public ControleurRecherche(ArrayList<Etudiant> etudiants,
+                               ObservateurFindMePartie observateurFindMePartie) {
 
         partie = new FindMePartie(etudiants, observateurFindMePartie);
         partie.reinitialiserInterfaceMinuteur();
     }
 
-    public Etudiant getProchainEtudiant(){
+    public Etudiant getProchainEtudiant() {
         return partie.getProchainEtudiant();
     }
 
-    public long[] pause(){
+    public long[] pause() {
         return partie.pauserTemps();
     }
 
-    public void recommencer(long[] tempsRestants){
+    public void recommencer(long[] tempsRestants) {
         partie.repartirTemps(tempsRestants);
     }
 
-    public ArrayList<Etudiant> getTousLesEtudiants(){
+    public ArrayList<Etudiant> getTousLesEtudiants() {
         return partie.getListeEtudiants();
     }
 
-    public long getPointage(){
+    public long getPointage() {
         return partie.getPointage();
     }
 
-    public void setPointage(long pointage){
+    public void setPointage(long pointage) {
         partie.setPointage(pointage);
     }
 
-    public void restorerListeEtudiants(ArrayList<Etudiant> etudiants){
+    public void restorerListeEtudiants(ArrayList<Etudiant> etudiants) {
         partie.restorerEtudiants(etudiants);
     }
 
-    public void setEtudiantATrouver(Etudiant etudiantATrouver){
+    public void setEtudiantATrouver(Etudiant etudiantATrouver) {
         partie.setEtudiantATrouver(etudiantATrouver);
     }
 
-    public void getEtudiantParCode(String code){
+    public void getEtudiantParCode(String code) {
         partie.getEtudiantParCode(code);
     }
 }

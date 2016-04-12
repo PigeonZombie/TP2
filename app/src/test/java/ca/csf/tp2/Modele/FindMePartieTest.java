@@ -19,10 +19,10 @@ import static org.mockito.Mockito.when;
  * @author Alicia
  */
 public class FindMePartieTest extends TestCase {
-    private  ArrayList<Etudiant> etudiants = new ArrayList<>();
+    private ArrayList<Etudiant> etudiants = new ArrayList<>();
     private long pointage = 0;
-    private  ObservateurFindMePartie observateurFindMePartie = null;
-    private  InterfaceMinuteur interfacerMinuteur = null;
+    private ObservateurFindMePartie observateurFindMePartie = null;
+    private InterfaceMinuteur interfacerMinuteur = null;
     private FindMePartie findMePartie = null;
 
 
@@ -32,19 +32,18 @@ public class FindMePartieTest extends TestCase {
         initialiserTest();
     }
 
-    void initialiserTest (){
-        etudiants.add(new Etudiant("A","123456789000"));
-        etudiants.add(new Etudiant("B","223456789123"));
-        etudiants.add(new Etudiant("C","345678901234"));
+    void initialiserTest() {
+        etudiants.add(new Etudiant("A", "123456789000"));
+        etudiants.add(new Etudiant("B", "223456789123"));
+        etudiants.add(new Etudiant("C", "345678901234"));
         observateurFindMePartie = mock(ObservateurFindMePartie.class);
         interfacerMinuteur = mock(InterfaceMinuteur.class);
-        findMePartie = new FindMePartie(etudiants, observateurFindMePartie,interfacerMinuteur);
+        findMePartie = new FindMePartie(etudiants, observateurFindMePartie, interfacerMinuteur);
         when(interfacerMinuteur.quandEtudiantTrouvee()).thenReturn((long) 100);
-        long tempsTimers [] = new long[2];
+        long tempsTimers[] = new long[2];
         when(interfacerMinuteur.mettreLesMinuteursEnPause()).thenReturn(tempsTimers);
 
     }
-
 
 
     public void testGetEtudiantParCodeRetraitEtudiant() throws Exception {
@@ -61,7 +60,7 @@ public class FindMePartieTest extends TestCase {
 
     public void testGetEtudiantParCodeMauvaisEtudiant() throws Exception {
         findMePartie.getEtudiantParCode("Badger");
-        verify(observateurFindMePartie,times(1)).notifierChangementEtudiantATrouver(null);
+        verify(observateurFindMePartie, times(1)).notifierChangementEtudiantATrouver(null);
     }
 
 
@@ -85,134 +84,133 @@ public class FindMePartieTest extends TestCase {
 
     public void testNotifierTempsTrouverEtudiantExpireAppelMethodeNotifier() throws Exception {
         findMePartie.notifierTempsTrouverEtudiantExpire();
-        verify(observateurFindMePartie,times(1)).notifierTempsEcoulePourTrouverEtudiant("B");
+        verify(observateurFindMePartie, times(1)).notifierTempsEcoulePourTrouverEtudiant("B");
     }
 
     public void testNotifierPartieTerminee() throws Exception {
         findMePartie.notifierPartieTerminee();
-        verify(observateurFindMePartie,times(1)).notifierTempsPourLaPartieFinie(0);
+        verify(observateurFindMePartie, times(1)).notifierTempsPourLaPartieFinie(0);
     }
 
-    public void testSetEtudiantATrouverEtudiantExistant(){
+    public void testSetEtudiantATrouverEtudiantExistant() {
         assertTrue(findMePartie.setEtudiantATrouver(etudiants.get(0)));
         assertEquals(etudiants.get(0), findMePartie.getProchainEtudiant());
     }
 
-    public void testSetEtudiantATrouverEtudiantInexistant(){
+    public void testSetEtudiantATrouverEtudiantInexistant() {
         Etudiant etudiant = new Etudiant("D", "012345567789");
         assertFalse(findMePartie.setEtudiantATrouver(etudiant));
         assertEquals(etudiants.get(0), findMePartie.getProchainEtudiant());
     }
 
-    public void testRestorerEtudiantListeNonVide(){
+    public void testRestorerEtudiantListeNonVide() {
         ArrayList<Etudiant> listeEtudiants = new ArrayList<>();
         Etudiant etudiant = new Etudiant("D", "012345567789");
         findMePartie.restorerEtudiants(listeEtudiants);
-        assertEquals(listeEtudiants,findMePartie.getListeEtudiants());
+        assertEquals(listeEtudiants, findMePartie.getListeEtudiants());
     }
 
-    public void testRestorerEtudiantListeVide(){
+    public void testRestorerEtudiantListeVide() {
         ArrayList<Etudiant> listeEtudiants = new ArrayList<>();
         findMePartie.restorerEtudiants(listeEtudiants);
         assertEquals(listeEtudiants, findMePartie.getListeEtudiants());
     }
 
 
-    public void testRestorerEtudiantListeNulle(){
+    public void testRestorerEtudiantListeNulle() {
         ArrayList<Etudiant> listeEtudiants = null;
         findMePartie.restorerEtudiants(listeEtudiants);
-        assertEquals(listeEtudiants,findMePartie.getListeEtudiants());
+        assertEquals(listeEtudiants, findMePartie.getListeEtudiants());
     }
 
-    public void testEnleverEtudiantParCodeEtudiantExistant(){
+    public void testEnleverEtudiantParCodeEtudiantExistant() {
         assertTrue(findMePartie.enleverEtudiantParCode(etudiants.get(0).getCode()));
     }
 
-    public void testEnleverEtudiantParCodeEtudiantInexistant(){
+    public void testEnleverEtudiantParCodeEtudiantInexistant() {
         assertFalse(findMePartie.enleverEtudiantParCode("888888888888"));
     }
 
-    public void testEnleverEtudiantParCodeEtudiantNul(){
+    public void testEnleverEtudiantParCodeEtudiantNul() {
         assertFalse(findMePartie.enleverEtudiantParCode(null));
     }
 
-    public void testEnleverEtudiantParCodeListeVide(){
+    public void testEnleverEtudiantParCodeListeVide() {
         assertTrue(findMePartie.enleverEtudiantParCode(etudiants.get(0).getCode()));
         assertTrue(findMePartie.enleverEtudiantParCode(etudiants.get(0).getCode()));
         assertTrue(findMePartie.enleverEtudiantParCode(etudiants.get(0).getCode()));
         assertFalse(findMePartie.enleverEtudiantParCode("123456789000"));
     }
 
-    public void testConstructeurListeEstMélangée(){
+    public void testConstructeurListeEstMélangée() {
         ArrayList<Etudiant> listeOriginale = new ArrayList<>(etudiants);
-        FindMePartie partie = new FindMePartie(etudiants,observateurFindMePartie);
+        FindMePartie partie = new FindMePartie(etudiants, observateurFindMePartie);
         assertFalse(partie.getListeEtudiants().equals(listeOriginale));
     }
 
-    public void testSetPointagePositif(){
-        assertTrue(findMePartie.getPointage()==0);
+    public void testSetPointagePositif() {
+        assertTrue(findMePartie.getPointage() == 0);
         findMePartie.setPointage(43221);
         assertTrue(findMePartie.getPointage() == 43221);
     }
 
-    public void testSetPointageNegatif(){
-        assertTrue(findMePartie.getPointage()==0);
+    public void testSetPointageNegatif() {
+        assertTrue(findMePartie.getPointage() == 0);
         findMePartie.setPointage(-43221);
         assertTrue(findMePartie.getPointage() == 0);
     }
 
-    public void testRepartirTempsValide(){
-        long temps [] = new long[2];
+    public void testRepartirTempsValide() {
+        long temps[] = new long[2];
         temps[0] = 123145;
         temps[1] = 1234325544;
         assertTrue(findMePartie.repartirTemps(temps));
     }
 
-    public void testRepartirTempsNulle(){
+    public void testRepartirTempsNulle() {
         assertFalse(findMePartie.repartirTemps(null));
     }
 
-    public void testRepartirTempsMauvaiseTailleTableau(){
-        long temps [] = new long[3];
+    public void testRepartirTempsMauvaiseTailleTableau() {
+        long temps[] = new long[3];
         temps[0] = 123145;
         temps[1] = 1234325544;
         temps[2] = 442363;
         assertFalse(findMePartie.repartirTemps(temps));
     }
 
-    public void testPauserTempsRetourneTableauDeTaille2(){
-        long tableauTest [] = findMePartie.pauserTemps();
+    public void testPauserTempsRetourneTableauDeTaille2() {
+        long tableauTest[] = findMePartie.pauserTemps();
 
         assertEquals(2, tableauTest.length);
         assertNotNull(tableauTest[0]);
         assertNotNull(tableauTest[1]);
     }
 
-    public void testNotifierChangementAuTempsRestantPourJoueurMethodeAppelee(){
+    public void testNotifierChangementAuTempsRestantPourJoueurMethodeAppelee() {
         findMePartie.notifierChangementAuTempsRestantPourJoueur(2000);
-        verify(observateurFindMePartie,times(1)).notifierDiminutionDuTempsPourTrouverUnEtudiant(2000);
+        verify(observateurFindMePartie, times(1)).notifierDiminutionDuTempsPourTrouverUnEtudiant(2000);
     }
 
-    public void testNotifierChangementAuTempsRestantPourPartieTotalee(){
+    public void testNotifierChangementAuTempsRestantPourPartieTotalee() {
         findMePartie.notifierChangementAuTempsRestantPourPartieTotale(-2000);
         verify(observateurFindMePartie, times(1)).notifierDIminutionDuTempsPourLaPArtieTotale(-2000);
     }
 
-    public void testReinitialiserInterfaceMinuteur(){
-        assertEquals(interfacerMinuteur,findMePartie.getInterfaceMinuteur());
+    public void testReinitialiserInterfaceMinuteur() {
+        assertEquals(interfacerMinuteur, findMePartie.getInterfaceMinuteur());
 
         findMePartie.reinitialiserInterfaceMinuteur();
         assertFalse(interfacerMinuteur.equals(findMePartie.getInterfaceMinuteur()));
     }
 
-    public void testNotifierTempsPourEtudiantExpireDernierEtudiantFinDePartieAppelee(){
+    public void testNotifierTempsPourEtudiantExpireDernierEtudiantFinDePartieAppelee() {
         findMePartie.enleverEtudiantParCode("123456789000");
         findMePartie.enleverEtudiantParCode("223456789123");
         findMePartie.notifierTempsTrouverEtudiantExpire();
 
-        verify(observateurFindMePartie,times(1)).notifierTempsPourLaPartieFinie(0);
+        verify(observateurFindMePartie, times(1)).notifierTempsPourLaPartieFinie(0);
     }
-
 
 
 }

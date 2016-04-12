@@ -15,16 +15,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @see Etudiant#nom
  * @see Etudiant#code
  */
-public class Etudiant implements Parcelable{
+public class Etudiant implements Parcelable {
 
     /**
      * Le prénom et le nom de famille de l'étudiant.
+     *
      * @see Etudiant#getNom()
      * @see Etudiant#setNom(String)
      */
     private String nom;
     /**
      * Le code venant d'un code barre représentant l'étudiant
+     *
      * @see Etudiant#code
      * @see Etudiant#setCode(String)
      */
@@ -34,22 +36,25 @@ public class Etudiant implements Parcelable{
      * Constructeur de la classe étudiant. Assigne le nom du joueur et son code selon les valeurs
      * passées en paramètre, si non nulles. Si le paramètre est null, l'attribut est initialisé
      * à "defaut".
-     * @param nom Le nom du joueur
+     *
+     * @param nom  Le nom du joueur
      * @param code Le code du joueur
      */
-    public Etudiant(String nom, String code){
-        if(!setNom(nom))
+    public Etudiant(String nom, String code) {
+        if (!setNom(nom))
             this.nom = "defaut";
 
-        if(!setCode(code))
+        if (!setCode(code))
             this.code = "defaut";
     }
 
-    public Etudiant(){}
+    public Etudiant() {
+    }
 
 
     /**
      * Constructeur privé pour le parcelable
+     *
      * @param in
      */
     private Etudiant(Parcel in) {
@@ -87,22 +92,24 @@ public class Etudiant implements Parcelable{
 
     /**
      * Obtient le code de l'étudiant
+     *
      * @return le code de l'étudiant
      * @see Etudiant#code
      */
-    @JsonProperty ("uniqueIdentifier")
+    @JsonProperty("uniqueIdentifier")
     public String getCode() {
         return code;
     }
 
     /**
      * Modifie la valeur du code de l'étudiant selon la valeur du paramètre
+     *
      * @param code le nouveau code de l'étudiant
      * @see Etudiant#code
      */
     @JsonProperty("uniqueIdentifier")
     public boolean setCode(String code) {
-        if(code!=null) {
+        if (code != null) {
             code = code.trim();
             if (code.length() == 12) {
                 this.code = code;
@@ -114,19 +121,20 @@ public class Etudiant implements Parcelable{
 
     /**
      * Obtient le nom de l'étudiant
+     *
      * @return le nom de l'étudiant
      * @see Etudiant#nom
      */
-    @JsonProperty ("fullName")
+    @JsonProperty("fullName")
     public String getNom() {
         return nom;
     }
 
     @JsonProperty("fullName")
     public boolean setNom(String nom) {
-        if(nom!=null) {
+        if (nom != null) {
             nom = nom.trim();
-            if(nom.length()>0) {
+            if (nom.length() > 0) {
                 this.nom = nom;
                 return true;
             }

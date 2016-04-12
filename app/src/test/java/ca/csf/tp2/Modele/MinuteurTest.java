@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 public class MinuteurTest {
 
     private ObservateurMinuteur observateurMinuteur;
-    private  Minuteur minuteur;
+    private Minuteur minuteur;
     private Timer timer;
     private long[] liste;
 
@@ -32,10 +32,10 @@ public class MinuteurTest {
     @Before
     public void setUp() throws Exception {
         liste = new long[2];
-        liste[0] =5;
-        liste[1] =1;
+        liste[0] = 5;
+        liste[1] = 1;
         observateurMinuteur = mock(ObservateurMinuteur.class);
-        timer= mock(Timer.class);
+        timer = mock(Timer.class);
         minuteur = new Minuteur(observateurMinuteur) {
             @NonNull
             @Override
@@ -50,9 +50,9 @@ public class MinuteurTest {
     public void peutRedemarerMinuteurLorsqueEtudiantTrouve() throws Exception {
         minuteur.quandEtudiantTrouvee();
         verify(timer).schedule(any(TimerTask.class), eq(Minuteur.DUREE_PARTIE));
-        verify(timer,times(4)).schedule(any(TimerTask.class), eq((long)1), eq((long)1));
-        verify(timer,times(2)).schedule(any(TimerTask.class), eq(Minuteur.DUREE_TROUVER_ETUDIANT),eq(Minuteur.DUREE_TROUVER_ETUDIANT));
-        verify(timer,times(4)).schedule(any(TimerTask.class), eq((long)1), eq((long)1));
+        verify(timer, times(4)).schedule(any(TimerTask.class), eq((long) 1), eq((long) 1));
+        verify(timer, times(2)).schedule(any(TimerTask.class), eq(Minuteur.DUREE_TROUVER_ETUDIANT), eq(Minuteur.DUREE_TROUVER_ETUDIANT));
+        verify(timer, times(4)).schedule(any(TimerTask.class), eq((long) 1), eq((long) 1));
     }
 
     @Test
@@ -75,15 +75,15 @@ public class MinuteurTest {
     @Test
     public void neRedemarrePasLesMinuteursLorsDeLaFonctionPause() throws Exception {
         minuteur.repartirLesMinuteurs(liste);
-        verify(timer,times(0)).schedule(any(TimerTask.class),eq(5));
-        verify(timer,times(0)).schedule(any(TimerTask.class),eq(1));
+        verify(timer, times(0)).schedule(any(TimerTask.class), eq(5));
+        verify(timer, times(0)).schedule(any(TimerTask.class), eq(1));
     }
 
     @Test
     public void testObtenirTempsRestantPourLesMinuteurs() throws Exception {
-    long[] resultats = minuteur.obtenirTempsRestantPourLesMinuteurs();
-        Assert.assertEquals(resultats[0],Minuteur.DUREE_PARTIE);
-        Assert.assertEquals(resultats[1],Minuteur.DUREE_TROUVER_ETUDIANT);
+        long[] resultats = minuteur.obtenirTempsRestantPourLesMinuteurs();
+        Assert.assertEquals(resultats[0], Minuteur.DUREE_PARTIE);
+        Assert.assertEquals(resultats[1], Minuteur.DUREE_TROUVER_ETUDIANT);
 
     }
 }

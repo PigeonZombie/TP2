@@ -12,6 +12,7 @@ import ca.csf.tp2.R;
 /**
  * L'activité de fin permet au joueur de voir son score final et lui
  * indique d'attendre la fin de la partie ou d'en recommencer une.
+ *
  * @author Alicia Lamontagne
  */
 public class ActiviteFin extends AppCompatActivity {
@@ -44,6 +45,7 @@ public class ActiviteFin extends AppCompatActivity {
     /**
      * Crée la vue et assigne tous les textes dans des attributs.
      * Restore aussi le score si nécessaire.
+     *
      * @param savedInstanceState Le bundle contenant les données sauvegardées
      * @see ActiviteFin#titreFin
      * @see ActiviteFin#texteFin
@@ -56,14 +58,14 @@ public class ActiviteFin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fin);
 
-        titreFin = (TextView)findViewById(R.id.titreFin);
-        texteFin = (TextView)findViewById(R.id.texteFin);
-        score = (TextView)findViewById(R.id.texteScore);
-        boutonReessayer = (Button)findViewById(R.id.boutonReessayer);
+        titreFin = (TextView) findViewById(R.id.titreFin);
+        texteFin = (TextView) findViewById(R.id.texteFin);
+        score = (TextView) findViewById(R.id.texteScore);
+        boutonReessayer = (Button) findViewById(R.id.boutonReessayer);
         boutonReessayer.setOnClickListener(clickReessayer);
 
         Intent extras = getIntent();
-        if(extras!=null){
+        if (extras != null) {
             pointage = extras.getLongExtra(SCORE, 0);
         }
     }
@@ -81,6 +83,7 @@ public class ActiviteFin extends AppCompatActivity {
     /**
      * Sauvegarde le pointage du joueur pour le restorer à la reprise de l'application.
      * L'attribut utilisé pour sauvegarder le pointage est SCORE
+     *
      * @param outState le bundle dans lequel sont sauvegardées les données
      * @see ActiviteFin#SCORE
      * @see ActiviteFin#pointage
@@ -93,13 +96,14 @@ public class ActiviteFin extends AppCompatActivity {
         outState.putLong(SCORE, pointage);
     }
 
-     /**
-      * Restore le pointage du joueur et met à jour le texte dans la vue.
-      * L'attribut utilisé pour récupérer le pointage est SCORE.
-      * @param savedInstanceState le bundle contenant les données sauvegardées
-      * @see ActiviteFin#score
-      * @see ActiviteFin#pointage
-      * @see ActiviteFin#onSaveInstanceState(Bundle)
+    /**
+     * Restore le pointage du joueur et met à jour le texte dans la vue.
+     * L'attribut utilisé pour récupérer le pointage est SCORE.
+     *
+     * @param savedInstanceState le bundle contenant les données sauvegardées
+     * @see ActiviteFin#score
+     * @see ActiviteFin#pointage
+     * @see ActiviteFin#onSaveInstanceState(Bundle)
      */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -117,9 +121,8 @@ public class ActiviteFin extends AppCompatActivity {
         }
     };
 
-    private void recommencerActivite()
-    {
-        Intent intent = new Intent(this,ActiviteDepart.class);
+    private void recommencerActivite() {
+        Intent intent = new Intent(this, ActiviteDepart.class);
         finish();
         startActivity(intent);
     }

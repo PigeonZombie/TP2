@@ -10,16 +10,16 @@ public class ControleurDepart {
 
     private FindMePartie partie;
 
-    public ControleurDepart(ActiviteDepart activiteDepart){
+    public ControleurDepart() {
 
-        partie = new FindMePartie(null,null);
+        partie = new FindMePartie(null, null);
     }
 
-    public void restorerEtudiantsPartie(ArrayList<Etudiant> etudiants){
+    public void restorerEtudiantsPartie(ArrayList<Etudiant> etudiants) {
         partie.restorerEtudiants(etudiants);
     }
 
-    public boolean enleverEtudiantParCode(String code){
+    public boolean enleverEtudiantParCode(String code) {
         return partie.enleverEtudiantParCode(code);
     }
 

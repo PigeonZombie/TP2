@@ -23,7 +23,7 @@ import ca.csf.tp2.R;
  *
  * @author Alicia Lamontagne
  */
-public class ActiviteDepart extends AppCompatActivity implements  TacheTelechargerListeEtudiant.Callback {
+public class ActiviteDepart extends AppCompatActivity implements TacheTelechargerListeEtudiant.Callback {
     /**
      * Le bouton dans la vue activity_debut permettant au joueur d'ouvrir une application
      * pour scanner un code barre
@@ -84,7 +84,7 @@ public class ActiviteDepart extends AppCompatActivity implements  TacheTelecharg
             etudiantsRestants = savedInstanceState.getParcelableArrayList(ETUDIANTS_ACTUELS);
         }
 
-        controleurDepart = new ControleurDepart(this);
+        controleurDepart = new ControleurDepart();
 
     }
 
